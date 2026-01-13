@@ -17,6 +17,9 @@
     "strict": true,
     "target": "es2022",
     "customConditions": ["@allorai/source"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "profile/*": ["apps/profile/src/*"]
+    }
   }
 }

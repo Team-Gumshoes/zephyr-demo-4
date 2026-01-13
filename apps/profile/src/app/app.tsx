@@ -1,10 +1,11 @@
-import NxWelcome from './nx-welcome';
 import '../styles.css';
+import Button from './components/Button';
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="profile" />
+    <div className='border'>
+      <h1>This is the remote application: Profile</h1>
+      <Button/>
     </div>
   );
 }

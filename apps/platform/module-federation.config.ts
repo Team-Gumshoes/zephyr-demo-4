@@ -14,7 +14,21 @@ const config: ModuleFederationConfig = {
    * declare module 'my-external-remote';
    *
    */
-  remotes: ['profile'],
+  remotes: [['profile', 'http://localhost:4201/remoteEntry.js']],
+  // additionalShared: [
+  //   [
+  //     'react',
+  //     { singleton: true, strictVersion: true, requiredVersion: '19.2.3' },
+  //   ],
+  //   [
+  //     'react-dom',
+  //     { singleton: true, strictVersion: true, requiredVersion: '19.2.3' },
+  //   ],
+  //   [
+  //     'react-router-dom',
+  //     { singleton: true, strictVersion: true, requiredVersion: '6.29.0' },
+  //   ],
+  // ],
 };
 
 /**
