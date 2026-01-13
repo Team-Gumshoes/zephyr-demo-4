@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 
 const Profile = React.lazy(() => import('profile/Module'));
-const Button = React.lazy(() => import('profile/app/components/Button'));
+const Button = React.lazy(() => import('profile/Button'));
 
 export function App() {
   return (
@@ -16,7 +16,15 @@ export function App() {
         </li>
       </ul>
       <Routes>
-        <Route path="/" element={<div>This is the Platform. The Remote button is being consumed rendered: <Button/></div>} />
+        <Route
+          path="/"
+          element={
+            <div>
+              This is the Platform. The Remote button is being consumed
+              rendered: <Button />
+            </div>
+          }
+        />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </React.Suspense>
