@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "profile": "workspace:*"
+  },
+  "zephyr:dependencies": {
+    "profile": "profile@*"
   }
 }
