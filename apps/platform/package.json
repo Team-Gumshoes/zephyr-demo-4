@@ -1,0 +1,27 @@
+{
+  "name": "platform",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "platform",
+    "targets": {
+      "serve": {
+        "options": {
+          "port": 4200
+        },
+        "dependsOn": [
+          "typecheck"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "^build",
+          "typecheck"
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "profile": "workspace:*"
+  }
+}
