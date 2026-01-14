@@ -3,8 +3,8 @@ import Button from './components/Button';
 
 export function App() {
   return (
-    <div className='border'>
-      <h1>This is the remote application: Profile</h1>
+    <div className='border border-blue-500 bg-slate-100'>
+      <div>This is the PROFILE (remote) application</div>
       <Button/>
     </div>
   );
