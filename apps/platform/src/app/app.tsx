@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import '../styles.css';
 
 const Profile = React.lazy(() => import('profile/Module'));
 const Button = React.lazy(() => import('profile/Button'));
@@ -20,7 +21,7 @@ export function App() {
           <Route
             path="/"
             element={
-              <div className="border border-red-500 bg-red-100 p-2 m-2">
+              <div className="border border-red-500 bg-slate-100 p-2 m-2">
                 <div>
                   <p>This is the Platform (host) app.</p>
                   <p>The Remote button is being rendered: </p>
