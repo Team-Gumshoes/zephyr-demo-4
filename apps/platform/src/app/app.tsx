@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom';
+import { Route, Navigate, Routes } from 'react-router-dom';
 import Layout from './components/Layout'
 import '../styles.css';
 import TripPlannerPage from './features/trip-planner/TripPlannerPage'
@@ -8,7 +8,6 @@ import TripPlannerPage from './features/trip-planner/TripPlannerPage'
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/trip-planner" replace />} />
@@ -18,7 +17,6 @@ function App() {
           <Route path="transport" element={<TransportPage />} /> */}
         </Route>
       </Routes>
-    </BrowserRouter>
   );
 }
 

@@ -15,6 +15,12 @@ const config: ModuleFederationConfig = {
    *
    */
   remotes: ['profile'],
+  shared: (libraryName, defaultConfig) => {
+    if (libraryName === 'react' || libraryName === 'react-dom') {
+      return { singleton: true, requiredVersion: false, eager: true };
+    }
+    return defaultConfig;
+  }
 };
 
 /**
