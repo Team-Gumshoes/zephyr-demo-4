@@ -1,7 +1,7 @@
 import { ModuleFederationConfig } from '@nx/module-federation';
 
 const config: ModuleFederationConfig = {
-  name: 'profile',
+  name: 'hotels',
   exposes: {
     './Module': './src/remote-entry.ts',
     './Button' : './src/app/components/Button.tsx'

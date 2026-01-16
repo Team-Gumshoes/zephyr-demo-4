@@ -7,7 +7,7 @@
       "path": "./apps/web/platform"
     },
     {
-      "path": "./apps/web/profile"
+      "path": "./apps/web/hotels"
     }
   ]
 }

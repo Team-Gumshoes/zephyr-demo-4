@@ -1,9 +1,9 @@
 {
-  "name": "profile",
+  "name": "hotels",
   "version": "0.0.1",
   "private": true,
   "nx": {
-    "name": "profile",
+    "name": "hotels",
     "targets": {
       "serve": {
         "options": {

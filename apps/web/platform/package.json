@@ -22,9 +22,9 @@
     }
   },
   "devDependencies": {
-    "profile": "workspace:*"
+    "hotels": "workspace:*"
   },
   "zephyr:dependencies": {
-    "profile": "profile@*"
+    "hotels": "hotels@*"
   }
 }

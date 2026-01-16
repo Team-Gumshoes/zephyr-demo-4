@@ -1,2 +1,2 @@
-declare module 'profile/Module';
-declare module 'profile/Button';
+declare module 'hotels/Module';
+declare module 'hotels/Button';

@@ -4,8 +4,8 @@ import '../styles.css';
 import TripPlannerPage from './features/trip-planner/TripPlannerPage'
 import FlightsPage from './features/flights/FlightsPage';
 
-// const Profile = React.lazy(() => import('profile/Module'));
-// const Button = React.lazy(() => import('profile/Button'));
+// const Hotels = React.lazy(() => import('hotels/Module'));
+// const Button = React.lazy(() => import('hotels/Button'));
 
 function App() {
   return (
