@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { MessageSquare, Send } from 'lucide-react';
 import ChatInterface from './components/ChatInterface';
 import TripSummary from './components/TripSummary';
-// import TripSummary from './components/TripSummary';
 
 export default function TripPlannerPage() {
   const [messages, setMessages] = useState<any[]>([]);
