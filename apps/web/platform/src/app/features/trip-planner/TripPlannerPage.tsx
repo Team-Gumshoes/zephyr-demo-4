@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MessageSquare, Send } from 'lucide-react';
-// import ChatInterface from './components/ChatInterface';
+import ChatInterface from './components/ChatInterface';
+import TripSummary from './components/TripSummary';
 // import TripSummary from './components/TripSummary';
 
 export default function TripPlannerPage() {
@@ -41,7 +42,7 @@ export default function TripPlannerPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          {/* <ChatInterface messages={messages} loading={loading} /> */}
+          <ChatInterface messages={messages} loading={loading} />
           <div className="mt-4 flex gap-2">
             <input
               type="text"
@@ -63,7 +64,7 @@ export default function TripPlannerPage() {
         </div>
 
         <div className="lg:col-span-1">
-          {/* <TripSummary /> */}
+          <TripSummary />
         </div>
       </div>
     </div>

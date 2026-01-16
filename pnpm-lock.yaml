@@ -166,13 +166,13 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3(@rspack/core@1.7.2(@swc/helpers@0.5.18))(webpack@5.104.1(@swc/core@1.5.29(@swc/helpers@0.5.18)))
 
-  apps/platform:
+  apps/web/platform:
     devDependencies:
       profile:
         specifier: workspace:*
         version: link:../profile
 
-  apps/profile: {}
+  apps/web/profile: {}
 
 packages:
 

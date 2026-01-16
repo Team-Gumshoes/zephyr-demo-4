@@ -4,10 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/platform"
+      "path": "./apps/web/platform"
     },
     {
-      "path": "./apps/profile"
+      "path": "./apps/web/profile"
     }
   ]
 }
