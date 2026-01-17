@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/web/hotels"
+    },
+    {
+      "path": "./apps/web/transport"
     }
   ]
 }
