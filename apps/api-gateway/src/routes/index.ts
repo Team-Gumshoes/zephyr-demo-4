@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-// import flightsRouter from './flights.routes.js';
-// import hotelsRouter from './hotels.routes.js';
-// import transportRouter from './transport.routes.js';
-import coordinatorRouter from './coordinator.routes.js';
+import flightsRouter from './flights.routes';
+import hotelsRouter from './hotels.routes';
+import transportRouter from './transport.routes';
+import coordinatorRouter from './coordinator.routes';
 
 const router: Router = Router();
 
@@ -16,9 +16,9 @@ router.get('/health', (req: Request, res: Response) => {
 });
 
 // Mount route modules
-// router.use('/flights', flightsRouter);
-// router.use('/hotels', hotelsRouter);
-// router.use('/transport', transportRouter);
+router.use('/flights', flightsRouter);
+router.use('/hotels', hotelsRouter);
+router.use('/transport', transportRouter);
 router.use('/coordinate', coordinatorRouter);
 
 export default router;

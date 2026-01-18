@@ -1,4 +1,4 @@
-// import apiClient from '@/lib/api-client';
+import apiClient from "../lib/api-client";
 
 export interface HotelSearchParams {
   location: string;
@@ -9,16 +9,16 @@ export interface HotelSearchParams {
 }
 
 export async function searchHotels(params: HotelSearchParams) {
-  const response = {data: []} // await apiClient.post('/hotels/search', params);
+  const response = await apiClient.post('/hotels/search', params);
   return response.data;
 }
 
 export async function getHotelDetails(hotelId: string) {
-  const response = {data: []} // await apiClient.get(`/hotels/${hotelId}`);
+  const response = await apiClient.get(`/hotels/${hotelId}`);
   return response.data;
 }
 
 export async function bookHotel(hotelId: string, bookingDetails: any) {
-  const response = {data: []} // await apiClient.post(`/hotels/${hotelId}/book`, bookingDetails);
+  const response = await apiClient.post(`/hotels/${hotelId}/book`, bookingDetails);
   return response.data;
 }

@@ -1,4 +1,4 @@
-// import apiClient from '@/lib/api-client';
+import apiClient from "../../../lib/api-client";
 
 export interface FlightSearchParams {
   origin: string;
@@ -9,17 +9,17 @@ export interface FlightSearchParams {
 }
 
 export async function searchFlights(params: FlightSearchParams) {
-  const response = {data:[]}//await apiClient.post('/flights/search', params);
+  const response = await apiClient.post('/flights/search', params);
   return response.data;
 }
 
 export async function getFlightDetails(flightId: string) {
-    const response = {data:[]}//apiClient.get(`/flights/${flightId}`);
+    const response = await apiClient.get(`/flights/${flightId}`);
   
   return response.data;
 }
 
 export async function bookFlight(flightId: string, passengerDetails: any) {
-  const response = {data:[]}//await apiClient.post(`/flights/${flightId}/book`, passengerDetails);
+  const response = await apiClient.post(`/flights/${flightId}/book`, passengerDetails);
   return response.data;
 }
