@@ -1,14 +1,17 @@
 // 
 import express, { Request, Response, type Express } from 'express';
-import cors from 'cors';
 import { config } from './config/env.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
+import { corsMiddleware } from './middleware/cors.middleware.js';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 const app: Express = express();
 
 // Middleware
-app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(loggerMiddleware);
 
 // Health check route
 app.get('/health', (req: Request, res: Response) => {

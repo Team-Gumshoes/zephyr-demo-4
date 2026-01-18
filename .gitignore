@@ -43,4 +43,8 @@ Thumbs.db
 
 test-output
 
+# Environment Variables
+.env
+!.env.example
+
 PRIVATE.md
