@@ -101,4 +101,4 @@ nx server platform
 Wait for some time (maybe 1 minute).
 Everything working now with Zephyr.
 
-# Add and commit. Push to GitHub
+## Add and commit. Push to GitHub
