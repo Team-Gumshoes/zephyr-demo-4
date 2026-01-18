@@ -4,6 +4,7 @@ import { config } from './config/env.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
 import { corsMiddleware } from './middleware/cors.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
+import routes from './routes/index.js';
 
 const app: Express = express();
 
@@ -13,19 +14,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
-// Health check route
-app.get('/health', (req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
+
+// Root endpoint
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    name: 'Allorai API Gateway',
+    version: '1.0.0',
+    description: 'Gateway for multi-agent travel orchestration',
+    endpoints: {
+      health: '/api/health',
+      flights: '/api/flights',
+      hotels: '/api/hotels',
+      transport: '/api/transport',
+      coordinate: '/api/coordinate',
+    },
   });
 });
 
-// Root route
-app.get('/', (req: Request, res: Response) => {
-  res.send({ message: 'Hello API Gateway' });
-});
+// API routes
+app.use('/api', routes);
 
 // Error handling middleware (must be last)
 app.use(errorMiddleware);
