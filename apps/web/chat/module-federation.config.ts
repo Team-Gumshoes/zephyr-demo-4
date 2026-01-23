@@ -1,7 +1,7 @@
 import { ModuleFederationConfig } from '@nx/module-federation';
 
 const config: ModuleFederationConfig = {
-  name: 'transport',
+  name: 'chat',
   exposes: {
     './Module': './src/remote-entry.ts',
   },

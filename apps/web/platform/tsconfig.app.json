@@ -37,7 +37,7 @@
       "path": "../landing/tsconfig.app.json"
     },
     {
-      "path": "../transport/tsconfig.app.json"
+      "path": "../chat/tsconfig.app.json"
     },
     {
       "path": "../hotels/tsconfig.app.json"

@@ -10,7 +10,7 @@
       "path": "./apps/web/hotels"
     },
     {
-      "path": "./apps/web/transport"
+      "path": "./apps/web/chat"
     },
     {
       "path": "./apps/api-gateway"

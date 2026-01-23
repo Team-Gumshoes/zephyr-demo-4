@@ -14,7 +14,7 @@ const config: ModuleFederationConfig = {
    * declare module 'my-external-remote';
    *
    */
-  remotes: ['hotels', 'transport', 'landing'],
+  remotes: ['hotels', 'chat', 'landing'],
   shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {
       return { singleton: true, requiredVersion: false, eager: true };
