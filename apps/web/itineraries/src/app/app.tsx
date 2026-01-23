@@ -4,7 +4,7 @@ import { useHotels } from './hooks/useHotels';
 import HotelCard from './components/HotelCard';
 import HotelSearchForm from './components/HotelSearchForm';
 
-function HotelsPage() {
+function ItinerariesPage() {
   const { hotels, loading, error, searchHotels } = useHotels();
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -18,7 +18,7 @@ function HotelsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
           <Hotel className="h-8 w-8 text-primary-600" />
-          Search Hotels
+          Itineraries Page (was Search Hotels)
         </h1>
         <p className="mt-2 text-gray-600">
           Find the perfect accommodation for your stay
@@ -68,4 +68,4 @@ function HotelsPage() {
   );
 }
 
-export default HotelsPage;
+export default ItinerariesPage;

@@ -9,8 +9,9 @@ const Landing = React.lazy(() => import('landing/Module'));
 
 const ChatPage = React.lazy(() => import('chat/Module'));
 
-const HotelsPage = React.lazy(() => import('hotels/Module'));
-// const Button = React.lazy(() => import('hotels/Button'));
+const ItinerariesPage = React.lazy(() => import('itineraries/Module'));
+// const Button = React.lazy(() => import('itineraries/Button'));
+
 // landing = 4201
 // chat = 4202
 // itineraries = 4203
@@ -25,8 +26,8 @@ function App() {
           <Route path="/landing" element={<Landing />} />
           <Route index element={<Navigate to="/landing" replace />} />
           <Route path="chat" element={<ChatPage />} />
-          <Route path="itineraries" element={<FlightsPage />} />
-          <Route path="explore" element={<HotelsPage />} />
+          <Route path="itineraries" element={<ItinerariesPage />} />
+          <Route path="explore" element={<FlightsPage />} />
           <Route path="login" element={<TripPlannerPage />} />
         </Route>
       </Routes>

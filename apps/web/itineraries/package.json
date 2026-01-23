@@ -1,9 +1,9 @@
 {
-  "name": "hotels",
+  "name": "itineraries",
   "version": "0.0.1",
   "private": true,
   "nx": {
-    "name": "hotels",
+    "name": "itineraries",
     "targets": {
       "serve": {
         "options": {

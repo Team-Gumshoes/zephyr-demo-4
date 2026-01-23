@@ -40,7 +40,7 @@
       "path": "../chat/tsconfig.app.json"
     },
     {
-      "path": "../hotels/tsconfig.app.json"
+      "path": "../itineraries/tsconfig.app.json"
     }
   ]
 }

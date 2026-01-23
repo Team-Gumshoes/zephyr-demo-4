@@ -7,9 +7,6 @@
       "path": "./apps/web/platform"
     },
     {
-      "path": "./apps/web/hotels"
-    },
-    {
       "path": "./apps/web/chat"
     },
     {
@@ -17,6 +14,9 @@
     },
     {
       "path": "./apps/web/landing"
+    },
+    {
+      "path": "./apps/web/itineraries"
     }
   ]
 }

@@ -22,12 +22,12 @@
     }
   },
   "devDependencies": {
-    "hotels": "workspace:*",
+    "itineraries": "workspace:*",
     "chat": "workspace:*",
     "landing": "workspace:*"
   },
   "zephyr:dependencies": {
-    "hotels": "hotels@*",
+    "itineraries": "itineraries@*",
     "chat": "chat@*",
     "landing": "landing@*"
   }
