@@ -196,18 +196,23 @@ importers:
         specifier: ^4.21.2
         version: 4.22.1
 
+  apps/web/chat: {}
+
   apps/web/hotels: {}
+
+  apps/web/landing: {}
 
   apps/web/platform:
     devDependencies:
-      hotels:
+      chat:
+        specifier: workspace:*
+        version: link:../chat
+      itineraries:
         specifier: workspace:*
         version: link:../hotels
-      transport:
+      landing:
         specifier: workspace:*
-        version: link:../transport
-
-  apps/web/transport: {}
+        version: link:../landing
 
 packages:
 

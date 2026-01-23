@@ -1,16 +1,16 @@
 import { ModuleFederationConfig } from '@nx/module-federation';
 
 const config: ModuleFederationConfig = {
-  name: 'transport',
+  name: 'explore',
   exposes: {
     './Module': './src/remote-entry.ts',
   },
-      shared: (libraryName, defaultConfig) => {
+  shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {
       return { singleton: true, requiredVersion: false, eager: true };
     }
     return defaultConfig;
-  }
+  },
 };
 
 /**

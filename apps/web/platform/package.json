@@ -22,13 +22,15 @@
     }
   },
   "devDependencies": {
-    "hotels": "workspace:*",
-    "transport": "workspace:*",
-    "landing": "workspace:*"
+    "landing": "workspace:*",
+    "chat": "workspace:*",
+    "itineraries": "workspace:*",
+    "explore": "workspace:*"
   },
   "zephyr:dependencies": {
-    "hotels": "hotels@*",
-    "transport": "transport@*",
-    "landing": "landing@*"
+    "landing": "landing@*",
+    "chat": "chat@*",
+    "itineraries": "itineraries@*",
+    "explore": "explore@*"
   }
 }

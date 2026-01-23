@@ -1,13 +1,13 @@
 {
-  "name": "transport",
+  "name": "explore",
   "version": "0.0.1",
   "private": true,
   "nx": {
-    "name": "transport",
+    "name": "explore",
     "targets": {
       "serve": {
         "options": {
-          "port": 4202
+          "port": 4204
         },
         "dependsOn": [
           "typecheck",

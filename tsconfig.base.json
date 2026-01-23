@@ -19,7 +19,7 @@
     "customConditions": ["@allorai/source"],
     "baseUrl": ".",
     "paths": {
-      "hotels/*": ["apps/web/hotels/src/*"]
+      "itineraries/*": ["apps/web/itineraries/src/*"]
     }
   }
 }
