@@ -1,0 +1,34 @@
+{
+  "name": "explore",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "explore",
+    "targets": {
+      "serve": {
+        "options": {
+          "port": 4204
+        },
+        "dependsOn": [
+          "typecheck",
+          "platform:serve"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "^build",
+          "typecheck"
+        ]
+      }
+    }
+  },
+  "exports": {
+    "./Module": {
+      "@allorai/source": "./src/remote-entry.ts",
+      "types": "./src/remote-entry.ts",
+      "import": "./src/remote-entry.ts",
+      "default": "./src/remote-entry.ts"
+    }
+  },
+  "types": "./src/remote-entry.ts"
+}

@@ -22,13 +22,15 @@
     }
   },
   "devDependencies": {
-    "itineraries": "workspace:*",
+    "landing": "workspace:*",
     "chat": "workspace:*",
-    "landing": "workspace:*"
+    "itineraries": "workspace:*",
+    "explore": "workspace:*"
   },
   "zephyr:dependencies": {
-    "itineraries": "itineraries@*",
+    "landing": "landing@*",
     "chat": "chat@*",
-    "landing": "landing@*"
+    "itineraries": "itineraries@*",
+    "explore": "explore@*"
   }
 }

@@ -25,25 +25,9 @@
     "src/**/*.test.js",
     "src/**/*.spec.jsx",
     "src/**/*.test.jsx",
-    "jest.config.ts",
-    "jest.config.cts",
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "references": [
-    {
-      "path": "../landing/tsconfig.app.json"
-    },
-    {
-      "path": "../chat/tsconfig.app.json"
-    },
-    {
-      "path": "../explore/tsconfig.app.json"
-    },
-    {
-      "path": "../itineraries/tsconfig.app.json"
-    }
-  ]
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
 }
