@@ -5,17 +5,18 @@ import {
   NxModuleFederationDevServerPlugin,
 } from '@nx/module-federation/rspack.js';
 import { join } from 'path';
-import { withZephyr } from 'zephyr-rspack-plugin';
+
 import mfConfig from './module-federation.config';
+import { withZephyr } from 'zephyr-rspack-plugin';
 import { Configuration } from '@rspack/core';
 
-const config:Configuration = {
+const config: Configuration = {
   output: {
     path: join(__dirname, 'dist'),
     publicPath: 'auto',
   },
   devServer: {
-    port: 4203,
+    port: 4201,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

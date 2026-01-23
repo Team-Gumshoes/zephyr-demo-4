@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Plane, Hotel, Bus, MessageSquare } from 'lucide-react';
 import clsx from 'clsx';
+import Logo from './Logo';
 
 const navigation = [
-  { name: 'Trip Planner', href: '/trip-planner', icon: MessageSquare },
-  { name: 'Flights', href: '/flights', icon: Plane },
-  { name: 'Hotels', href: '/hotels', icon: Hotel },
-  { name: 'Transport', href: '/transport', icon: Bus },
+  { name: 'Chat', href: '/chat' },
+  { name: 'Itineraries', href: '/itineraries' },
+  { name: 'Explore', href: '/explore' },
+  { name: 'Login', href: '/login' },
 ];
 
 export default function Navbar() {
@@ -18,14 +18,12 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <Plane className="h-8 w-8 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">AllorAI</span>
+              <Logo />
             </Link>
           </div>
 
           <div className="flex space-x-4">
             {navigation.map((item) => {
-              const Icon = item.icon;
               const isActive = location.pathname === item.href;
 
               return (
@@ -36,10 +34,9 @@ export default function Navbar() {
                     'flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors',
                     isActive
                       ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
                   )}
                 >
-                  <Icon className="h-5 w-5" />
                   <span>{item.name}</span>
                 </Link>
               );

@@ -1,13 +1,13 @@
 {
-  "name": "hotels",
+  "name": "landing",
   "version": "0.0.1",
   "private": true,
   "nx": {
-    "name": "hotels",
+    "name": "landing",
     "targets": {
       "serve": {
         "options": {
-          "port": 4203
+          "port": 4201
         },
         "dependsOn": [
           "typecheck",

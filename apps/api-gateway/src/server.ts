@@ -31,6 +31,14 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
+app.get('/health', (req: Request, res: Response) => {
+  res.json({
+    status: 'healthy',
+    service: 'api-gateway',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // API routes
 app.use('/api', routes);
 
