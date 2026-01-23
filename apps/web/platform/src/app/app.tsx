@@ -1,17 +1,14 @@
 import { Route, Navigate, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import '../styles.css';
-import TripPlannerPage from './features/trip-planner/TripPlannerPage';
-import FlightsPage from './features/flights/FlightsPage';
 import React, { Suspense } from 'react';
+import LoginPage from './features/login/LoginPage';
 
 const ExplorePage = React.lazy(() => import('explore/Module'));
-
 const LandingPage = React.lazy(() => import('landing/Module'));
-
 const ChatPage = React.lazy(() => import('chat/Module'));
-
 const ItinerariesPage = React.lazy(() => import('itineraries/Module'));
+
 // const Button = React.lazy(() => import('itineraries/Button'));
 
 // landing = 4201
@@ -25,13 +22,12 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/landing" element={<LandingPage />} />
           <Route index element={<Navigate to="/landing" replace />} />
+          <Route path="landing" element={<LandingPage />} />
           <Route path="chat" element={<ChatPage />} />
           <Route path="itineraries" element={<ItinerariesPage />} />
-          <Route path="explore" element={<FlightsPage />} />
-          <Route path="login" element={<TripPlannerPage />} />
+          <Route path="explore" element={<ExplorePage />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
       </Routes>
     </Suspense>
