@@ -14,13 +14,11 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-xs text-[#002e9a]">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <Logo />
-            </Link>
-          </div>
+      <div className="container mx-auto px-4 py-2.5">
+        <div className="flex items-center justify-between">
+          <Link to="/" className="flex items-center space-x-2">
+            <Logo />
+          </Link>
 
           <div className="flex space-x-4">
             {navigation.map((item) => {
