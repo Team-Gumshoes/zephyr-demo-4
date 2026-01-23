@@ -198,7 +198,9 @@ importers:
 
   apps/web/chat: {}
 
-  apps/web/hotels: {}
+  apps/web/explore: {}
+
+  apps/web/itineraries: {}
 
   apps/web/landing: {}
 
@@ -207,9 +209,12 @@ importers:
       chat:
         specifier: workspace:*
         version: link:../chat
+      explore:
+        specifier: workspace:*
+        version: link:../explore
       itineraries:
         specifier: workspace:*
-        version: link:../hotels
+        version: link:../itineraries
       landing:
         specifier: workspace:*
         version: link:../landing
