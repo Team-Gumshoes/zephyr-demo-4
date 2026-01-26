@@ -27,7 +27,7 @@ function DefaultIcon() {
 export function Card({ icon, title, description, className = '' }: CardProps) {
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-4 p-[30px] border border-black rounded-2xl ${className}`}
+      className={`card-landing-page flex flex-col items-center justify-center gap-4 p-[30px] border border-black rounded-2xl ${className}`}
     >
       <div className="w-10 h-10 shrink-0">{icon ?? <DefaultIcon />}</div>
       <p className="text-base font-semibold text-[#050315] text-center leading-[1.4]">

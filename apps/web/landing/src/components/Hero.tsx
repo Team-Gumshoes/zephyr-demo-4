@@ -29,7 +29,7 @@ export function Hero({ title, subtitle, features }: HeroProps) {
             key={index}
             title={feature.title}
             description={feature.description}
-            className="flex-1 bg-white"
+            className="flex-1"
           />
         ))}
       </div>

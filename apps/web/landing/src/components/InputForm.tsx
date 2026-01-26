@@ -24,9 +24,23 @@ function CalendarIcon() {
         stroke="currentColor"
         strokeWidth="2"
       />
-      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="2" />
+      <line
+        x1="3"
+        y1="10"
+        x2="21"
+        y2="10"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
       <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="2" />
-      <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="2" />
+      <line
+        x1="16"
+        y1="2"
+        x2="16"
+        y2="6"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </svg>
   );
 }
@@ -96,13 +110,17 @@ export function InputForm() {
 
   const toggleBudgetOption = (index: number) => {
     setBudgetOptions((prev) =>
-      prev.map((opt, i) => (i === index ? { ...opt, checked: !opt.checked } : opt))
+      prev.map((opt, i) =>
+        i === index ? { ...opt, checked: !opt.checked } : opt,
+      ),
     );
   };
 
   const toggleTransportOption = (index: number) => {
     setTransportOptions((prev) =>
-      prev.map((opt, i) => (i === index ? { ...opt, checked: !opt.checked } : opt))
+      prev.map((opt, i) =>
+        i === index ? { ...opt, checked: !opt.checked } : opt,
+      ),
     );
   };
 
@@ -114,7 +132,9 @@ export function InputForm() {
       departureDate,
       arrivalDate,
       budgetOptions: budgetOptions.filter((o) => o.checked).map((o) => o.label),
-      transportOptions: transportOptions.filter((o) => o.checked).map((o) => o.label),
+      transportOptions: transportOptions
+        .filter((o) => o.checked)
+        .map((o) => o.label),
       specialPreferences,
     });
   };
@@ -122,9 +142,9 @@ export function InputForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#989898] flex flex-col gap-6 p-8 rounded-[20px] w-full"
+      className="bg-[#CCD5EB] flex flex-col gap-6 p-8 rounded-[20px] w-full"
     >
-      <h2 className="text-2xl font-semibold text-white tracking-tight leading-[1.2]">
+      <h2 className="text-2xl font-semibold text-black tracking-tight leading-[1.2]">
         Hey Allora, can you help me plan a trip with the following?
       </h2>
 
@@ -229,7 +249,7 @@ export function InputForm() {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full min-h-[32px] bg-black text-white text-sm font-semibold rounded-full py-1.5 px-3 tracking-[0.07px] leading-[21px]"
+        className="w-full min-h-[32px] bg-[#002E9A] text-white text-sm font-semibold rounded-full py-1.5 px-3 tracking-[0.07px] leading-[21px]"
       >
         Thank you, please help me plan this trip.
       </button>

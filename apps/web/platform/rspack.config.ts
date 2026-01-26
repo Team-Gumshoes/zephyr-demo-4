@@ -10,7 +10,7 @@ import { withZephyr } from 'zephyr-rspack-plugin';
 
 import mfConfig from './module-federation.config';
 
-const config:Configuration = {
+const config: Configuration = {
   output: {
     path: join(__dirname, 'dist'),
     publicPath: 'auto',
@@ -44,4 +44,5 @@ const config:Configuration = {
   ],
 };
 
-export default withZephyr()(config)
+export default config;
+// export default withZephyr()(config)

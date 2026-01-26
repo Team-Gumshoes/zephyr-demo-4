@@ -7,7 +7,10 @@ export function App() {
   return (
     <PageBackground>
       <div className="flex flex-col">
-        <Hero title="AllorAI" subtitle="Your trip planning agent" />
+        <Hero
+          title="Plan Trips Smart"
+          subtitle="Use AI to craft your travel plans with ease"
+        />
         <div className="px-8 md:mx-auto py-12">
           <InputForm />
         </div>
