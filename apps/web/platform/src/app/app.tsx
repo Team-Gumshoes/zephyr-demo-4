@@ -14,7 +14,7 @@ const ItinerariesPage = React.lazy(() => import('itineraries/Module'));
 // landing = 4201
 // chat = 4202
 // itineraries = 4203
-// explore = 4204
+//// explore = 4204
 // login = keep it in the platform
 
 function App() {

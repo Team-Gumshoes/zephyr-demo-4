@@ -46,5 +46,5 @@ const config: Configuration = {
     new NxModuleFederationDevServerPlugin({ config: mfConfig }),
   ],
 };
-
-export default withZephyr()(config)
+// export default config
+export default withZephyr()(config);

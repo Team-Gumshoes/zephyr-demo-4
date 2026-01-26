@@ -6,9 +6,9 @@ const config: ModuleFederationConfig = {
     './Module': './src/remote-entry.ts',
     './Button' : './src/app/components/Button.tsx'
   },
-    shared: (libraryName, defaultConfig) => {
+  shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {
-      return { singleton: true, requiredVersion: false, eager: true };
+      return { singleton: true, requiredVersion: false, eager: false };
     }
     return defaultConfig;
   }
