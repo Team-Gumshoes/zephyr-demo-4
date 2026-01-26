@@ -13,11 +13,11 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="bg-white shadow-xs text-[#002e9a]">
-      <div className="container mx-auto px-4 py-2.5">
+    <nav className="bg-white border-b border-black shadow-md text-[#002e9a]">
+      <div className="max-w-7xl mx-auto px-4 py-2.5">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <Logo />
+            <Logo width={125}/>
           </Link>
 
           <div className="flex space-x-4">
