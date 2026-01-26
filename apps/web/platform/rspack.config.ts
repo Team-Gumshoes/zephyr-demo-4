@@ -44,5 +44,5 @@ const config: Configuration = {
   ],
 };
 
-export default config;
-// export default withZephyr()(config)
+// export default config
+export default withZephyr()(config);
