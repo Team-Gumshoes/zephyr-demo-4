@@ -1,22 +1,42 @@
-import { Card } from './Card';
+import {
+  Card,
+  SmartPlanningIcon,
+  FlexibleOptionsIcon,
+  StepByStepIcon,
+} from './Card';
 
 interface HeroProps {
   title: string;
   subtitle: string;
-  features?: { title: string; description: string }[];
+  features?: { title: string; description: string; icon: React.ReactNode }[];
 }
 
 export function Hero({ title, subtitle, features }: HeroProps) {
   const defaultFeatures = [
-    { title: 'Feature', description: 'Description' },
-    { title: 'Feature', description: 'Description' },
-    { title: 'Feature', description: 'Description' },
+    {
+      title: 'Smart Planning',
+      description:
+        'Allora AI considers your budget, preferences, and travel style',
+      icon: <SmartPlanningIcon />,
+    },
+    {
+      title: 'Flexible Options',
+      description:
+        'View and select the exact activities for your best travel experience',
+      icon: <FlexibleOptionsIcon />,
+    },
+    {
+      title: 'Step by Step',
+      description:
+        'Plan your trip step by step. Allora guides decision-making with expertise',
+      icon: <StepByStepIcon />,
+    },
   ];
 
   const featureList = features ?? defaultFeatures;
 
   return (
-    <section className="flex flex-col items-center gap-10">
+    <section className="flex flex-col items-center gap-10 mt-[48px]">
       <h1 className="text-5xl md:text-7xl font-bold leading-[1.2] tracking-tight text-center">
         {title}
       </h1>
@@ -27,9 +47,10 @@ export function Hero({ title, subtitle, features }: HeroProps) {
         {featureList.map((feature, index) => (
           <Card
             key={index}
+            icon={feature.icon}
             title={feature.title}
             description={feature.description}
-            className="flex-1 bg-white"
+            className="flex-1"
           />
         ))}
       </div>
