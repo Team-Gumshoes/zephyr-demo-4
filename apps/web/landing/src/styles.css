@@ -4,7 +4,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 .bg-landing {
-  background-image: url('/images/earth_background.jpg');
+  background-image: url('./assets/earth_background.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
