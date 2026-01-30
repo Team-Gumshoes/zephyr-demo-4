@@ -4,7 +4,6 @@ const config: ModuleFederationConfig = {
   name: 'itineraries',
   exposes: {
     './Module': './src/remote-entry.ts',
-    './Button' : './src/app/components/Button.tsx'
   },
   shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {

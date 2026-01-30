@@ -9,8 +9,6 @@ const LandingPage = React.lazy(() => import('landing/Module'));
 const ChatPage = React.lazy(() => import('chat/Module'));
 const ItinerariesPage = React.lazy(() => import('itineraries/Module'));
 
-// const Button = React.lazy(() => import('itineraries/Button'));
-
 // landing = 4201
 // chat = 4202
 // itineraries = 4203
