@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { ChatStep } from '../app/app';
 import { Plane, User } from 'lucide-react';
+import { Button } from '@allorai/shared-ui'
 
 type Props = {
   chat: ChatStep[];
@@ -56,13 +57,12 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
             {currentStep.stepName === chatStep.stepName && (
               <div className="flex justify-end items-end gap-2">
                 <div className={`mr-14 self-center justify-end`}>
-                  <button
+                  <Button
                     disabled={thinking}
-                    className="rounded-full bg-[#002E9A] text-white px-3 py-0.5 cursor-pointer"
                     onClick={incrementStep}
                   >
                     {thinking ? '...Thinking' : 'Next Step'}
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}

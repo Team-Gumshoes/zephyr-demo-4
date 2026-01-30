@@ -19,7 +19,8 @@
     "customConditions": ["@allorai/source"],
     "baseUrl": ".",
     "paths": {
-      "itineraries/*": ["apps/web/itineraries/src/*"]
+      "itineraries/*": ["apps/web/itineraries/src/*"],
+      "@allorai/shared-ui": ["libs/shared/ui/src/index.ts"]
     }
   }
 }

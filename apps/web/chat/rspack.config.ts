@@ -14,6 +14,14 @@ const config: Configuration = {
     path: join(__dirname, 'dist'),
     publicPath: 'auto',
   },
+  resolve: {
+    alias: {
+      '@allorai/shared-ui': join(
+        __dirname,
+        '../../../libs/shared/ui/src/index.ts',
+      ),
+    },
+  },
   devServer: {
     port: 4202,
     headers: {
@@ -45,5 +53,5 @@ const config: Configuration = {
     new NxModuleFederationDevServerPlugin({ config: mfConfig }),
   ],
 };
-// export default config
+// export default config;
 export default withZephyr()(config);
