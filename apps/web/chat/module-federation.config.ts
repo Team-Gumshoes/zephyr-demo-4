@@ -12,6 +12,11 @@ const config: ModuleFederationConfig = {
         requiredVersion: false,
         eager: false,
       };
+    } else if (libraryName === '@allorai/shared-ui') {
+      return {
+        singleton: true,
+        requiredVersion: false,
+      };
     }
     return defaultConfig;
   },

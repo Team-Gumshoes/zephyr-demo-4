@@ -20,6 +20,9 @@
     },
     {
       "path": "./apps/web/explore"
+    },
+    {
+      "path": "./libs/shared/ui"
     }
   ]
 }

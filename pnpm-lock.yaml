@@ -36,6 +36,12 @@ importers:
         specifier: 6.29.0
         version: 6.29.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
     devDependencies:
+      '@babel/core':
+        specifier: ^7.14.5
+        version: 7.28.6
+      '@babel/preset-react':
+        specifier: ^7.14.5
+        version: 7.28.5(@babel/core@7.28.6)
       '@eslint/js':
         specifier: ^9.8.0
         version: 9.39.2
@@ -218,6 +224,8 @@ importers:
       landing:
         specifier: workspace:*
         version: link:../landing
+
+  libs/shared/ui: {}
 
 packages:
 
