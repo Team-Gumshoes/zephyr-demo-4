@@ -46,5 +46,8 @@ const config: Configuration = {
     new NxModuleFederationDevServerPlugin({ config: mfConfig }),
   ],
 };
-// export default config
-export default withZephyr()(config);
+
+// Toggle Zephyr plugin via environment variable
+export default process.env['USE_ZEPHYR'] === 'true'
+  ? withZephyr()(config)
+  : config;
