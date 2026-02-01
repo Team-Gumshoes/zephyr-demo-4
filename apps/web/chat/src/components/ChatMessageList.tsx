@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ChatStep } from '../app/app';
 import { Plane, User } from 'lucide-react';
-import { Button } from '@allorai/shared-ui'
+import { Button } from '@allorai/shared-ui';
 
 type Props = {
   chat: ChatStep[];
@@ -30,7 +30,7 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
             <div className="flex justify-end items-end gap-2">
               <div
                 className={clsx(
-                  `ml-14 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-full max-w-96`,
+                  `ml-14 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-auto max-w-[50%]`,
                   currentStep.stepName === chatStep.stepName
                     ? 'bg-[#97dbd9]'
                     : 'bg-[#99abd7]',
@@ -57,10 +57,7 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
             {currentStep.stepName === chatStep.stepName && (
               <div className="flex justify-end items-end gap-2">
                 <div className={`mr-14 self-center justify-end`}>
-                  <Button
-                    disabled={thinking}
-                    onClick={incrementStep}
-                  >
+                  <Button disabled={thinking} onClick={incrementStep}>
                     {thinking ? '...Thinking' : 'Next Step'}
                   </Button>
                 </div>
@@ -91,4 +88,3 @@ const BouncingBalls = ({ color = 'black' }: { color?: string }) => {
   );
 };
 */
-
