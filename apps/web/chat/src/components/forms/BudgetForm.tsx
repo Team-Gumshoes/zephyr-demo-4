@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-const BudgetForm = ({ active = false }: { active?: Boolean }) => {
+const BudgetForm = ({ active = true }: { active?: boolean }) => {
   return (
     <form>
       <div className="">Budget and Priorities</div>
@@ -52,6 +52,21 @@ const BudgetForm = ({ active = false }: { active?: Boolean }) => {
             />
             <span>Premium (direct flights, better times)</span>
           </label>
+          <label
+            className={clsx(
+              'flex gap-2 items-center',
+              active && 'cursor-pointer',
+            )}
+          >
+            <input
+              disabled={!active}
+              type="radio"
+              name="flightPreference"
+              value="none"
+              className={clsx(active && 'cursor-pointer')}
+            />
+            <span>No Preference</span>
+          </label>
         </div>
         <div className="font-semibold">Lodging Preferences</div>
         <div className="flex flex-col">
@@ -99,6 +114,21 @@ const BudgetForm = ({ active = false }: { active?: Boolean }) => {
               className={clsx(active && 'cursor-pointer')}
             />
             <span>High-End($$$-$$$$)</span>
+          </label>
+          <label
+            className={clsx(
+              'flex gap-2 items-center',
+              active && 'cursor-pointer',
+            )}
+          >
+            <input
+              disabled={!active}
+              type="radio"
+              name="lodgingPreference"
+              value="none"
+              className={clsx(active && 'cursor-pointer')}
+            />
+            <span>No Preference</span>
           </label>
         </div>
       </div>
