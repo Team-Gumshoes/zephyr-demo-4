@@ -73,7 +73,17 @@ const FlightsForm = ({ active = false }: { active?: boolean }) => {
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
           {departingFlights.map((flight) => (
-            <FlightChip key={flight.id} flight={flight} />
+            <label key={flight.id} className="cursor-pointer group">
+              <input
+                type="radio"
+                name="departingFlight"
+                value={flight.id}
+                className="sr-only peer"
+              />
+              <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
+                <FlightChip flight={flight} />
+              </div>
+            </label>
           ))}
         </div>
       </div>
@@ -81,7 +91,17 @@ const FlightsForm = ({ active = false }: { active?: boolean }) => {
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
           {returnFlights.map((flight) => (
-            <FlightChip key={flight.id} flight={flight} />
+            <label key={flight.id} className="cursor-pointer group">
+              <input
+                type="radio"
+                name="returnFlight"
+                value={flight.id}
+                className="sr-only peer"
+              />
+              <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
+                <FlightChip flight={flight} />
+              </div>
+            </label>
           ))}
         </div>
       </div>
