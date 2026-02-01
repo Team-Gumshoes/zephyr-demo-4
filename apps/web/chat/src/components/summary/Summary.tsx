@@ -9,11 +9,11 @@ export type SummaryData = {
 
 const Summary = ({ data }: { data: SummaryData }) => {
   return (
-    <div className="bg-[#99abd7] flex flex-col gap-4 p-8 rounded-[20px] w-full">
+    <div className="bg-[#99abd7] flex flex-col gap-4 rounded-[20px] w-full">
       {/* Flights - Departing */}
       {data.departingFlight && (
         <div className="flex flex-col gap-3">
-          <h3 className="font-['Montserrat'] font-semibold text-2xl text-black tracking-[-1px] leading-[28.8px]">
+          <h3 className="font-bold text-xl text-black tracking-[-1px] leading-[28.8px]">
             Flights - Departing
           </h3>
           <FlightChip flight={data.departingFlight} />
@@ -23,7 +23,7 @@ const Summary = ({ data }: { data: SummaryData }) => {
       {/* Flights - Return */}
       {data.returningFlight && (
         <div className="flex flex-col gap-3">
-          <h3 className="font-['Montserrat'] font-semibold text-2xl text-black tracking-[-1px] leading-[28.8px]">
+          <h3 className="font-bold text-xl text-black tracking-[-1px] leading-[28.8px]">
             Flights - Return
           </h3>
           <FlightChip flight={data.returningFlight} />
@@ -33,7 +33,7 @@ const Summary = ({ data }: { data: SummaryData }) => {
       {/* Lodging */}
       {data.hotel && (
         <div className="flex flex-col gap-3">
-          <h3 className="font-['Montserrat'] font-semibold text-2xl text-black tracking-[-1px] leading-[28.8px]">
+          <h3 className="font-bold text-xl text-black tracking-[-1px] leading-[28.8px]">
             Lodging
           </h3>
           <HotelChip hotel={data.hotel} />

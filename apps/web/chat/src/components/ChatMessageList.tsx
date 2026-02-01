@@ -29,7 +29,14 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
               </div>
             )}
 
-            <div className="flex justify-end items-end gap-2">
+            <div
+              className={clsx(
+                `flex items-end gap-2`,
+                chatStep.stepName === 'Summary'
+                  ? 'justify-center'
+                  : 'justify-end',
+              )}
+            >
               <div
                 className={clsx(
                   `ml-14 mb-8 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-auto max-w-[50%]`,
