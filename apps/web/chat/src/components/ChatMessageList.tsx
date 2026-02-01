@@ -17,23 +17,27 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
       <div className="space-y-0.5">
         {chat.map((chatStep) => (
           <div key={chatStep.stepName} className="space-y-3">
-            <div className="flex py-2 mr-14 text-left items-end gap-2 ">
-              <Plane
-                size={30}
-                className="mx-1 bg-[#3358ae] text-white rounded-full p-1 shrink-0"
-              />
-              <div className="p-6 text-left whitespace-normal bg-[#3358ae] text-white max-w-96 rounded-t-xl rounded-r-xl">
-                {chatStep.instructions}
+            {chatStep.instructions && (
+              <div className="flex py-2 mr-14 text-left items-end gap-2 ">
+                <Plane
+                  size={30}
+                  className="mx-1 bg-[#3358ae] text-white rounded-full p-1 shrink-0"
+                />
+                <div className="p-6 text-left whitespace-normal bg-[#3358ae] text-white max-w-96 rounded-t-xl rounded-r-xl">
+                  {chatStep.instructions}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="flex justify-end items-end gap-2">
               <div
                 className={clsx(
-                  `ml-14 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-auto max-w-[50%]`,
-                  currentStep.stepName === chatStep.stepName
-                    ? 'bg-[#97dbd9]'
-                    : 'bg-[#99abd7]',
+                  `ml-14 mb-8 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-auto max-w-[50%]`,
+                  chatStep.stepName === 'Summary'
+                    ? 'bg-[#99abd7]'
+                    : currentStep.stepName === chatStep.stepName
+                      ? 'bg-[#97dbd9]'
+                      : 'bg-[#99abd7]',
                 )}
               >
                 <div className="p-6 text-left whitespace-normal">

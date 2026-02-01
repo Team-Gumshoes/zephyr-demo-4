@@ -1,4 +1,4 @@
-import FlightChip, { Flight } from '../FlightsChip';
+import FlightChip, { Flight } from '../chips/FlightsChip';
 
 const departingFlights: Flight[] = [
   {

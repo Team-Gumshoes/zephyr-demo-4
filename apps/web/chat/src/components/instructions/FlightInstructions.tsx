@@ -3,8 +3,7 @@ const FlightInstructions = () => {
     <div className="text-sm">
       <div>
         Thank you for your preferences. Here are a few possible flights that are
-        _________________ and/or lodging that are in the ____________ price
-        range that you can select for your trip plan estimate.
+        _________________ that you can select for your trip plan estimate.
       </div>
     </div>
   );
