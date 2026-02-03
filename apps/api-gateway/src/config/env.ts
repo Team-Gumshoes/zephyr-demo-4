@@ -1,20 +1,25 @@
-import dotenv from 'dotenv';
+import {z} from 'zod'
 
-dotenv.config();
+const environmentSchema = z.object({
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  PORT: z.coerce.number().min(1000),
+  TYPESCRIPT_AGENTS_URL: z.string(),
+  PYTHON_AGENTS_URL: z.string(),
 
-export const config = {
-  port: parseInt(process.env.PORT || '3000', 10),
-  nodeEnv: process.env.NODE_ENV || 'development',
+  CORS_ORIGIN: z.string(),
+  LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]),
+  
+  SUPABASE_URL: z.string().url(),
+  SUPABASE_KEY: z.string().min(1),
+})
 
-  // Service URLs
-  typescriptAgentsUrl: process.env.TYPESCRIPT_AGENTS_URL || 'http://localhost:3002',
-  pythonAgentsUrl: process.env.PYTHON_AGENTS_URL || 'http://localhost:8000',
+const parsedResults = environmentSchema.safeParse(
+  process.env 
+)
 
-  // CORS
-  corsOrigin: process.env.CORS_ORIGIN || '*',
+if (!parsedResults.success) {
+  console.error("Environment variable validation failed:", parsedResults.error.format());
+  throw new Error("Invalid environment variables");
+}
 
-  // Logging
-  logLevel: process.env.LOG_LEVEL || 'info',
-} as const;
-
-export type Config = typeof config;
+export const config = parsedResults.data

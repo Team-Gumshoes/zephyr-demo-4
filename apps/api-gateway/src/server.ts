@@ -5,6 +5,7 @@ import { errorMiddleware } from './middleware/error.middleware.js';
 import { corsMiddleware } from './middleware/cors.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 import routes from './routes/index.js';
+import { connectToSupabase } from './startup/connectToDB.js';
 
 const app: Express = express();
 
@@ -45,19 +46,22 @@ app.use('/api', routes);
 // Error handling middleware (must be last)
 app.use(errorMiddleware);
 
+// Connect to Supabase
+connectToSupabase();
+
 // Start server
-app.listen(config.port, () => {
+app.listen(config.PORT, () => {
   console.log(`
 ╔═══════════════════════════════════════════════════════════╗
 ║                                                           ║
 ║   🚀 Allorai API Gateway                                  ║
 ║                                                           ║
-║   Port:        ${config.port}                                      ║
-║   Environment: ${config.nodeEnv}                             ║
+║   Port:        ${config.PORT}                                      ║
+║   Environment: ${config.NODE_ENV}                             ║
 ║                                                           ║
 ║   Services:                                               ║
-║   • TypeScript Agents: ${config.typescriptAgentsUrl.padEnd(30)} ║
-║   • Python Agents:     ${config.pythonAgentsUrl.padEnd(30)} ║
+║   • TypeScript Agents: ${config.TYPESCRIPT_AGENTS_URL.padEnd(30)} ║
+║   • Python Agents:     ${config.PYTHON_AGENTS_URL.padEnd(30)} ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
   `);
