@@ -7,9 +7,15 @@ type Props = {
   chat: ChatStep[];
   thinking: boolean;
   incrementStep: () => void;
+  validationError?: string;
 };
 
-const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
+const ChatMessageList = ({
+  chat,
+  thinking,
+  incrementStep,
+  validationError,
+}: Props) => {
   const currentStep = chat[chat.length - 1];
 
   return (
@@ -66,11 +72,16 @@ const ChatMessageList = ({ chat, thinking, incrementStep }: Props) => {
             </div>
 
             {currentStep.stepName === chatStep.stepName && (
-              <div className="flex justify-end items-end gap-2">
-                <div className={`mr-14 self-center justify-end`}>
+              <div className="flex justify-end gap-2">
+                <div className={`flex flex-col items-end mr-14 justify-end`}>
                   <Button disabled={thinking} onClick={incrementStep}>
                     {thinking ? '...Thinking' : 'Next Step'}
                   </Button>
+                  {validationError && (
+                    <div className="text-red-600 font-semibold mt-2">
+                      {validationError}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

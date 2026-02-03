@@ -1,11 +1,16 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BudgetInstructions from '../components/instructions/BudgetInstructions';
-import BudgetForm from '../components/forms/BudgetForm';
+import BudgetForm, {
+  BudgetFormData,
+  BudgetFormRef,
+} from '../components/forms/BudgetForm';
 import ChatMessageList from '../components/ChatMessageList';
 import clsx from 'clsx';
-import FlightsForm from '../components/forms/FlightsForm';
-import FlightInstructions from '../components/instructions/FlightInstructions';
+import FlightsDepartingForm from '../components/forms/FlightsDepartingForm';
+import FlightDepartingInstructions from '../components/instructions/FlightDepartingInstructions';
+import FlightsReturnForm from '../components/forms/FlightsReturnForm';
+import FlightReturnInstructions from '../components/instructions/FlightReturnInstructions';
 import HotelInstructions from '../components/instructions/HotelInstructions';
 import HotelsForm from '../components/forms/HotelsForm';
 import Summary from '../components/summary/Summary';
@@ -65,20 +70,40 @@ const ChatPage = () => {
   const [stepCount, setStepCount] = useState(1);
   const [thinking, setThinking] = useState(false);
 
+  // Budget form state
+  const [budgetData, setBudgetData] = useState<BudgetFormData | null>(null);
+  const [validationError, setValidationError] = useState('');
+  const budgetFormRef = useRef<BudgetFormRef>(null);
+
   const chatSteps: ChatStep[] = [
     {
       stepName: 'Budget',
       instructions: <BudgetInstructions tripRequest={tripRequest} />,
-      form: <BudgetForm />,
+      form: (
+        <BudgetForm
+          ref={budgetFormRef}
+          onSubmit={(data) => {
+            setBudgetData(data);
+          }}
+          onValidationError={(error) => {
+            setValidationError(error);
+          }}
+        />
+      ),
     },
     {
       stepName: 'Flights',
-      instructions: <FlightInstructions />,
-      form: <FlightsForm />,
+      instructions: <FlightDepartingInstructions budgetData={budgetData} />,
+      form: <FlightsDepartingForm />,
+    },
+    {
+      stepName: 'Flights',
+      instructions: <FlightReturnInstructions budgetData={budgetData} />,
+      form: <FlightsReturnForm />,
     },
     {
       stepName: 'Hotels',
-      instructions: <HotelInstructions />,
+      instructions: <HotelInstructions budgetData={budgetData} />,
       form: <HotelsForm />,
     },
     {
@@ -131,7 +156,16 @@ const ChatPage = () => {
         <ChatMessageList
           chat={chatSteps.slice(0, stepCount)}
           thinking={thinking}
+          validationError={validationError}
           incrementStep={() => {
+            // If we're on the first step (Budget), validate the form first
+            if (stepCount === 1) {
+              const isValid = budgetFormRef.current?.submit();
+              if (!isValid) {
+                return; // Don't proceed if validation fails
+              }
+            }
+
             setThinking(true);
             setTimeout(() => {
               setStepCount((prev) => prev + 1);
