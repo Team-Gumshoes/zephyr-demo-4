@@ -43,6 +43,8 @@ Thumbs.db
 
 test-output
 
+tsconfig.tsbuildinfo
+
 # Environment Variables
 .env
 !.env.example

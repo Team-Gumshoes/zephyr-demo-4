@@ -7,12 +7,24 @@ import BudgetForm, {
 } from '../components/forms/BudgetForm';
 import ChatMessageList from '../components/ChatMessageList';
 import clsx from 'clsx';
-import FlightsDepartingForm from '../components/forms/FlightsDepartingForm';
+import FlightsDepartingForm, {
+  FlightsDepartingFormData,
+  FlightsDepartingFormRef,
+} from '../components/forms/FlightsDepartingForm';
 import FlightDepartingInstructions from '../components/instructions/FlightDepartingInstructions';
-import FlightsReturnForm from '../components/forms/FlightsReturnForm';
+import FlightsReturnForm, {
+  FlightsReturnFormData,
+  FlightsReturnFormRef,
+  returnFlights,
+} from '../components/forms/FlightsReturnForm';
+import { departingFlights } from '../components/forms/FlightsDepartingForm';
 import FlightReturnInstructions from '../components/instructions/FlightReturnInstructions';
 import HotelInstructions from '../components/instructions/HotelInstructions';
-import HotelsForm from '../components/forms/HotelsForm';
+import HotelsForm, {
+  HotelsFormData,
+  HotelsFormRef,
+  hotels,
+} from '../components/forms/HotelsForm';
 import Summary from '../components/summary/Summary';
 
 // #3358ae dark
@@ -75,6 +87,31 @@ const ChatPage = () => {
   const [validationError, setValidationError] = useState('');
   const budgetFormRef = useRef<BudgetFormRef>(null);
 
+  // Departing flights form state
+  const [departingFlightData, setDepartingFlightData] =
+    useState<FlightsDepartingFormData | null>(null);
+  const departingFlightFormRef = useRef<FlightsDepartingFormRef>(null);
+
+  // Return flights form state
+  const [returnFlightData, setReturnFlightData] =
+    useState<FlightsReturnFormData | null>(null);
+  const returnFlightFormRef = useRef<FlightsReturnFormRef>(null);
+
+  // Hotels form state
+  const [hotelData, setHotelData] = useState<HotelsFormData | null>(null);
+  const hotelsFormRef = useRef<HotelsFormRef>(null);
+
+  // Get selected objects for Summary
+  const selectedDepartingFlight = departingFlightData
+    ? departingFlights.find((f) => f.id === departingFlightData.selectedFlightId)
+    : undefined;
+  const selectedReturnFlight = returnFlightData
+    ? returnFlights.find((f) => f.id === returnFlightData.selectedFlightId)
+    : undefined;
+  const selectedHotel = hotelData
+    ? hotels.find((h) => h.id === hotelData.selectedHotelId)
+    : undefined;
+
   const chatSteps: ChatStep[] = [
     {
       stepName: 'Budget',
@@ -94,56 +131,58 @@ const ChatPage = () => {
     {
       stepName: 'Flights',
       instructions: <FlightDepartingInstructions budgetData={budgetData} />,
-      form: <FlightsDepartingForm />,
+      form: (
+        <FlightsDepartingForm
+          ref={departingFlightFormRef}
+          tripRequest={tripRequest}
+          onSubmit={(data) => {
+            setDepartingFlightData(data);
+          }}
+          onValidationError={(error) => {
+            setValidationError(error);
+          }}
+        />
+      ),
     },
     {
       stepName: 'Flights',
       instructions: <FlightReturnInstructions budgetData={budgetData} />,
-      form: <FlightsReturnForm />,
+      form: (
+        <FlightsReturnForm
+          ref={returnFlightFormRef}
+          tripRequest={tripRequest}
+          onSubmit={(data) => {
+            setReturnFlightData(data);
+          }}
+          onValidationError={(error) => {
+            setValidationError(error);
+          }}
+        />
+      ),
     },
     {
       stepName: 'Hotels',
       instructions: <HotelInstructions budgetData={budgetData} />,
-      form: <HotelsForm />,
+      form: (
+        <HotelsForm
+          ref={hotelsFormRef}
+          onSubmit={(data) => {
+            setHotelData(data);
+          }}
+          onValidationError={(error) => {
+            setValidationError(error);
+          }}
+        />
+      ),
     },
     {
       stepName: 'Summary',
       form: (
         <Summary
           data={{
-            departingFlight: {
-              id: 1,
-              cost: '$450',
-              airline: 'United Airlines',
-              airlineLogo: undefined,
-              departureTime: '08:30 AM',
-              arrivalTime: '11:45 AM',
-              duration: '3 hr 15 min',
-              departureAirport: 'JFK',
-              arrivalAirport: 'LAX',
-            },
-            returningFlight: {
-              id: 2,
-              cost: '$420',
-              airline: 'Delta',
-              airlineLogo: undefined,
-              departureTime: '02:15 PM',
-              arrivalTime: '10:30 PM',
-              duration: '5 hr 15 min',
-              departureAirport: 'LAX',
-              arrivalAirport: 'JFK',
-            },
-            hotel: {
-              id: 1,
-              name: 'Grand Luxury Hotel',
-              city: 'Los Angeles',
-              rating: 4.5,
-              reviewCount: 1234,
-              totalCost: '$1,280',
-              nightlyRate: '$320/nt',
-              discount: '15% off',
-              logo: undefined,
-            },
+            departingFlight: selectedDepartingFlight,
+            returningFlight: selectedReturnFlight,
+            hotel: selectedHotel,
           }}
         />
       ),
@@ -166,11 +205,39 @@ const ChatPage = () => {
               }
             }
 
+            // If we're on the second step (Departing Flights), validate the form
+            if (stepCount === 2) {
+              const isValid = departingFlightFormRef.current?.submit();
+              if (!isValid) {
+                return; // Don't proceed if validation fails
+              }
+            }
+
+            // If we're on the third step (Return Flights), validate the form
+            if (stepCount === 3) {
+              const isValid = returnFlightFormRef.current?.submit();
+              if (!isValid) {
+                return; // Don't proceed if validation fails
+              }
+            }
+
+            // If we're on the fourth step (Hotels), validate the form
+            if (stepCount === 4) {
+              const isValid = hotelsFormRef.current?.submit();
+              if (!isValid) {
+                return; // Don't proceed if validation fails
+              }
+            }
+
             setThinking(true);
             setTimeout(() => {
               setStepCount((prev) => prev + 1);
               setThinking(false);
             }, 1000);
+          }}
+          decrementStep={() => {
+            setValidationError(''); // Clear any validation errors
+            setStepCount((prev) => Math.max(1, prev - 1)); // Don't go below step 1
           }}
         />
       </div>

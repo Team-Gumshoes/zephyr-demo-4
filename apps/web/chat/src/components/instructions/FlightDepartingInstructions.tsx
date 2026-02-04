@@ -27,9 +27,9 @@ const FlightDepartingInstructions = ({
   return (
     <div className="text-sm">
       <div>
-        Thank you for your preferences. Here are a few possible <b>departing</b>{' '}
-        flights that are <b>{getFlightPreferenceText()}</b> that you can select
-        for your trip plan estimate.
+        Thank you for your preferences. Here are a few possible{' '}
+        <b>departing flights</b> that are <b>{getFlightPreferenceText()}</b>{' '}
+        that you can select for your trip plan estimate.
       </div>
     </div>
   );

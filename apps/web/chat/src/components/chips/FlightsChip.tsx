@@ -8,6 +8,7 @@ export type Flight = {
   duration: string;
   departureAirport: string;
   arrivalAirport: string;
+  date?: string;
 };
 
 const FlightChip = ({ flight }: { flight: Flight }) => {

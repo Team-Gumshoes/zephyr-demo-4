@@ -27,7 +27,7 @@ const FlightReturnInstructions = ({
   return (
     <div className="text-sm">
       <div>
-        Here are a few possible <b>return</b> flights that are{' '}
+        Here are a few possible <b>return flights</b> that are{' '}
         <b>{getFlightPreferenceText()}</b> that you can select for your trip
         plan estimate.
       </div>
