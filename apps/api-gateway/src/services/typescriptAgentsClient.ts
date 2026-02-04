@@ -6,7 +6,7 @@ class TypeScriptAgentsClient {
 
   constructor() {
     this.client = axios.create({
-      baseURL: config.typescriptAgentsUrl,
+      baseURL: config.TYPESCRIPT_AGENTS_URL,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',

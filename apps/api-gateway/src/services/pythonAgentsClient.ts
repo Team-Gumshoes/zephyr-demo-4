@@ -6,7 +6,7 @@ class PythonAgentsClient {
 
   constructor() {
     this.client = axios.create({
-      baseURL: config.pythonAgentsUrl,
+      baseURL: config.PYTHON_AGENTS_URL,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',

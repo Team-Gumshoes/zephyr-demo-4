@@ -3,7 +3,8 @@
 nx g @nx/react:library shared-ui --directory=libs/shared/ui --bundler=none
 ```
 
-Copilot told me to remove this line but I believe that was a mistake (seems to work fine with it still there):
+Copilot told me to remove this line to resolve TS error.
+It does not seems to cause a problem with it still there either though.
 ```json
 // apps/web/chat/tsconfig.app.json
 

@@ -1,0 +1,28 @@
+import { SupabaseClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '../startup/connectToDB';
+import { Request, Response, NextFunction } from 'express';
+
+declare global {
+  namespace Express {
+    interface Request {
+      supabase: SupabaseClient;
+    }
+  }
+}
+
+export const requireSupabase = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const supabase = getSupabaseClient();
+
+  if (!supabase) {
+    res.status(500).json({
+      error: 'Database connection not available',
+    });
+    return;
+  }
+  req.supabase = supabase;
+  next();
+};
