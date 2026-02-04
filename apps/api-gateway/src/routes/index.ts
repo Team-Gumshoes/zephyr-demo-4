@@ -3,7 +3,8 @@ import flightsRouter from './flights.routes';
 import hotelsRouter from './hotels.routes';
 import transportRouter from './transport.routes';
 import coordinatorRouter from './coordinator.routes';
-import sessionRouter from './session.routes';
+import chatRouter from './chat.routes';
+import { requireSupabase } from '../middleware/supabase.middleware';
 
 const router: Router = Router();
 
@@ -17,7 +18,7 @@ router.get('/health', (req: Request, res: Response) => {
 });
 
 // Mount route modules
-router.use('/session', sessionRouter);
+router.use('/chat', requireSupabase, chatRouter);
 
 // These will likely all be removed eventually
 router.use('/flights', flightsRouter);
