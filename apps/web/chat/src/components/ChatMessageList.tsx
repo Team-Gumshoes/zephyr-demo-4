@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { ChatStep } from '../app/app';
 import { Plane, User, ArrowLeft, MessageCircle } from 'lucide-react';
@@ -20,6 +20,7 @@ const ChatMessageList = ({
   validationError,
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const currentStep = chat[chat.length - 1];
   const isFirstStep = chat.length === 1;
 
@@ -28,6 +29,19 @@ const ChatMessageList = ({
     isFirstStep,
     currentStepName: currentStep?.stepName,
   });
+
+  // Auto-scroll to bottom when a new step is added or validation error appears
+  useEffect(() => {
+    if (scrollRef.current) {
+      // Use setTimeout to ensure DOM has updated
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 0);
+    }
+  }, [chat.length, validationError]);
 
   const handleModifyDetails = () => {
     setIsModalOpen(true);
@@ -47,7 +61,7 @@ const ChatMessageList = ({
   return (
     <>
       <div className={clsx('flex flex-col-reverse h-full my-4')}>
-        <div className="space-y-0.5">
+        <div ref={scrollRef} className="space-y-0.5">
           {chat.map((chatStep) => (
             <div key={chatStep.stepName} className="space-y-3">
               {chatStep.instructions && (
