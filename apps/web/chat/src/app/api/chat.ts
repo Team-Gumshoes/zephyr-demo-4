@@ -33,7 +33,7 @@ export async function sendChatMessage(
   data: ChatMessageRequest,
 ): Promise<ChatMessageResponse> {
   const response = await apiClient.post<ChatMessageResponse>(
-    '/chat/message',
+    '/api/chat/session',
     data,
   );
   return response.data;
