@@ -1,4 +1,12 @@
-import { TripRequest } from "../types/chat.types";
+export interface TripRequest {
+  fromCity: string;
+  toCity: string;
+  departureDate: string;
+  arrivalDate: string;
+  budgetIncludes: string[];
+  transportation: string[];
+  preferences?: string;
+}
 
 export default function parseTripRequest(searchParams: URLSearchParams): TripRequest | null {
   const fromCity = searchParams.get('fromCity');

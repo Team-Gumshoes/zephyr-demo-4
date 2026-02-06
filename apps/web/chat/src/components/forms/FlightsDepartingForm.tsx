@@ -1,7 +1,7 @@
 import { useState, useRef, useImperativeHandle, forwardRef } from 'react';
-import { TripRequest } from '../../app/app';
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
+import { TripRequest } from '../../utils/parseTripRequest';
 
 export const departingFlights: Flight[] = [
   {
