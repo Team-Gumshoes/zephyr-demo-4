@@ -1,5 +1,5 @@
-import { TripRequest } from '../../app/app';
 import { formatDate } from '../../utils/formatDate';
+import { TripRequest } from '../../utils/parseTripRequest';
 
 interface BudgetInstructionsProps {
   tripRequest?: TripRequest | null;

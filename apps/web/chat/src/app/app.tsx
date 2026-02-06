@@ -26,7 +26,8 @@ import HotelsForm, {
   hotels,
 } from '../components/forms/HotelsForm';
 import Summary from '../components/summary/Summary';
-import { sendChatMessage } from './api/chat';
+import { createChatSession, sendChatMessage } from './api/chat';
+import parseTripRequest from '../utils/parseTripRequest';
 
 // #3358ae dark
 // #99abd7 light
@@ -45,36 +46,28 @@ export type ChatStep = {
   form: ReactNode;
 };
 
-export interface TripRequest {
-  fromCity: string;
-  toCity: string;
-  departureDate: string;
-  arrivalDate: string;
-  budgetIncludes: string[];
-  transportation: string[];
-  preferences?: string;
-}
 
-function parseTripRequest(searchParams: URLSearchParams): TripRequest | null {
-  const fromCity = searchParams.get('fromCity');
-  const toCity = searchParams.get('toCity');
 
-  if (!fromCity || !toCity) {
-    return null;
-  }
+// function parseTripRequest(searchParams: URLSearchParams): TripRequest | null {
+//   const fromCity = searchParams.get('fromCity');
+//   const toCity = searchParams.get('toCity');
 
-  return {
-    fromCity,
-    toCity,
-    departureDate: searchParams.get('departureDate') || '',
-    arrivalDate: searchParams.get('arrivalDate') || '',
-    budgetIncludes:
-      searchParams.get('budgetIncludes')?.split(',').filter(Boolean) || [],
-    transportation:
-      searchParams.get('transportation')?.split(',').filter(Boolean) || [],
-    preferences: searchParams.get('preferences') || undefined,
-  };
-}
+//   if (!fromCity || !toCity) {
+//     return null;
+//   }
+
+//   return {
+//     fromCity,
+//     toCity,
+//     departureDate: searchParams.get('departureDate') || '',
+//     arrivalDate: searchParams.get('arrivalDate') || '',
+//     budgetIncludes:
+//       searchParams.get('budgetIncludes')?.split(',').filter(Boolean) || [],
+//     transportation:
+//       searchParams.get('transportation')?.split(',').filter(Boolean) || [],
+//     preferences: searchParams.get('preferences') || undefined,
+//   };
+// }
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
@@ -123,11 +116,9 @@ const ChatPage = () => {
         <BudgetForm
           ref={budgetFormRef}
           onSubmit={async (data) => {
-            // initiate session
-            // save to database
+            await createChatSession();
             const response = await sendChatMessage({
-              sessionId: 'caa2e00a-4839-4360-a1d3-7166d33b07af',
-              message: 'A sample message from user',
+              message: formatBudgetFormData(data),
             });
             console.log(response);
             setBudgetData(data);
@@ -256,3 +247,12 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+
+const formatBudgetFormData = (data: BudgetFormData) => {
+  return `
+  The user has this pref: ${data.flightPreference}
+  The user has this pref: ${data.lodgingPreference}
+  Please provide options for flights
+  `
+}
