@@ -23,7 +23,7 @@ export interface CreateSessionResponse {
 // API sets cookie for chat_session_id
 export async function createChatSession(): Promise<CreateSessionResponse> {
   const response = await apiClient.post<CreateSessionResponse>(
-    '/chat/session',
+    'api/chat/session',
     {},
   );
   return response.data;
@@ -33,7 +33,7 @@ export async function sendChatMessage(
   data: ChatMessageRequest,
 ): Promise<ChatMessageResponse> {
   const response = await apiClient.post<ChatMessageResponse>(
-    '/api/chat/session',
+    '/api/chat/message',
     data,
   );
   return response.data;

@@ -50,3 +50,5 @@ tsconfig.tsbuildinfo
 !.env.example
 
 PRIVATE.md
+CLAUDE.md
+.claude
