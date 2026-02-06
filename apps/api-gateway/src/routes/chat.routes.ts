@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import { extractSessionFromCookie } from '../middleware/chat_session.middleware';
 
 const router: Router = Router();
 
@@ -23,6 +24,15 @@ router.post(
         return;
       }
 
+      // Set session ID in cookie
+      res.cookie('chat_session_id', data.id, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
       // Return the session ID to the front end
       res.status(201).json({
         id: data.id,
@@ -36,15 +46,15 @@ router.post(
 
 // POST /chat/message - Send a message and get LLM response
 router.post(
-  '/message',
+  '/message', extractSessionFromCookie,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { session_id, message } = req.body;
+      const { sessionId, message } = req.body;
 
       // Validate required fields
-      if (!session_id || !message) {
+      if (!sessionId || !message) {
         res.status(400).json({
-          error: 'session_id and message are required',
+          error: 'sessionId and message are required',
         });
         return;
       }
@@ -53,7 +63,7 @@ router.post(
       const { error: userMessageError } = await req.supabase
         .from('chat_messages')
         .insert({
-          session_id,
+          session_id: sessionId,
           role: 'user',
           content: { text: message },
         });
@@ -75,7 +85,7 @@ router.post(
         await req.supabase
           .from('chat_messages')
           .insert({
-            session_id,
+            session_id: sessionId,
             role: 'assistant',
             content: { text: mockLLMResponse },
           })

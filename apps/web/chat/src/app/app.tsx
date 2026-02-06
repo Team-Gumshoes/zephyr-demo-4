@@ -26,6 +26,7 @@ import HotelsForm, {
   hotels,
 } from '../components/forms/HotelsForm';
 import Summary from '../components/summary/Summary';
+import { sendChatMessage } from './api/chat';
 
 // #3358ae dark
 // #99abd7 light
@@ -103,7 +104,9 @@ const ChatPage = () => {
 
   // Get selected objects for Summary
   const selectedDepartingFlight = departingFlightData
-    ? departingFlights.find((f) => f.id === departingFlightData.selectedFlightId)
+    ? departingFlights.find(
+        (f) => f.id === departingFlightData.selectedFlightId,
+      )
     : undefined;
   const selectedReturnFlight = returnFlightData
     ? returnFlights.find((f) => f.id === returnFlightData.selectedFlightId)
@@ -119,7 +122,14 @@ const ChatPage = () => {
       form: (
         <BudgetForm
           ref={budgetFormRef}
-          onSubmit={(data) => {
+          onSubmit={async (data) => {
+            // initiate session
+            // save to database
+            const response = await sendChatMessage({
+              sessionId: 'caa2e00a-4839-4360-a1d3-7166d33b07af',
+              message: 'A sample message from user',
+            });
+            console.log(response);
             setBudgetData(data);
           }}
           onValidationError={(error) => {

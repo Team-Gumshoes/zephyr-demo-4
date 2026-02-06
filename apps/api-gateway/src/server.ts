@@ -6,15 +6,16 @@ import { corsMiddleware } from './middleware/cors.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 import routes from './routes/index.js';
 import { connectToSupabase } from './startup/connectToDB.js';
+import cookieParser from 'cookie-parser';
 
 const app: Express = express();
 
 // Middleware
-app.use(corsMiddleware);
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(corsMiddleware);
 app.use(loggerMiddleware);
-
 
 // Root endpoint
 app.get('/', (req: Request, res: Response) => {
