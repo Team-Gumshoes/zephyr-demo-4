@@ -28,6 +28,7 @@ import HotelsForm, {
 import Summary from '../components/summary/Summary';
 import { createChatSession, sendChatMessage } from './api/chat';
 import parseTripRequest from '../utils/parseTripRequest';
+import { Button, ActivityCard } from '@allorai/shared-ui';
 
 // #3358ae dark
 // #99abd7 light
@@ -45,8 +46,6 @@ export type ChatStep = {
   instructions?: ReactNode;
   form: ReactNode;
 };
-
-
 
 // function parseTripRequest(searchParams: URLSearchParams): TripRequest | null {
 //   const fromCity = searchParams.get('fromCity');
@@ -242,17 +241,28 @@ const ChatPage = () => {
           }}
         />
       </div>
+      <div className="flex flex-col items-center gap-[50px] my-[100px]">
+        <Button className="w-fit" onClick={() => {}}>
+          Test Component
+        </Button>
+        <ActivityCard
+          title="Concert"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          estimatedCost="55"
+          distance="44"
+          onViewDetails={() => {}}
+        />
+      </div>
     </div>
   );
 };
 
 export default ChatPage;
 
-
 const formatBudgetFormData = (data: BudgetFormData) => {
   return `
   The user has this pref: ${data.flightPreference}
   The user has this pref: ${data.lodgingPreference}
   Please provide options for flights
-  `
-}
+  `;
+};
