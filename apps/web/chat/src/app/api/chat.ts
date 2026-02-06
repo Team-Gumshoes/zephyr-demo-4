@@ -14,6 +14,21 @@ export interface ChatMessageResponse {
   conversationId: string;
 }
 
+// TODO Fix the type here
+export interface CreateSessionResponse {
+  sessionId: string;
+  createdAt: string;
+}
+
+// API sets cookie for chat_session_id
+export async function createChatSession(): Promise<CreateSessionResponse> {
+  const response = await apiClient.post<CreateSessionResponse>(
+    '/chat/session',
+    {},
+  );
+  return response.data;
+}
+
 export async function sendChatMessage(
   data: ChatMessageRequest,
 ): Promise<ChatMessageResponse> {
