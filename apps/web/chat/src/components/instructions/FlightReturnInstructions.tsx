@@ -1,35 +1,26 @@
-import { BudgetFormData } from '../forms/BudgetForm';
+import { BudgetPref } from '../forms/BudgetForm';
+
+const FLIGHT_PREFS = {
+  budget: 'budget-focused with possible layovers',
+  balanced: 'balanced in price and convenience',
+  premium: 'premium with direct flights and better times',
+  none: 'none',
+};
 
 type FlightReturnInstructionsProps = {
-  budgetData: BudgetFormData | null;
+  flightPreference: BudgetPref | undefined;
 };
 
 const FlightReturnInstructions = ({
-  budgetData,
+  flightPreference,
 }: FlightReturnInstructionsProps) => {
-  const getFlightPreferenceText = () => {
-    if (!budgetData?.flightPreference) return 'available';
-
-    switch (budgetData.flightPreference) {
-      case 'budget':
-        return 'budget-focused with possible layovers';
-      case 'balanced':
-        return 'balanced in price and convenience';
-      case 'premium':
-        return 'premium with direct flights and better times';
-      case 'none':
-        return 'available';
-      default:
-        return 'available';
-    }
-  };
-
+  if (!flightPreference) return null;
   return (
     <div className="text-sm">
       <div>
         Here are a few possible <b>return flights</b> that are{' '}
-        <b>{getFlightPreferenceText()}</b> that you can select for your trip
-        plan estimate.
+        <b>{FLIGHT_PREFS[flightPreference]}</b> that you can select for your
+        trip plan estimate.
       </div>
     </div>
   );

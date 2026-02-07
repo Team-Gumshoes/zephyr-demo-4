@@ -1,7 +1,5 @@
-import { useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
-import { TripRequest } from '../../utils/parseTripRequest';
 
 export const departingFlights: Flight[] = [
   {
@@ -37,65 +35,21 @@ export const departingFlights: Flight[] = [
 ];
 
 export type FlightsDepartingFormData = {
-  selectedFlightId: number;
+  flightDepartingId: number;
+  departureDate: string;
 };
 
-type FlightsDepartingFormProps = {
-  active?: boolean;
-  tripRequest?: TripRequest | null;
-  onSubmit?: (data: FlightsDepartingFormData) => void;
-  onValidationError?: (error: string) => void;
+type FlightsDepartingFormProps = FlightsDepartingFormData & {
+    updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
+
 };
 
-export type FlightsDepartingFormRef = {
-  submit: () => boolean;
-};
-
-const FlightsDepartingForm = forwardRef<
-  FlightsDepartingFormRef,
-  FlightsDepartingFormProps
->(({ active = true, tripRequest, onSubmit, onValidationError }, ref) => {
-  const [selectedFlightId, setSelectedFlightId] = useState<number | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const departureDate =
-    formatDate(tripRequest?.departureDate) || 'March 15, 2026';
-
-  const validateForm = () => {
-    if (!selectedFlightId) {
-      if (onValidationError) {
-        onValidationError('Please select a departing flight before continuing.');
-      }
-      return false;
-    }
-    if (onValidationError) {
-      onValidationError('');
-    }
-    return true;
-  };
-
-  useImperativeHandle(ref, () => ({
-    submit: () => {
-      const isValid = validateForm();
-      if (isValid) {
-        formRef.current?.requestSubmit();
-      }
-      return isValid;
-    },
-  }));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (onSubmit && selectedFlightId) {
-      onSubmit({ selectedFlightId });
-    }
-  };
+const FlightsDepartingForm = ({flightDepartingId, departureDate, updateFields}: FlightsDepartingFormProps) => {
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="w-full">
+    <div  className="w-full">
       <h2 className="text-xl font-bold mb-6">
-        Departing Flights - {departureDate}
+        Departing Flights - {formatDate(departureDate) }
       </h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
@@ -105,8 +59,8 @@ const FlightsDepartingForm = forwardRef<
                 type="radio"
                 name="departingFlight"
                 value={flight.id}
-                checked={selectedFlightId === flight.id}
-                onChange={(e) => setSelectedFlightId(Number(e.target.value))}
+                checked={flightDepartingId === flight.id}
+                onChange={(e) => updateFields({flightDepartingId :Number(e.target.value)})}
                 className="sr-only peer"
               />
               <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
@@ -116,9 +70,9 @@ const FlightsDepartingForm = forwardRef<
           ))}
         </div>
       </div>
-    </form>
+    </div>
   );
-});
+};
 
 FlightsDepartingForm.displayName = 'FlightsDepartingForm';
 

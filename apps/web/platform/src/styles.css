@@ -2,3 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+
+@layer components {
+  /* 'Bouncer' typing indicator */
+  .bouncer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 25px;
+    height: 12px;
+  }
+  .bouncer div {
+    width: 4px;
+    height: 4px;
+    background:  #cc7786;
+    border-radius: 50%;
+    animation: bouncer 0.5s cubic-bezier(.19,.57,.3,.98) infinite alternate;
+  }
+  .bouncer div:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .bouncer div:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .bouncer div:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes bouncer {
+  from { transform: translateY(10px) }
+  to { transform: translateY(2px) }
+}
