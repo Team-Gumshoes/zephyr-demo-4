@@ -1,5 +1,3 @@
-// import { cn } from "@/utils/cn"
-
 import clsx from "clsx"
 
 type Props = {
@@ -14,7 +12,7 @@ const ChatTypingIndicator = ({isTyping = true, color = "black", content = "", cl
   if(!isTyping) return null
 
   return (
-    <div style={{color: color}} className={clsx("flex text-sm", className)}>
+    <div style={{color: color}} className={clsx("flex text-sm gap-1", className)}>
       <BouncingBalls color={color}/>
       {content}
     </div>

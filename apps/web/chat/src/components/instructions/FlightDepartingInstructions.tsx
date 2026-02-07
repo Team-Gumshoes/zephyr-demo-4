@@ -1,35 +1,27 @@
-import { BudgetFormData } from '../forms/BudgetForm';
+import { BudgetPref } from '../forms/BudgetForm';
+
+const FLIGHT_PREFS = {
+  budget: 'budget-focused with possible layovers',
+  balanced: 'balanced in price and convenience',
+  premium: 'premium with direct flights and better times',
+  none: 'none',
+};
 
 type FlightDepartingInstructionsProps = {
-  budgetData: BudgetFormData | null;
+  flightPreference: BudgetPref | undefined;
 };
 
 const FlightDepartingInstructions = ({
-  budgetData,
+  flightPreference,
 }: FlightDepartingInstructionsProps) => {
-  const getFlightPreferenceText = () => {
-    if (!budgetData?.flightPreference) return 'available';
-
-    switch (budgetData.flightPreference) {
-      case 'budget':
-        return 'budget-focused with possible layovers';
-      case 'balanced':
-        return 'balanced in price and convenience';
-      case 'premium':
-        return 'premium with direct flights and better times';
-      case 'none':
-        return 'available';
-      default:
-        return 'available';
-    }
-  };
-
+  if (!flightPreference) return null;
   return (
     <div className="text-sm">
       <div>
         Thank you for your preferences. Here are a few possible{' '}
-        <b>departing flights</b> that are <b>{getFlightPreferenceText()}</b>{' '}
-        that you can select for your trip plan estimate.
+        <b>departing flights</b> that are{' '}
+        <b>{FLIGHT_PREFS[flightPreference]}</b> that you can select for your
+        trip plan estimate.
       </div>
     </div>
   );

@@ -1,43 +1,43 @@
 import { formatDate } from '../../utils/formatDate';
-import { TripRequest } from '../../utils/parseTripRequest';
 
 interface BudgetInstructionsProps {
-  tripRequest?: TripRequest | null;
+  toCity: string;
+  fromCity: string;
+  departureDate: string;
+  returnDate: string;
+  budgetIncludes: string[];
+  transportation: string[];
+  preferences?: string;
 }
 
-const BudgetInstructions = ({ tripRequest }: BudgetInstructionsProps) => {
-  const destination = tripRequest?.toCity || 'Paris, France';
-  const origin = tripRequest?.fromCity || 'New York, NY';
-  const departureDate =
-    formatDate(tripRequest?.departureDate) || 'March 15, 2026';
-  const returnDate = formatDate(tripRequest?.arrivalDate) || 'March 22, 2026';
+const BudgetInstructions = ({
+  toCity,
+  fromCity,
+  departureDate,
+  returnDate,
+  budgetIncludes,
+  transportation,
+  preferences,
+}: BudgetInstructionsProps) => {
 
-  const budgetItems = tripRequest?.budgetIncludes?.length
-    ? tripRequest.budgetIncludes.join(', ').toLowerCase()
-    : 'flights, lodging, dining';
-
-  const transportation = tripRequest?.transportation?.length
-    ? tripRequest.transportation.join(', ').toLowerCase()
-    : 'car rental';
-
-  const considerations = tripRequest?.preferences
-    ? tripRequest.preferences
-    : 'family-friendly activities and local cuisine';
-
-  const budgetAndTransport = transportation
-    ? `${budgetItems} and ${transportation}`
-    : budgetItems;
+  // TODO needs some clean up
+  const budgetFormatted = budgetIncludes.join(', ').toLowerCase();
+  const transportFormatted = transportation.join(', ').toLowerCase();
+  const budgetAndTransport = transportFormatted
+    ? `${budgetFormatted} and ${transportFormatted}`
+    : budgetFormatted;
 
   return (
     <div className="text-sm">
       <div>
         Sure thing. I am happy to help you plan a trip from{' '}
-        <strong>{origin}</strong> to <strong>{destination}</strong> departing on{' '}
-        <strong>{departureDate}</strong> and returning on{' '}
-        <strong>{returnDate}</strong> while considering {budgetAndTransport} and{' '}
-        <strong>{considerations}</strong>. So that I can suggest an estimate for
-        your flights and/or lodging, provide your preferences with your choices
-        below.
+        <strong>{fromCity}</strong> to <strong>{toCity}</strong> departing on{' '}
+        <strong>{formatDate(departureDate)}</strong> and returning on{' '}
+        <strong>{formatDate(returnDate)}</strong> while considering {budgetAndTransport}
+        { preferences ? <span> and <strong>{preferences}</strong>.</span> : "."}{' '}
+        So that I can suggest an estimate{' '}
+        for your flights and/or lodging, provide your preferences with your
+        choices below.
       </div>
     </div>
   );
