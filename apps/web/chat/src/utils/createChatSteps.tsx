@@ -6,6 +6,7 @@ import BudgetInstructions from '../components/instructions/BudgetInstructions';
 import FlightDepartingInstructions from '../components/instructions/FlightDepartingInstructions';
 import FlightReturnInstructions from '../components/instructions/FlightReturnInstructions';
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
+import { type Flight } from '../components/chips/FlightsChip';
 
 export type ChatStepName =
   | 'Budget'
@@ -23,6 +24,8 @@ export type ChatStep = {
 
 const createChatSteps = (
   tripData: TripData,
+  departingFlightOptions: Flight[],
+  returningFlightOptions: Flight[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [
   {
@@ -32,37 +35,20 @@ const createChatSteps = (
   },
   {
     stepName: 'Departing',
-    form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
+    form: (
+      <FlightsDepartingForm
+        {...tripData}
+        departingFlightOptions={departingFlightOptions}
+        updateFields={updateFields}
+      />
+    ),
     instructions: <FlightDepartingInstructions {...tripData} />,
   },
   {
     stepName: 'Returning',
     instructions: <FlightReturnInstructions {...tripData} />,
-    form: <FlightsReturningForm {...tripData} updateFields={updateFields} />,
+    form: <FlightsReturningForm {...tripData} returningFlightOptions={returningFlightOptions} updateFields={updateFields} />,
   },
 ];
 
 export { createChatSteps };
-
-// const createChatStepsFactory = (
-//   tripData: TripData,
-//   updateFields: (fields: Partial<TripData>) => void,
-// ) => (currentStepIndex: number): ChatStep[] => [
-//   {
-//     stepName: 'Budget',
-//     form: <BudgetForm {...tripData} updateFields={updateFields} />,
-//     instructions: <BudgetInstructions {...tripData} />,
-//   },
-//   {
-//     stepName: 'Departing',
-//     form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
-//     instructions: <FlightDepartingInstructions {...tripData} />,
-//   },
-//   {
-//     stepName: 'Returning',
-//     instructions: <FlightReturnInstructions {...tripData} />,
-//     form: <FlightsReturningForm {...tripData} updateFields={updateFields} />,
-//   },
-// ];
-
-// export { createChatStepsFactory };
