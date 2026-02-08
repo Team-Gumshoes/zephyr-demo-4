@@ -8,6 +8,8 @@ import FlightReturnInstructions from '../components/instructions/FlightReturnIns
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
 import HotelInstructions from '../components/instructions/HotelInstructions';
 import HotelsForm from '../components/forms/HotelsForm';
+import { type Flight } from '../components/chips/FlightsChip';
+import { type Hotel } from '../components/chips/HotelChip';
 
 export type ChatStepName =
   | 'Budget'
@@ -27,6 +29,7 @@ const createChatSteps = (
   tripData: TripData,
   departingFlightOptions: Flight[],
   returningFlightOptions: Flight[],
+  hotelOptions: Hotel[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [
   {
@@ -37,17 +40,35 @@ const createChatSteps = (
   {
     stepName: 'Departing',
     instructions: <FlightDepartingInstructions {...tripData} />,
-    form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
+    form: (
+      <FlightsDepartingForm
+        {...tripData}
+        departingFlightOptions={departingFlightOptions}
+        updateFields={updateFields}
+      />
+    ),
   },
   {
     stepName: 'Returning',
     instructions: <FlightReturnInstructions {...tripData} />,
-    form: <FlightsReturningForm {...tripData} updateFields={updateFields} />,
+    form: (
+      <FlightsReturningForm
+        {...tripData}
+        returningFlightOptions={returningFlightOptions}
+        updateFields={updateFields}
+      />
+    ),
   },
   {
     stepName: 'Hotels',
     instructions: <HotelInstructions {...tripData} />,
-    form: <HotelsForm {...tripData} updateFields={updateFields} />,
+    form: (
+      <HotelsForm
+        {...tripData}
+        hotelOptions={hotelOptions}
+        updateFields={updateFields}
+      />
+    ),
   },
 ];
 

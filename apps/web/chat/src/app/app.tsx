@@ -14,8 +14,10 @@ import parseTripRequest, {
 import { BudgetPref } from '../components/forms/BudgetForm';
 import { stepHandlers } from './handlers/steps';
 import { Flight } from '../components/chips/FlightsChip';
+import { Hotel } from '../components/chips/HotelChip';
 import { SAMPLE_DEPARTING_FLIGHTS } from '../components/forms/FlightsDepartingForm';
 import { SAMPLE_RETURNING_FLIGHTS } from '../components/forms/FlightsReturningForm';
+import { SAMPLE_HOTELS } from '../components/forms/HotelsForm';
 
 // #3358ae dark
 // #99abd7 light
@@ -77,6 +79,7 @@ const ChatPage = () => {
   const [returningFlightOptions, setReturningFlightOptions] = useState<
     Flight[]
   >(SAMPLE_RETURNING_FLIGHTS);
+  const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
@@ -92,9 +95,16 @@ const ChatPage = () => {
         tripData,
         departingFlightOptions,
         returningFlightOptions,
+        hotelOptions,
         updateFields,
       ),
-    [tripData, updateFields, departingFlightOptions, returningFlightOptions],
+    [
+      tripData,
+      updateFields,
+      departingFlightOptions,
+      returningFlightOptions,
+      hotelOptions,
+    ],
   );
 
   const {
@@ -117,6 +127,7 @@ const ChatPage = () => {
         tripData,
         setDepartingFlightOptions,
         setReturningFlightOptions,
+        setHotelOptions,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
       });
@@ -150,7 +161,7 @@ const ChatPage = () => {
       <div className={clsx('flex justify-between h-full flex-col')}>
         <ChatMessageList steps={steps} currentStepIndex={currentStepIndex} />
         <div className="flex justify-end gap-2">
-          <div className={`flex flex-col items-end mr-14 justify-end`}>
+          <div className={`flex flex-col items-end mr-14 mb-6 justify-end`}>
             <div className="flex gap-2">
               {!isFirstStep && (
                 <Button

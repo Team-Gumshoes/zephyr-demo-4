@@ -1,7 +1,7 @@
 import { calculateNights, formatDate } from '../../utils/formatDate';
 import HotelChip, { Hotel } from '../chips/HotelChip';
 
-export const hotels: Hotel[] = [
+export const SAMPLE_HOTELS: Hotel[] = [
   {
     id: 1,
     name: 'Hôtel Le Marais',
@@ -50,6 +50,7 @@ export type HotelsFormData = {
 };
 
 type HotelsFormProps = HotelsFormData & {
+  hotelOptions: Hotel[];
   updateFields: (fields: Partial<HotelsFormData>) => void;
 };
 
@@ -58,6 +59,7 @@ const HotelsForm = ({
   departureDate,
   returnDate,
   currentStepIndex,
+  hotelOptions,
   updateFields,
 }: HotelsFormProps) => {
   const isActive = currentStepIndex === 1;
@@ -75,7 +77,7 @@ const HotelsForm = ({
       </h3>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
-          {hotels.map((hotel) => (
+          {hotelOptions.map((hotel) => (
             <label key={hotel.id} className="cursor-pointer group">
               <input
                 type="radio"
