@@ -12,6 +12,11 @@ import parseTripRequest, {
   TripRequest,
 } from '../utils/parseTripRequest';
 import { BudgetPref } from '../components/forms/BudgetForm';
+import { stepHandlers } from './handlers/steps';
+import { Flight } from '../components/chips/FlightsChip';
+import { SAMPLE_DEPARTING_FLIGHTS } from '../components/forms/FlightsDepartingForm';
+import { SAMPLE_RETURNING_FLIGHTS } from '../components/forms/FlightsReturningForm';
+
 // #3358ae dark
 // #99abd7 light
 // #97dbd9 teal
@@ -64,7 +69,16 @@ const ChatPage = () => {
     ...(tripRequest || fallbackTripRequest),
     ...initialTripData,
   });
+
+  // TODO Consider putting all this state in Zustand
+  const [departingFlightOptions, setDepartingFlightOptions] = useState<
+    Flight[]
+  >(SAMPLE_DEPARTING_FLIGHTS);
+  const [returningFlightOptions, setReturningFlightOptions] = useState<
+    Flight[]
+  >(SAMPLE_RETURNING_FLIGHTS);
   const [isChatLoading, setChatLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const updateFields = useCallback((fields: Partial<TripData>) => {
     setTripData((prev) => {
@@ -72,31 +86,60 @@ const ChatPage = () => {
     });
   }, []);
 
-  const CHAT_STEPS: ChatStep[] = useMemo(
-    () => createChatSteps(tripData, updateFields),
-    [tripData, updateFields],
+  const chatSteps: ChatStep[] = useMemo(
+    () =>
+      createChatSteps(
+        tripData,
+        departingFlightOptions,
+        returningFlightOptions,
+        updateFields,
+      ),
+    [tripData, updateFields, departingFlightOptions, returningFlightOptions],
   );
 
-  const { steps, currentStepIndex, next, isFirstStep, isLastStep } =
-    useMultiStepChat(CHAT_STEPS, tripData, setTripData);
+  const {
+    steps,
+    currentStep,
+    currentStepIndex,
+    next,
+    isFirstStep,
+    isLastStep,
+  } = useMultiStepChat(chatSteps, tripData, setTripData);
 
-  function onSubmit() {
-    // check for validation errors here ?
+  const onSubmit = async () => {
     setChatLoading(true);
-    // LLM call here
-    setTimeout(() => {
-      setChatLoading(false);
-      if (!isLastStep) {
-        return next();
-      } else {
-        alert('We will advance to the next page here.');
+    setError(undefined);
+
+    try {
+      const handler = stepHandlers[currentStep.stepName];
+
+      const result = await handler({
+        tripData,
+        setDepartingFlightOptions,
+        setReturningFlightOptions,
+        updateFields, // <-- might not need this ?
+        next, // <-- might not need this ?
+      });
+
+      if (!result.success) {
+        setError(result.error || 'An error occurred');
+        setChatLoading(false);
+        return;
       }
-    }, 1000);
-  }
 
-  const validationError = ''; // TODO handle validation
-
-  console.log(steps);
+      if (isLastStep) {
+        alert('We will advance to the next page here.');
+      } else if (result.shouldAdvance) {
+        next();
+      }
+    } catch (error) {
+      // Unlikely to be catching here as things stand. Maybe in the future we will re-throw inside our handlers (?)
+      console.error('Step handler error:', error);
+      setError('An unexpected error occurred');
+    } finally {
+      setChatLoading(false);
+    }
+  };
 
   if (!tripRequest) {
     return <div>Something went wrong. Query string not parsed.</div>;
@@ -125,10 +168,8 @@ const ChatPage = () => {
                 )}
               </Button>
             </div>
-            {validationError && (
-              <div className="text-red-600 font-semibold mt-2">
-                {validationError}
-              </div>
+            {error && (
+              <div className="text-red-600 font-semibold mt-2">{error}</div>
             )}
           </div>
         </div>

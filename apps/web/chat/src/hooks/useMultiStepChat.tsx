@@ -29,7 +29,7 @@ const useMultiStepChat = (
 
   return {
     currentStepIndex: data.currentStepIndex,
-    step: steps[data.currentStepIndex],
+    currentStep: steps[data.currentStepIndex],
     steps,
     next,
     back,

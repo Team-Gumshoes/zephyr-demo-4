@@ -1,7 +1,7 @@
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
 
-export const returnFlights: Flight[] = [
+export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   {
     id: 4,
     cost: '$ 875',
@@ -41,6 +41,7 @@ export type FlightsReturningFormData = {
 };
 
 type FlightsReturningFormProps = FlightsReturningFormData & {
+  returningFlightOptions: Flight[];
   updateFields: (fields: Partial<FlightsReturningFormData>) => void;
 };
 
@@ -48,6 +49,7 @@ const FlightsReturningForm = ({
   flightReturningId,
   returnDate,
   currentStepIndex,
+  returningFlightOptions,
   updateFields,
 }: FlightsReturningFormProps) => {
   const isActive = currentStepIndex === 2;
@@ -59,7 +61,7 @@ const FlightsReturningForm = ({
       </h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
-          {returnFlights.map((flight) => (
+          {returningFlightOptions.map((flight) => (
             <label key={flight.id} className="cursor-pointer group">
               <input
                 type="radio"
