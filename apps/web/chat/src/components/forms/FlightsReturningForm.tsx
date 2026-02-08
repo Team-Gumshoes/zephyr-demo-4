@@ -37,6 +37,7 @@ export const returnFlights: Flight[] = [
 export type FlightsReturningFormData = {
   flightReturningId: number;
   returnDate: string;
+  currentStepIndex: number;
 };
 
 type FlightsReturningFormProps = FlightsReturningFormData & {
@@ -46,8 +47,11 @@ type FlightsReturningFormProps = FlightsReturningFormData & {
 const FlightsReturningForm = ({
   flightReturningId,
   returnDate,
+  currentStepIndex,
   updateFields,
 }: FlightsReturningFormProps) => {
+  const isActive = currentStepIndex === 2;
+
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold mb-6">
@@ -62,6 +66,7 @@ const FlightsReturningForm = ({
                 name="returningFlight"
                 value={flight.id}
                 checked={flightReturningId === flight.id}
+                disabled={!isActive}
                 onChange={(e) =>
                   updateFields({ flightReturningId: Number(e.target.value) })
                 }

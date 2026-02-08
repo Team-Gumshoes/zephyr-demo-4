@@ -5,6 +5,7 @@ export type BudgetPref = "budget" | "balanced" | "premium" | "none"
 export type BudgetFormData = {
   flightPreference: BudgetPref | undefined;
   lodgingPreference: BudgetPref | undefined;
+  currentStepIndex: number;
 }
 
 export type BudgetFormProps = BudgetFormData & {
@@ -15,10 +16,10 @@ const BudgetForm = ({
   flightPreference,
   lodgingPreference,
   updateFields,
+  currentStepIndex,
 }: BudgetFormProps) => {
 
-
-  const active = true // TODO how to do this? Possibly with currentChatStep in tripData ?
+  const isActive = currentStepIndex === 0
 
   const flightOptions: {value: BudgetPref, label: string}[] = [
     { value: 'budget', label: 'Budget-focused (layovers likely)' },
@@ -45,17 +46,17 @@ const BudgetForm = ({
               key={option.value}
               className={clsx(
                 'flex gap-2 items-center',
-                active && 'cursor-pointer',
+                isActive && 'cursor-pointer',
               )}
             >
               <input
-                disabled={!active}
+                disabled={!isActive}
                 type="radio"
                 name="flightPreference"
                 value={option.value}
                 checked={flightPreference === option.value}
                 onChange={(e) => updateFields({flightPreference: e.target.value as BudgetPref})}
-                className={clsx(active && 'cursor-pointer')}
+                className={clsx(isActive && 'cursor-pointer')}
               />
               <span>{option.label}</span>
             </label>
@@ -70,17 +71,17 @@ const BudgetForm = ({
               key={option.value}
               className={clsx(
                 'flex gap-2 items-center',
-                active && 'cursor-pointer',
+                isActive && 'cursor-pointer',
               )}
             >
               <input
-                disabled={!active}
+                disabled={!isActive}
                 type="radio"
                 name="lodgingPreference"
                 value={option.value}
                 checked={lodgingPreference === option.value}
                 onChange={(e) => updateFields({lodgingPreference: e.target.value as BudgetPref})}
-                className={clsx(active && 'cursor-pointer')}
+                className={clsx(isActive && 'cursor-pointer')}
               />
               <span>{option.label}</span>
             </label>
