@@ -1,30 +1,40 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { type ChatStep } from '../utils/createChatSteps';
+import { TripData } from '../app/app';
 
 const useMultiStepChat = (
   steps: ChatStep[],
+  data: TripData,
+  setTripData: Dispatch<SetStateAction<TripData>>,
 ) => {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-
   function next() {
-    setCurrentStepIndex((i) => (i === steps.length - 1 ? i : i + 1));
+    setTripData((prevTripData) => {
+      const prevIdx = prevTripData.currentStepIndex;
+      return {
+        ...prevTripData,
+        currentStepIndex: prevIdx === steps.length - 1 ? prevIdx : prevIdx + 1,
+      };
+    });
   }
+
   function back() {
-    setCurrentStepIndex((i) => (i === 0 ? 0 : i - 1));
-  }
-  function goTo(i: number) {
-    setCurrentStepIndex(i);
+    setTripData((prevTripData) => {
+      const prevIdx = prevTripData.currentStepIndex;
+      return {
+        ...prevTripData,
+        currentStepIndex: prevIdx === 0 ? prevIdx : prevIdx - 1,
+      };
+    });
   }
 
   return {
-    currentStepIndex,
-    step: steps[currentStepIndex],
+    currentStepIndex: data.currentStepIndex,
+    step: steps[data.currentStepIndex],
     steps,
     next,
     back,
-    goTo,
-    isFirstStep: currentStepIndex === 0,
-    isLastStep: currentStepIndex === steps.length -1,
+    isFirstStep: data.currentStepIndex === 0,
+    isLastStep: data.currentStepIndex === steps.length - 1,
   };
 };
 

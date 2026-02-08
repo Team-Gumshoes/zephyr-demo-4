@@ -14,7 +14,7 @@ type FlightReturnInstructionsProps = {
 const FlightReturnInstructions = ({
   flightPreference,
 }: FlightReturnInstructionsProps) => {
-  if (!flightPreference) return null;
+  if (!flightPreference) return <div>Invalid data</div>;
   return (
     <div className="text-sm">
       <div>

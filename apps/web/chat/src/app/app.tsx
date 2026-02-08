@@ -1,6 +1,6 @@
 import { Button } from '@allorai/shared-ui';
 import clsx from 'clsx';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
@@ -34,7 +34,7 @@ export interface TripData extends TripRequest {
   lodgingPreference: BudgetPref | undefined;
   flightDepartingId: number;
   flightReturningId: number;
-  // TODO Possibly add a currentChatStep here ?
+  currentStepIndex: number;
 }
 
 const initialTripData: Pick<
@@ -43,11 +43,13 @@ const initialTripData: Pick<
   | 'lodgingPreference'
   | 'flightDepartingId'
   | 'flightReturningId'
+  | 'currentStepIndex'
 > = {
   flightPreference: undefined,
   lodgingPreference: undefined,
   flightDepartingId: 0,
   flightReturningId: 0,
+  currentStepIndex: 0,
 };
 
 const ChatPage = () => {
@@ -58,6 +60,13 @@ const ChatPage = () => {
     ...(tripRequest || fallbackTripRequest),
     ...initialTripData,
   });
+  const [isChatLoading, setChatLoading] = useState(false);
+
+  const updateFields = useCallback((fields: Partial<TripData>) => {
+    setTripData((prev) => {
+      return { ...prev, ...fields };
+    });
+  }, []);
 
   const CHAT_STEPS: ChatStep[] = useMemo(
     () => createChatSteps(tripData, updateFields),
@@ -65,14 +74,7 @@ const ChatPage = () => {
   );
 
   const { steps, currentStepIndex, next, isFirstStep, isLastStep } =
-    useMultiStepChat(CHAT_STEPS);
-  const [isChatLoading, setChatLoading] = useState(false);
-
-  function updateFields(fields: Partial<TripData>) {
-    setTripData((prev) => {
-      return { ...prev, ...fields };
-    });
-  }
+    useMultiStepChat(CHAT_STEPS, tripData, setTripData);
 
   function onSubmit() {
     // check for validation errors here ?
@@ -87,15 +89,15 @@ const ChatPage = () => {
       }
     }, 1000);
   }
-  
+
   const validationError = ''; // TODO handle validation
-  
-  console.log(tripData)
-  
+
+  console.log(steps);
+
   if (!tripRequest) {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
-  
+
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>

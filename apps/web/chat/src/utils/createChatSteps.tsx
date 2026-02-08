@@ -43,3 +43,26 @@ const createChatSteps = (
 ];
 
 export { createChatSteps };
+
+// const createChatStepsFactory = (
+//   tripData: TripData,
+//   updateFields: (fields: Partial<TripData>) => void,
+// ) => (currentStepIndex: number): ChatStep[] => [
+//   {
+//     stepName: 'Budget',
+//     form: <BudgetForm {...tripData} updateFields={updateFields} />,
+//     instructions: <BudgetInstructions {...tripData} />,
+//   },
+//   {
+//     stepName: 'Departing',
+//     form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
+//     instructions: <FlightDepartingInstructions {...tripData} />,
+//   },
+//   {
+//     stepName: 'Returning',
+//     instructions: <FlightReturnInstructions {...tripData} />,
+//     form: <FlightsReturningForm {...tripData} updateFields={updateFields} />,
+//   },
+// ];
+
+// export { createChatStepsFactory };

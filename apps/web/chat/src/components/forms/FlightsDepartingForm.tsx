@@ -37,19 +37,25 @@ export const departingFlights: Flight[] = [
 export type FlightsDepartingFormData = {
   flightDepartingId: number;
   departureDate: string;
+  currentStepIndex: number;
 };
 
 type FlightsDepartingFormProps = FlightsDepartingFormData & {
-    updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
-
+  updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
 };
 
-const FlightsDepartingForm = ({flightDepartingId, departureDate, updateFields}: FlightsDepartingFormProps) => {
+const FlightsDepartingForm = ({
+  flightDepartingId,
+  departureDate,
+  currentStepIndex,
+  updateFields,
+}: FlightsDepartingFormProps) => {
+  const isActive = currentStepIndex === 1;
 
   return (
-    <div  className="w-full">
+    <div className="w-full">
       <h2 className="text-xl font-bold mb-6">
-        Departing Flights - {formatDate(departureDate) }
+        Departing Flights - {formatDate(departureDate)}
       </h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
@@ -58,9 +64,12 @@ const FlightsDepartingForm = ({flightDepartingId, departureDate, updateFields}: 
               <input
                 type="radio"
                 name="departingFlight"
+                disabled={!isActive}
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
-                onChange={(e) => updateFields({flightDepartingId :Number(e.target.value)})}
+                onChange={(e) =>
+                  updateFields({ flightDepartingId: Number(e.target.value) })
+                }
                 className="sr-only peer"
               />
               <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
