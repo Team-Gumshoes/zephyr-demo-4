@@ -1,5 +1,11 @@
-// import { Button, ActivityCard, BudgetOverview } from '@allorai/shared-ui';
-import { Button } from '@allorai/shared-ui';
+// import {
+//   Button,
+//   ActivityCard,
+//   BudgetOverview,
+//   Dialogue,
+// } from '@allorai/shared-ui';
+import { Button, Dialogue } from '@allorai/shared-ui';
+import { ModifyDetails } from '../components/modals/ModifyDetails';
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -82,6 +88,7 @@ const ChatPage = () => {
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const updateFields = useCallback((fields: Partial<TripData>) => {
     setTripData((prev) => {
@@ -164,12 +171,21 @@ const ChatPage = () => {
           <div className={`flex flex-col items-end mr-14 mb-6 justify-end`}>
             <div className="flex gap-2">
               {!isFirstStep && (
-                <Button
-                  onClick={() => console.log('clicked')}
-                  variant="secondary"
-                >
-                  Modify Details
-                </Button>
+                <>
+                  <Button
+                    onClick={() => setIsDialogOpen(true)}
+                    variant="secondary"
+                  >
+                    Modify Details
+                  </Button>
+                  <Dialogue
+                    isOpen={isDialogOpen}
+                    onClose={() => setIsDialogOpen(false)}
+                    title="How would you like to modify your trip details?"
+                  >
+                    <ModifyDetails />
+                  </Dialogue>
+                </>
               )}
               <Button onClick={onSubmit}>
                 {isChatLoading ? (
@@ -185,6 +201,7 @@ const ChatPage = () => {
           </div>
         </div>
       </div>
+      ;
     </div>
   );
 };
@@ -193,9 +210,16 @@ export default ChatPage;
 // Placeholder for testing UI library components
 {
   /* <div className="flex flex-col items-center gap-[50px] my-[100px]">
-  <Button className="w-fit" onClick={() => {}}>
+  <Button className="w-fit" onClick={() => setIsDialogOpen(true)}>
     Test Component
   </Button>
+  <Dialogue
+    isOpen={isDialogOpen}
+    onClose={() => setIsDialogOpen(false)}
+    title="How would you like to modify your trip details?"
+  >
+    <ModifyDetails />
+  </Dialogue>
   <ActivityCard
     title="Concert"
     description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
