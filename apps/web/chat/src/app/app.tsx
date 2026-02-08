@@ -1,3 +1,4 @@
+// import { Button, ActivityCard, BudgetOverview } from '@allorai/shared-ui';
 import { Button } from '@allorai/shared-ui';
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
@@ -13,8 +14,10 @@ import parseTripRequest, {
 import { BudgetPref } from '../components/forms/BudgetForm';
 import { stepHandlers } from './handlers/steps';
 import { Flight } from '../components/chips/FlightsChip';
+import { Hotel } from '../components/chips/HotelChip';
 import { SAMPLE_DEPARTING_FLIGHTS } from '../components/forms/FlightsDepartingForm';
 import { SAMPLE_RETURNING_FLIGHTS } from '../components/forms/FlightsReturningForm';
+import { SAMPLE_HOTELS } from '../components/forms/HotelsForm';
 
 // #3358ae dark
 // #99abd7 light
@@ -39,6 +42,7 @@ export interface TripData extends TripRequest {
   lodgingPreference: BudgetPref | undefined;
   flightDepartingId: number;
   flightReturningId: number;
+  hotelId: number;
   currentStepIndex: number;
 }
 
@@ -48,12 +52,14 @@ const initialTripData: Pick<
   | 'lodgingPreference'
   | 'flightDepartingId'
   | 'flightReturningId'
+  | 'hotelId'
   | 'currentStepIndex'
 > = {
   flightPreference: undefined,
   lodgingPreference: undefined,
   flightDepartingId: 0,
   flightReturningId: 0,
+  hotelId: 0,
   currentStepIndex: 0,
 };
 
@@ -73,6 +79,7 @@ const ChatPage = () => {
   const [returningFlightOptions, setReturningFlightOptions] = useState<
     Flight[]
   >(SAMPLE_RETURNING_FLIGHTS);
+  const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
@@ -88,9 +95,16 @@ const ChatPage = () => {
         tripData,
         departingFlightOptions,
         returningFlightOptions,
+        hotelOptions,
         updateFields,
       ),
-    [tripData, updateFields, departingFlightOptions, returningFlightOptions],
+    [
+      tripData,
+      updateFields,
+      departingFlightOptions,
+      returningFlightOptions,
+      hotelOptions,
+    ],
   );
 
   const {
@@ -113,6 +127,7 @@ const ChatPage = () => {
         tripData,
         setDepartingFlightOptions,
         setReturningFlightOptions,
+        setHotelOptions,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
       });
@@ -146,7 +161,7 @@ const ChatPage = () => {
       <div className={clsx('flex justify-between h-full flex-col')}>
         <ChatMessageList steps={steps} currentStepIndex={currentStepIndex} />
         <div className="flex justify-end gap-2">
-          <div className={`flex flex-col items-end mr-14 justify-end`}>
+          <div className={`flex flex-col items-end mr-14 mb-6 justify-end`}>
             <div className="flex gap-2">
               {!isFirstStep && (
                 <Button
@@ -173,5 +188,27 @@ const ChatPage = () => {
     </div>
   );
 };
-
 export default ChatPage;
+
+// Placeholder for testing UI library components
+{
+  /* <div className="flex flex-col items-center gap-[50px] my-[100px]">
+  <Button className="w-fit" onClick={() => {}}>
+    Test Component
+  </Button>
+  <ActivityCard
+    title="Concert"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    estimatedCost="55"
+    distance="44"
+    onViewDetails={() => {}}
+  />
+  <BudgetOverview
+    items={[
+      { label: 'flights', amount: 800 },
+      { label: 'Hotels', amount: 600 },
+      { label: 'Attractions', amount: 0 },
+    ]}
+  />
+</div>; */
+}

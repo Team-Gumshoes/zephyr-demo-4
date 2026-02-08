@@ -6,7 +6,10 @@ import BudgetInstructions from '../components/instructions/BudgetInstructions';
 import FlightDepartingInstructions from '../components/instructions/FlightDepartingInstructions';
 import FlightReturnInstructions from '../components/instructions/FlightReturnInstructions';
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
+import HotelInstructions from '../components/instructions/HotelInstructions';
+import HotelsForm from '../components/forms/HotelsForm';
 import { type Flight } from '../components/chips/FlightsChip';
+import { type Hotel } from '../components/chips/HotelChip';
 
 export type ChatStepName =
   | 'Budget'
@@ -26,15 +29,17 @@ const createChatSteps = (
   tripData: TripData,
   departingFlightOptions: Flight[],
   returningFlightOptions: Flight[],
+  hotelOptions: Hotel[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [
   {
     stepName: 'Budget',
-    form: <BudgetForm {...tripData} updateFields={updateFields} />,
     instructions: <BudgetInstructions {...tripData} />,
+    form: <BudgetForm {...tripData} updateFields={updateFields} />,
   },
   {
     stepName: 'Departing',
+    instructions: <FlightDepartingInstructions {...tripData} />,
     form: (
       <FlightsDepartingForm
         {...tripData}
@@ -42,12 +47,28 @@ const createChatSteps = (
         updateFields={updateFields}
       />
     ),
-    instructions: <FlightDepartingInstructions {...tripData} />,
   },
   {
     stepName: 'Returning',
     instructions: <FlightReturnInstructions {...tripData} />,
-    form: <FlightsReturningForm {...tripData} returningFlightOptions={returningFlightOptions} updateFields={updateFields} />,
+    form: (
+      <FlightsReturningForm
+        {...tripData}
+        returningFlightOptions={returningFlightOptions}
+        updateFields={updateFields}
+      />
+    ),
+  },
+  {
+    stepName: 'Hotels',
+    instructions: <HotelInstructions {...tripData} />,
+    form: (
+      <HotelsForm
+        {...tripData}
+        hotelOptions={hotelOptions}
+        updateFields={updateFields}
+      />
+    ),
   },
 ];
 

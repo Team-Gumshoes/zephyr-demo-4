@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
 import { TripData } from '../app';
 import { Flight } from '../../components/chips/FlightsChip';
+import { Hotel } from '../../components/chips/HotelChip';
 
 // This is what the handler might need to be passed to it to get its job done
 export interface StepHandlerContext {
   tripData: TripData;
   setDepartingFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
+  setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;
   updateFields: (fields: Partial<TripData>) => void; // not totally clear if we need this
   next: () => void; // not totally clear if we need this
 }
