@@ -1,3 +1,4 @@
+// import { Button, ActivityCard, BudgetOverview } from '@allorai/shared-ui';
 import { Button } from '@allorai/shared-ui';
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
@@ -34,6 +35,7 @@ export interface TripData extends TripRequest {
   lodgingPreference: BudgetPref | undefined;
   flightDepartingId: number;
   flightReturningId: number;
+  hotelId: number;
   currentStepIndex: number;
 }
 
@@ -43,12 +45,14 @@ const initialTripData: Pick<
   | 'lodgingPreference'
   | 'flightDepartingId'
   | 'flightReturningId'
+  | 'hotelId'
   | 'currentStepIndex'
 > = {
   flightPreference: undefined,
   lodgingPreference: undefined,
   flightDepartingId: 0,
   flightReturningId: 0,
+  hotelId: 0,
   currentStepIndex: 0,
 };
 
@@ -132,5 +136,27 @@ const ChatPage = () => {
     </div>
   );
 };
-
 export default ChatPage;
+
+// Placeholder for testing UI library components
+{
+  /* <div className="flex flex-col items-center gap-[50px] my-[100px]">
+  <Button className="w-fit" onClick={() => {}}>
+    Test Component
+  </Button>
+  <ActivityCard
+    title="Concert"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    estimatedCost="55"
+    distance="44"
+    onViewDetails={() => {}}
+  />
+  <BudgetOverview
+    items={[
+      { label: 'flights', amount: 800 },
+      { label: 'Hotels', amount: 600 },
+      { label: 'Attractions', amount: 0 },
+    ]}
+  />
+</div>; */
+}

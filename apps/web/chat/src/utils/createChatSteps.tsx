@@ -6,6 +6,8 @@ import BudgetInstructions from '../components/instructions/BudgetInstructions';
 import FlightDepartingInstructions from '../components/instructions/FlightDepartingInstructions';
 import FlightReturnInstructions from '../components/instructions/FlightReturnInstructions';
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
+import HotelInstructions from '../components/instructions/HotelInstructions';
+import HotelsForm from '../components/forms/HotelsForm';
 
 export type ChatStepName =
   | 'Budget'
@@ -27,18 +29,23 @@ const createChatSteps = (
 ): ChatStep[] => [
   {
     stepName: 'Budget',
-    form: <BudgetForm {...tripData} updateFields={updateFields} />,
     instructions: <BudgetInstructions {...tripData} />,
+    form: <BudgetForm {...tripData} updateFields={updateFields} />,
   },
   {
     stepName: 'Departing',
-    form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
     instructions: <FlightDepartingInstructions {...tripData} />,
+    form: <FlightsDepartingForm {...tripData} updateFields={updateFields} />,
   },
   {
     stepName: 'Returning',
     instructions: <FlightReturnInstructions {...tripData} />,
     form: <FlightsReturningForm {...tripData} updateFields={updateFields} />,
+  },
+  {
+    stepName: 'Hotels',
+    instructions: <HotelInstructions {...tripData} />,
+    form: <HotelsForm {...tripData} updateFields={updateFields} />,
   },
 ];
 

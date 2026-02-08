@@ -1,38 +1,27 @@
-// import { BudgetFormData } from '../forms/BudgetForm';
+import { BudgetPref } from '../forms/BudgetForm';
 
-// TODO Needs update
-
-import { BudgetFormData } from "../forms/BudgetForm";
-
-type HotelInstructionsProps = {
-  budgetData: BudgetFormData | null;
+const HOTEL_PREFS = {
+  budget: 'budget-focused ($)',
+  balanced: 'balanced, mid-priced ($$-$$$)',
+  premium: 'premium priced ($$$-$$$$) high-end',
+  none: 'none',
 };
 
-const HotelInstructions = ({ budgetData }: HotelInstructionsProps) => {
-  const getLodgingPreferenceText = () => {
-    if (!budgetData?.lodgingPreference) return 'various';
+type HotelInstructionsProps = {
+  lodgingPreference: BudgetPref | undefined;
+};
 
-    switch (budgetData.lodgingPreference) {
-      case 'budget':
-        return 'budget ($)';
-      case 'balanced':
-        return 'mid-range ($$-$$$)';
-      case 'premium':
-        return 'high-end ($$$-$$$$)';
-      case 'none':
-        return 'various';
-      default:
-        return 'various';
-    }
-  };
+const HotelInstructions = ({ lodgingPreference }: HotelInstructionsProps) => {
+  if (!lodgingPreference) return <div>Invalid data</div>;
 
   return (
     <div className="text-sm">
       <div>
-        Here are some lodging options in the <b>{getLodgingPreferenceText()}</b> price range that
+        Here are some <b>{HOTEL_PREFS[lodgingPreference]}</b> lodging options
         you can select for your trip plan estimate.
       </div>
     </div>
   );
 };
+
 export default HotelInstructions;
