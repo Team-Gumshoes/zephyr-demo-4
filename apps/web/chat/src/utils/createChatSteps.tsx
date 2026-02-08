@@ -11,13 +11,16 @@ import HotelsForm from '../components/forms/HotelsForm';
 import { type Flight } from '../components/chips/FlightsChip';
 import { type Hotel } from '../components/chips/HotelChip';
 
-export type ChatStepName =
-  | 'Budget'
-  | 'Departing'
-  | 'Returning'
-  | 'Hotels'
-  | 'Summary'
-  | 'Other';
+export enum ChatStepSequence {
+  Budget,
+  Departing,
+  Returning,
+  Hotels,
+  Summary,
+  Other,
+}
+
+export type ChatStepName = keyof typeof ChatStepSequence;
 
 export type ChatStep = {
   stepName: ChatStepName;

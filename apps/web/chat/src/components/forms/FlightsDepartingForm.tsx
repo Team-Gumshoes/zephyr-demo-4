@@ -1,3 +1,4 @@
+import { ChatStepSequence } from '../../utils/createChatSteps';
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
 
@@ -41,7 +42,7 @@ export type FlightsDepartingFormData = {
 };
 
 type FlightsDepartingFormProps = FlightsDepartingFormData & {
-  departingFlightOptions: Flight[],
+  departingFlightOptions: Flight[];
   updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
 };
 
@@ -52,7 +53,7 @@ const FlightsDepartingForm = ({
   departingFlightOptions,
   updateFields,
 }: FlightsDepartingFormProps) => {
-  const isActive = currentStepIndex === 1;
+  const isActive = currentStepIndex === ChatStepSequence.Departing;
 
   return (
     <div className="w-full">

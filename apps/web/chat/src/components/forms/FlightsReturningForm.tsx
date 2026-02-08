@@ -1,3 +1,4 @@
+import { ChatStepSequence } from '../../utils/createChatSteps';
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
 
@@ -52,7 +53,7 @@ const FlightsReturningForm = ({
   returningFlightOptions,
   updateFields,
 }: FlightsReturningFormProps) => {
-  const isActive = currentStepIndex === 2;
+  const isActive = currentStepIndex === ChatStepSequence.Returning;
 
   return (
     <div className="w-full">

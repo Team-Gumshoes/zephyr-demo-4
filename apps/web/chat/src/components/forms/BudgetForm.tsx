@@ -1,12 +1,13 @@
 import clsx from 'clsx';
+import { ChatStepSequence } from '../../utils/createChatSteps';
 
-export type BudgetPref = "budget" | "balanced" | "premium" | "none"
+export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
 
 export type BudgetFormData = {
   flightPreference: BudgetPref | undefined;
   lodgingPreference: BudgetPref | undefined;
   currentStepIndex: number;
-}
+};
 
 export type BudgetFormProps = BudgetFormData & {
   updateFields: (fields: Partial<BudgetFormData>) => void;
@@ -18,17 +19,16 @@ const BudgetForm = ({
   updateFields,
   currentStepIndex,
 }: BudgetFormProps) => {
+  const isActive = currentStepIndex === ChatStepSequence.Budget;
 
-  const isActive = currentStepIndex === 0
-
-  const flightOptions: {value: BudgetPref, label: string}[] = [
+  const flightOptions: { value: BudgetPref; label: string }[] = [
     { value: 'budget', label: 'Budget-focused (layovers likely)' },
     { value: 'balanced', label: 'Balanced' },
     { value: 'premium', label: 'Premium (direct flights, better times)' },
     { value: 'none', label: 'No Preference' },
   ];
 
-  const lodgingOptions: {value: BudgetPref, label: string}[] = [
+  const lodgingOptions: { value: BudgetPref; label: string }[] = [
     { value: 'budget', label: 'Budget ($)' },
     { value: 'balanced', label: 'Mid-Range ($$-$$$)' },
     { value: 'premium', label: 'High-End($$$-$$$$)' },
@@ -55,14 +55,17 @@ const BudgetForm = ({
                 name="flightPreference"
                 value={option.value}
                 checked={flightPreference === option.value}
-                onChange={(e) => updateFields({flightPreference: e.target.value as BudgetPref})}
+                onChange={(e) =>
+                  updateFields({
+                    flightPreference: e.target.value as BudgetPref,
+                  })
+                }
                 className={clsx(isActive && 'cursor-pointer')}
               />
               <span>{option.label}</span>
             </label>
           ))}
         </div>
-
 
         <div className="font-semibold">Lodging Preferences</div>
         <div className="flex flex-col">
@@ -80,7 +83,11 @@ const BudgetForm = ({
                 name="lodgingPreference"
                 value={option.value}
                 checked={lodgingPreference === option.value}
-                onChange={(e) => updateFields({lodgingPreference: e.target.value as BudgetPref})}
+                onChange={(e) =>
+                  updateFields({
+                    lodgingPreference: e.target.value as BudgetPref,
+                  })
+                }
                 className={clsx(isActive && 'cursor-pointer')}
               />
               <span>{option.label}</span>

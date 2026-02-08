@@ -1,3 +1,4 @@
+import { ChatStepSequence } from '../../utils/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatDate';
 import HotelChip, { Hotel } from '../chips/HotelChip';
 
@@ -62,7 +63,7 @@ const HotelsForm = ({
   hotelOptions,
   updateFields,
 }: HotelsFormProps) => {
-  const isActive = currentStepIndex === 1;
+  const isActive = currentStepIndex === ChatStepSequence.Hotels;
 
   return (
     <div className="w-full">
