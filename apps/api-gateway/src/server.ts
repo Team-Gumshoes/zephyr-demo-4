@@ -1,51 +1,10 @@
-// 
-import express, { Request, Response, type Express } from 'express';
+import { type Express } from 'express';
 import { config } from './config/env.js';
-import { errorMiddleware } from './middleware/error.middleware.js';
-import { corsMiddleware } from './middleware/cors.middleware.js';
-import { loggerMiddleware } from './middleware/logger.middleware.js';
-import routes from './routes/index.js';
 import { connectToSupabase } from './startup/connectToDB.js';
-import cookieParser from 'cookie-parser';
+import createApp from './startup/createApp.js';
 
-const app: Express = express();
-
-// Middleware
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
-app.use(corsMiddleware);
-app.use(loggerMiddleware);
-
-// Root endpoint
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    name: 'Allorai API Gateway',
-    version: '1.0.0',
-    description: 'Gateway for multi-agent travel orchestration',
-    endpoints: {
-      health: '/api/health',
-      flights: '/api/flights',
-      hotels: '/api/hotels',
-      transport: '/api/transport',
-      coordinate: '/api/coordinate',
-    },
-  });
-});
-
-app.get('/health', (req: Request, res: Response) => {
-  res.json({
-    status: 'healthy',
-    service: 'api-gateway',
-    timestamp: new Date().toISOString(),
-  });
-});
-
-// API routes
-app.use('/api', routes);
-
-// Error handling middleware (must be last)
-app.use(errorMiddleware);
+// Create express app and add all middleware and routes
+const app: Express = createApp();
 
 // Connect to Supabase
 connectToSupabase();

@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-export const extractSessionFromCookie = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
+export const extractSessionFromCookie = (req: Request, res: Response, next: NextFunction): void => {
   const sessionId = req.cookies?.chat_session_id;
 
   if (!sessionId) {
