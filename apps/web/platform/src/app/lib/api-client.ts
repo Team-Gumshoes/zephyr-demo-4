@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 // TODO debug env
-// const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3001/api'
-const API_BASE_URL = 'http://localhost:3001/api'
+const API_BASE_URL = process.env.NX_PUBLIC_API_BASE_URL || 'http://localhost:3001';
 
 export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: `${API_BASE_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor for adding auth tokens
@@ -22,7 +22,7 @@ apiClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor for handling errors
@@ -35,7 +35,7 @@ apiClient.interceptors.response.use(
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

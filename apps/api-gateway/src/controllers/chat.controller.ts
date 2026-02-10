@@ -1,18 +1,33 @@
 import { Request, Response } from 'express';
 import { createChatMessage, createChatSession } from '../services/chat.service';
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: 'lax' as const,
+  path: '/',
+};
+// import { deleteChatSession } from '../services/chat.service';
 // import { typescriptAgentsClient } from '../services/typescriptAgentsClient';
 
-// ************* POST /chat/session - Create a new chat session ************
+// ************* POST /chat/session - Create a new chat session (idempotent) ************
 const createChatSessionHandler = async (req: Request, res: Response): Promise<void> => {
+  const existingSessionId = req.cookies?.chat_session_id;
+
+  // If a session cookie already exists, return it without creating a new one
+  if (existingSessionId) {
+    res.status(200).json({ id: existingSessionId });
+    return;
+  }
+
   const { supabase } = req;
   const { data } = await createChatSession({ supabase });
 
   // Set session ID in cookie
   res.cookie('chat_session_id', data.id, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
+    ...cookieOptions,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -24,7 +39,10 @@ const createChatSessionHandler = async (req: Request, res: Response): Promise<vo
 
 // ************* POST /chat/message - Send a message and get LLM response ************
 const chatMessageHandler = async (req: Request, res: Response): Promise<void> => {
-  const { supabase, body: { sessionId, message } } = req;
+  const {
+    supabase,
+    body: { sessionId, message },
+  } = req;
 
   // Validate required fields
   if (!sessionId || !message) {
@@ -61,4 +79,25 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
   });
 };
 
-export { chatMessageHandler, createChatSessionHandler };
+// ************* DELETE /chat/session - Delete a chat session ************
+const deleteChatSessionHandler = async (req: Request, res: Response): Promise<void> => {
+  // const { supabase } = req;
+  const sessionId = req.cookies?.chat_session_id;
+
+  if (!sessionId) {
+    res.status(400).json({
+      error: 'No active session found',
+    });
+    return;
+  }
+
+  // Delete session from chat sessions table
+  // await deleteChatSession({ supabase, sessionId });
+
+  // Clear the session cookie
+  res.clearCookie('chat_session_id', cookieOptions);
+
+  res.status(200).json({ message: 'Session cleared' });
+};
+
+export { chatMessageHandler, createChatSessionHandler, deleteChatSessionHandler };
