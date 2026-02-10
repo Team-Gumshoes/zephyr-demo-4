@@ -1,6 +1,7 @@
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatDate';
 import HotelChip, { Hotel } from '../chips/HotelChip';
+import clsx from 'clsx';
 
 export const SAMPLE_HOTELS: Hotel[] = [
   {
@@ -70,12 +71,8 @@ const HotelsForm = ({
       <h2 className="text-xl font-bold mb-3">
         Available Hotels - {calculateNights(departureDate, returnDate)} nights
       </h2>
-      <h3 className="text-lg font-bold mb-3">
-        Check-in: {formatDate(departureDate)}
-      </h3>
-      <h3 className="text-lg font-bold mb-6">
-        Checkout: {formatDate(returnDate)}
-      </h3>
+      <h3 className="text-lg font-bold mb-3">Check-in: {formatDate(departureDate)}</h3>
+      <h3 className="text-lg font-bold mb-6">Checkout: {formatDate(returnDate)}</h3>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
           {hotelOptions.map((hotel) => (
@@ -86,12 +83,16 @@ const HotelsForm = ({
                 disabled={!isActive}
                 value={hotel.id}
                 checked={hotelId === hotel.id}
-                onChange={(e) =>
-                  updateFields({ hotelId: Number(e.target.value) })
-                }
+                onChange={(e) => updateFields({ hotelId: Number(e.target.value) })}
                 className="sr-only peer"
               />
-              <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
+              <div
+                className={clsx(
+                  'peer-checked:ring-2 peer-checked:ring-[#3358ae] rounded-[20px] transition-all duration-200 ',
+                  isActive && 'group-hover:scale-[1.02] group-hover:shadow-lg',
+                  !isActive && hotelId !== hotel.id && 'hidden',
+                )}
+              >
                 <HotelChip hotel={hotel} />
               </div>
             </label>

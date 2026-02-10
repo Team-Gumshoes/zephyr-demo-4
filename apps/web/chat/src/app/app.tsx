@@ -13,10 +13,7 @@ import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
 import useMultiStepChat from '../hooks/useMultiStepChat';
 import { ChatStep, createChatSteps } from '../utils/createChatSteps';
-import parseTripRequest, {
-  fallbackTripRequest,
-  TripRequest,
-} from '../utils/parseTripRequest';
+import parseTripRequest, { fallbackTripRequest, TripRequest } from '../utils/parseTripRequest';
 import { BudgetPref } from '../components/forms/BudgetForm';
 import { stepHandlers } from './handlers/steps';
 import { Flight } from '../components/chips/FlightsChip';
@@ -79,12 +76,10 @@ const ChatPage = () => {
   });
 
   // TODO Consider putting all this state in Zustand
-  const [departingFlightOptions, setDepartingFlightOptions] = useState<
-    Flight[]
-  >(SAMPLE_DEPARTING_FLIGHTS);
-  const [returningFlightOptions, setReturningFlightOptions] = useState<
-    Flight[]
-  >(SAMPLE_RETURNING_FLIGHTS);
+  const [departingFlightOptions, setDepartingFlightOptions] =
+    useState<Flight[]>(SAMPLE_DEPARTING_FLIGHTS);
+  const [returningFlightOptions, setReturningFlightOptions] =
+    useState<Flight[]>(SAMPLE_RETURNING_FLIGHTS);
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -105,23 +100,14 @@ const ChatPage = () => {
         hotelOptions,
         updateFields,
       ),
-    [
-      tripData,
-      updateFields,
-      departingFlightOptions,
-      returningFlightOptions,
-      hotelOptions,
-    ],
+    [tripData, updateFields, departingFlightOptions, returningFlightOptions, hotelOptions],
   );
 
-  const {
-    steps,
-    currentStep,
-    currentStepIndex,
-    next,
-    isFirstStep,
-    isLastStep,
-  } = useMultiStepChat(chatSteps, tripData, setTripData);
+  const { steps, currentStep, currentStepIndex, next, isFirstStep, isLastStep } = useMultiStepChat(
+    chatSteps,
+    tripData,
+    setTripData,
+  );
 
   const onSubmit = async () => {
     setChatLoading(true);
@@ -156,6 +142,9 @@ const ChatPage = () => {
       setError('An unexpected error occurred');
     } finally {
       setChatLoading(false);
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, 100);
     }
   };
 
@@ -172,10 +161,7 @@ const ChatPage = () => {
             <div className="flex gap-2">
               {!isFirstStep && (
                 <>
-                  <Button
-                    onClick={() => setIsDialogOpen(true)}
-                    variant="secondary"
-                  >
+                  <Button onClick={() => setIsDialogOpen(true)} variant="secondary">
                     Modify Details
                   </Button>
                   <Dialogue
@@ -195,9 +181,7 @@ const ChatPage = () => {
                 )}
               </Button>
             </div>
-            {error && (
-              <div className="text-red-600 font-semibold mt-2">{error}</div>
-            )}
+            {error && <div className="text-red-600 font-semibold mt-2">{error}</div>}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { formatDate } from '../../utils/formatDate';
 import FlightChip, { Flight } from '../chips/FlightsChip';
+import clsx from 'clsx';
 
 export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   {
@@ -57,9 +58,7 @@ const FlightsReturningForm = ({
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-bold mb-6">
-        Returning Flights - {formatDate(returnDate)}
-      </h2>
+      <h2 className="text-xl font-bold mb-6">Returning Flights - {formatDate(returnDate)}</h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
           {returningFlightOptions.map((flight) => (
@@ -70,12 +69,16 @@ const FlightsReturningForm = ({
                 value={flight.id}
                 checked={flightReturningId === flight.id}
                 disabled={!isActive}
-                onChange={(e) =>
-                  updateFields({ flightReturningId: Number(e.target.value) })
-                }
+                onChange={(e) => updateFields({ flightReturningId: Number(e.target.value) })}
                 className="sr-only peer"
               />
-              <div className="peer-checked:ring-2 peer-checked:ring-[#3358ae] peer-checked:ring-offset-2 rounded-[20px] transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
+              <div
+                className={clsx(
+                  'peer-checked:ring-2 peer-checked:ring-[#3358ae] rounded-[20px] transition-all duration-200 ',
+                  isActive && 'group-hover:scale-[1.02] group-hover:shadow-lg',
+                  !isActive && flightReturningId !== flight.id && 'hidden',
+                )}
+              >
                 <FlightChip flight={flight} />
               </div>
             </label>
