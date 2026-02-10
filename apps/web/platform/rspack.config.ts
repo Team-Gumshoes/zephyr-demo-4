@@ -15,6 +15,11 @@ const config: Configuration = {
     path: join(__dirname, 'dist'),
     publicPath: 'auto',
   },
+  resolve: {
+    alias: {
+      '@allorai/shared-ui': join(__dirname, '../../../libs/shared/ui/src/index.ts'),
+    },
+  },
   devServer: {
     port: 4200,
     historyApiFallback: {
@@ -45,6 +50,4 @@ const config: Configuration = {
 };
 
 // Toggle Zephyr plugin via environment variable
-export default process.env['USE_ZEPHYR'] === 'true'
-  ? withZephyr()(config)
-  : config;
+export default process.env['USE_ZEPHYR'] === 'true' ? withZephyr()(config) : config;
