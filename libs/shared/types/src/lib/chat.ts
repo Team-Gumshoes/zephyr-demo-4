@@ -1,16 +1,16 @@
 import type { Message } from './message';
 import type { ResponseData } from './response-data';
-import type { Trip } from './trip';
+import { TripData } from './trip';
 
 export interface ChatRequest {
   messages: Message[];
   data?: ResponseData | null;
-  trip: Trip;
+  trip: TripData;
 }
 
 export interface ChatResponse {
   messages: Message[];
   data: ResponseData | null;
-  trip: Trip;
+  trip: TripData;
   debug: Message[];
 }

@@ -16,10 +16,8 @@ const config: Configuration = {
   },
   resolve: {
     alias: {
-      '@allorai/shared-ui': join(
-        __dirname,
-        '../../../libs/shared/ui/src/index.ts',
-      ),
+      '@allorai/shared-ui': join(__dirname, '../../../libs/shared/ui/src/index.ts'),
+      '@allorai/shared-types': join(__dirname, '../../../libs/shared/types/src/index.ts'),
     },
   },
   devServer: {
@@ -55,6 +53,4 @@ const config: Configuration = {
 };
 
 // Toggle Zephyr plugin via environment variable
-export default process.env['USE_ZEPHYR'] === 'true'
-  ? withZephyr()(config)
-  : config;
+export default process.env['USE_ZEPHYR'] === 'true' ? withZephyr()(config) : config;

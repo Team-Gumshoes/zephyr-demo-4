@@ -3,7 +3,14 @@ import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 
 // Re-export shared types so existing imports from this file still work
 export type { ChatRequest, ChatResponse } from '@allorai/shared-types';
-export type { Message, Trip, FlightSegment, FlightLeg, FlightResults, FlightResponseData, ResponseData } from '@allorai/shared-types';
+export type {
+  Message,
+  FlightSegment,
+  FlightLeg,
+  FlightResults,
+  FlightResponseData,
+  ResponseData,
+} from '@allorai/shared-types';
 
 // TODO Fix the type here
 export interface CreateSessionResponse {
@@ -13,21 +20,11 @@ export interface CreateSessionResponse {
 
 // API sets cookie for chat_session_id
 export async function createChatSession(): Promise<CreateSessionResponse> {
-  const response = await apiClient.post<CreateSessionResponse>(
-    '/chat/session',
-    {},
-  );
+  const response = await apiClient.post<CreateSessionResponse>('/chat/session', {});
   return response.data;
 }
 
-export async function sendChatMessage(
-  data: ChatRequest,
-): Promise<ChatResponse> {
-  const response = await apiClient.post<ChatResponse>(
-    '/chat/message',
-    data,
-  );
-  console.log("&&&&&&&& In chat.ts (api) &&&&&&")
-  console.log(response)
+export async function sendChatMessage(data: ChatRequest): Promise<ChatResponse> {
+  const response = await apiClient.post<ChatResponse>('/chat/message', data);
   return response.data;
 }

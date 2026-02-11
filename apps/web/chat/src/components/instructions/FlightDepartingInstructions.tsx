@@ -1,6 +1,8 @@
-import { BudgetPref } from '../forms/BudgetForm';
+// import { BudgetPref } from '../forms/BudgetForm';
 
-const FLIGHT_PREFS = {
+import { BudgetPref } from '@allorai/shared-types';
+
+const FLIGHT_PREFS: Record<BudgetPref, string> = {
   budget: 'budget-focused with possible layovers',
   balanced: 'balanced in price and convenience',
   premium: 'premium with direct flights and better times',
@@ -11,17 +13,13 @@ type FlightDepartingInstructionsProps = {
   flightPreference?: BudgetPref;
 };
 
-const FlightDepartingInstructions = ({
-  flightPreference,
-}: FlightDepartingInstructionsProps) => {
+const FlightDepartingInstructions = ({ flightPreference }: FlightDepartingInstructionsProps) => {
   if (!flightPreference) return <div>Invalid data</div>;
   return (
     <div className="text-sm">
       <div>
-        Thank you for your preferences. Here are a few possible{' '}
-        <b>departing flights</b> that are{' '}
-        <b>{FLIGHT_PREFS[flightPreference]}</b> that you can select for your
-        trip plan estimate.
+        Thank you for your preferences. Here are a few possible <b>departing flights</b> that are{' '}
+        <b>{FLIGHT_PREFS[flightPreference]}</b> that you can select for your trip plan estimate.
       </div>
     </div>
   );

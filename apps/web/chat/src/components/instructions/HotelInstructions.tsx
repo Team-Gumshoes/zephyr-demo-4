@@ -1,6 +1,6 @@
-import { BudgetPref } from '../forms/BudgetForm';
+import { BudgetPref } from '@allorai/shared-types';
 
-const HOTEL_PREFS = {
+const HOTEL_PREFS: Record<BudgetPref, string> = {
   budget: 'budget-focused ($)',
   balanced: 'balanced, mid-priced ($$-$$$)',
   premium: 'premium priced ($$$-$$$$) high-end',
@@ -17,8 +17,8 @@ const HotelInstructions = ({ lodgingPreference }: HotelInstructionsProps) => {
   return (
     <div className="text-sm">
       <div>
-        Here are some <b>{HOTEL_PREFS[lodgingPreference]}</b> lodging options
-        you can select for your trip plan estimate.
+        Here are some <b>{HOTEL_PREFS[lodgingPreference]}</b> lodging options you can select for
+        your trip plan estimate.
       </div>
     </div>
   );

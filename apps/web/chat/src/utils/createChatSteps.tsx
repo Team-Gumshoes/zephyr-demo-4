@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { TripData } from '../app/app';
 import BudgetForm from '../components/forms/BudgetForm';
 import FlightsDepartingForm from '../components/forms/FlightsDepartingForm';
 import BudgetInstructions from '../components/instructions/BudgetInstructions';
@@ -8,8 +7,7 @@ import FlightReturnInstructions from '../components/instructions/FlightReturnIns
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
 import HotelInstructions from '../components/instructions/HotelInstructions';
 import HotelsForm from '../components/forms/HotelsForm';
-import { type Flight } from '../components/chips/FlightsChip';
-import { type Hotel } from '../components/chips/HotelChip';
+import { FlightResults, HotelResults, TripData } from '@allorai/shared-types';
 
 export enum ChatStepSequence {
   Budget,
@@ -30,9 +28,9 @@ export type ChatStep = {
 
 const createChatSteps = (
   tripData: TripData,
-  departingFlightOptions: Flight[],
-  returningFlightOptions: Flight[],
-  hotelOptions: Hotel[],
+  departingFlightOptions: FlightResults[],
+  returningFlightOptions: FlightResults[],
+  hotelOptions: HotelResults[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [
   {
@@ -65,13 +63,7 @@ const createChatSteps = (
   {
     stepName: 'Hotels',
     instructions: <HotelInstructions {...tripData} />,
-    form: (
-      <HotelsForm
-        {...tripData}
-        hotelOptions={hotelOptions}
-        updateFields={updateFields}
-      />
-    ),
+    form: <HotelsForm {...tripData} hotelOptions={hotelOptions} updateFields={updateFields} />,
   },
 ];
 
