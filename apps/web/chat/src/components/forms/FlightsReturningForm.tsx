@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 export type FlightsReturningFormData = {
   flightReturningId?: string;
+  returnFlight?: FlightResults;
   returnDate?: string;
   currentStepIndex: number;
 };
@@ -37,7 +38,12 @@ const FlightsReturningForm = ({
                 value={flight.id}
                 checked={flightReturningId === flight.id}
                 disabled={!isActive}
-                onChange={(e) => updateFields({ flightReturningId: e.target.value })}
+                onChange={(e) =>
+                  updateFields({
+                    flightReturningId: e.target.value,
+                    returnFlight: flight,
+                  })
+                }
                 className="sr-only peer"
               />
               <div
