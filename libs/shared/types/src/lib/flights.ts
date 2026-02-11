@@ -24,6 +24,7 @@ export interface FlightResults {
   price: number;
   currency: string;
   legs: FlightLeg[];
+  date?: string;
 }
 
 export const SAMPLE_DEPARTING_FLIGHTS: FlightResults[] = [
@@ -47,7 +48,7 @@ export const SAMPLE_DEPARTING_FLIGHTS: FlightResults[] = [
     ],
   },
   {
-    id: '3',
+    id: '2',
     price: 275,
     currency: 'USD',
     legs: [

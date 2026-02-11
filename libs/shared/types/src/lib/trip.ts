@@ -12,6 +12,9 @@
 //   constraints: string[];
 // }
 
+import { FlightResults } from './flights';
+import { HotelResults } from './hotels';
+
 export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
 
 // StartingPrefs comes from the form on the landing page (query string)
@@ -34,9 +37,9 @@ export interface TripPrefs extends StartingPrefs {
 }
 
 export interface TripData extends TripPrefs {
-  departureFlight?: string;
-  returnFlight?: string;
-  hotel?: string;
+  departureFlight?: FlightResults;
+  returnFlight?: FlightResults;
+  hotel?: HotelResults;
 }
 
 // TODO AgentApiTrip is here for reference only (Delete later)

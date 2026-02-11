@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 export type HotelsFormData = {
   hotelId?: string;
+  hotel?: HotelResults;
   departureDate?: string;
   returnDate?: string;
   currentStepIndex: number;
@@ -43,7 +44,7 @@ const HotelsForm = ({
                 disabled={!isActive}
                 value={hotel.id}
                 checked={hotelId === hotel.id}
-                onChange={(e) => updateFields({ hotelId: e.target.value })}
+                onChange={(e) => updateFields({ hotelId: e.target.value, hotel: hotel })}
                 className="sr-only peer"
               />
               <div
