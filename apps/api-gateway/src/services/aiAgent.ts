@@ -1,12 +1,22 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { config } from '../config/env.js';
-
-class PythonAgentsClient {
+/*
+{
+  "messages": [
+    { "type": "human", "content": "Find flights from LAX to JFK" },
+    { "type": "ai", "content": "What are your travel dates?" }
+  ],
+  "data": null,
+  "trip": { ... },
+  "debug": [ ... ]
+}
+*/
+class AiAgent {
   private client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: config.PYTHON_AGENTS_URL,
+      baseURL: config.AGENTS_URL,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
@@ -16,25 +26,25 @@ class PythonAgentsClient {
     // Request interceptor
     this.client.interceptors.request.use(
       (config) => {
-        console.log(`[Python Agents] ${config.method?.toUpperCase()} ${config.url}`);
+        console.log(`[TS Agents] ${config.method?.toUpperCase()} ${config.url}`);
         return config;
       },
       (error) => {
-        console.error('[Python Agents] Request error:', error);
+        console.error('[TS Agents] Request error:', error);
         return Promise.reject(error);
-      }
+      },
     );
 
     // Response interceptor
     this.client.interceptors.response.use(
       (response) => {
-        console.log(`[Python Agents] Response ${response.status} from ${response.config.url}`);
+        console.log(`[TS Agents] Response ${response.status} from ${response.config.url}`);
         return response;
       },
       (error) => {
-        console.error('[Python Agents] Response error:', error.message);
+        console.error('[TS Agents] Response error:', error.message);
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -59,4 +69,4 @@ class PythonAgentsClient {
   }
 }
 
-export const pythonAgentsClient = new PythonAgentsClient();
+export const aiAgent = new AiAgent();

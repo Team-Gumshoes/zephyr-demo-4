@@ -1,16 +1,8 @@
-export interface TripRequest {
-  fromCity: string;
-  toCity: string;
-  departureDate: string;
-  returnDate: string;
-  budgetIncludes: string[];
-  transportation: string[];
-  preferences?: string;
-}
+import { StartingPrefs } from '@allorai/shared-types';
 
-export const fallbackTripRequest = {
-  fromCity: 'Paris, France',
-  toCity: 'New York, NY',
+export const fallbackStartingPrefs: StartingPrefs = {
+  origin: 'JFK',
+  destination: 'CDG',
   departureDate: 'March 15, 2026',
   returnDate: 'March 22, 2026',
   budgetIncludes: ['flights', 'lodging', 'dining'],
@@ -18,33 +10,29 @@ export const fallbackTripRequest = {
   preferences: 'family-friendly activities and local cuisine',
 };
 
-export default function parseTripRequest(
-  searchParams: URLSearchParams,
-): TripRequest | null {
-  const fromCity = searchParams.get('fromCity');
-  const toCity = searchParams.get('toCity');
+export default function parseStartingPrefs(searchParams: URLSearchParams): StartingPrefs | null {
+  const origin = searchParams.get('fromCity');
+  const destination = searchParams.get('toCity');
   const departureDate = searchParams.get('departureDate');
   const returnDate = searchParams.get('returnDate');
-  const budgetIncludes =
-    searchParams.get('budgetIncludes')?.split(',').filter(Boolean) || [];
-  const transportation =
-    searchParams.get('transportation')?.split(',').filter(Boolean) || [];
+  const budgetIncludes = searchParams.get('budgetIncludes')?.split(',').filter(Boolean) || [];
+  const transportation = searchParams.get('transportation')?.split(',').filter(Boolean) || [];
 
   if (
-    !fromCity ||
-    !toCity ||
+    !origin ||
+    !destination ||
     !departureDate ||
     !returnDate ||
     budgetIncludes.length < 1 ||
     transportation.length < 1
   ) {
-    return fallbackTripRequest; // TODO <-- This is temporary only for development, should return null
+    return fallbackStartingPrefs; // TODO <-- This is temporary only for development, should return null
     // return null;
   }
 
   return {
-    fromCity,
-    toCity,
+    origin,
+    destination,
     departureDate,
     returnDate,
     budgetIncludes,

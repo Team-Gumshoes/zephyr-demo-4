@@ -1,9 +1,16 @@
-import { SAMPLE_DEPARTING_FLIGHTS } from '../../../components/forms/FlightsDepartingForm';
+import {
+  SAMPLE_DEPARTING_FLIGHTS_RESPONSE,
+  type ChatRequest,
+  type ChatResponse,
+  type Message,
+} from '@allorai/shared-types';
+import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
 import { createChatSession, sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 
 export const budgetStepHandler: StepHandler = async ({ tripData, setDepartingFlightOptions }) => {
   try {
+    // 1. Validate user selections
     if (!tripData.flightPreference || !tripData.lodgingPreference) {
       return {
         success: false,
@@ -11,23 +18,47 @@ export const budgetStepHandler: StepHandler = async ({ tripData, setDepartingFli
       };
     }
 
+    // 2. Format api request correctly
+    const newMessage: Message = {
+      type: 'human',
+      content: 'Please find outbound flights for the trip',
+    };
     // Create a new chat session before sending the first message
     await createChatSession();
 
     // FORMAT: Here, we format the user selection to create a message that the LLM will understand and will
     // result in a response with a list of departing flight options
 
-    // SEND: Now we Send to LLM
-    const response = await sendChatMessage({
-      message: `Budget preferences: Flight - ${tripData.flightPreference}, Lodging - ${tripData.lodgingPreference}`,
-    });
+    const request: ChatRequest = {
+      messages: [newMessage],
+      data: null,
+      trip: tripData,
+    };
 
-    // INSPECT RESPONSE: Here is where we will check if the response is the structured output that we expect
-    // we expect a response with departing flight options here and we update state if we get a good response
-    setDepartingFlightOptions(SAMPLE_DEPARTING_FLIGHTS)
-    const shouldAdvance = true; // If everything worked out
+    // 3. Make request to api-gateway
+    const response: ChatResponse = await sendChatMessage(request);
+    console.log('response received in flightDepartingStepHandler:');
+    console.log(response);
 
-    console.log('Budget step response:', response);
+    // 4. Parse and validate response into flight options
+    const parsedResponseData = FlightResponseDataSchema.safeParse(
+      SAMPLE_DEPARTING_FLIGHTS_RESPONSE,
+    );
+    // const parsed = FlightResponseDataSchema.safeParse(response.data);
+
+    if (!parsedResponseData.success) {
+      console.error('Invalid flight response data:', parsedResponseData.error.issues);
+      return {
+        success: false,
+        error: 'Received invalid flight data from server',
+      };
+    }
+
+    if (parsedResponseData.data.options) {
+      setDepartingFlightOptions(parsedResponseData.data.options);
+    }
+
+    const shouldAdvance = true;
 
     return { success: true, shouldAdvance };
   } catch (error) {

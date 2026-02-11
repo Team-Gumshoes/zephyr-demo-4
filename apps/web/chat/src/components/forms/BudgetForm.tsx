@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import { ChatStepSequence } from '../../utils/createChatSteps';
-
-export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
+import { BudgetPref } from '@allorai/shared-types';
 
 export type BudgetFormData = {
-  flightPreference: BudgetPref | undefined;
-  lodgingPreference: BudgetPref | undefined;
+  flightPreference?: BudgetPref;
+  lodgingPreference?: BudgetPref;
   currentStepIndex: number;
 };
 
@@ -44,10 +43,7 @@ const BudgetForm = ({
           {flightOptions.map((option) => (
             <label
               key={option.value}
-              className={clsx(
-                'flex gap-2 items-center',
-                isActive && 'cursor-pointer',
-              )}
+              className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
                 disabled={!isActive}
@@ -72,10 +68,7 @@ const BudgetForm = ({
           {lodgingOptions.map((option) => (
             <label
               key={option.value}
-              className={clsx(
-                'flex gap-2 items-center',
-                isActive && 'cursor-pointer',
-              )}
+              className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
                 disabled={!isActive}

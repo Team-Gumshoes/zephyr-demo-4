@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { type ChatStep } from '../utils/createChatSteps';
-import { TripData } from '../app/app';
+import { TripData } from '@allorai/shared-types';
 
 const useMultiStepChat = (
   steps: ChatStep[],

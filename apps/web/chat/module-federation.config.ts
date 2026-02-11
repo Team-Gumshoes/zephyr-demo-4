@@ -17,6 +17,11 @@ const config: ModuleFederationConfig = {
         singleton: true,
         requiredVersion: false,
       };
+    } else if (libraryName === '@allorai/shared-types') {
+      return {
+        singleton: true,
+        requiredVersion: false,
+      };
     }
     return defaultConfig;
   },

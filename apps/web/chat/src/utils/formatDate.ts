@@ -1,5 +1,5 @@
 export const formatDate = (
-  dateString: string | undefined,
+  dateString: string | undefined | null ,
 ): string | undefined => {
   if (!dateString) return undefined;
   const date = new Date(dateString);
@@ -12,8 +12,8 @@ export const formatDate = (
 };
 
 export const calculateNights = (
-  departureDate: string | undefined,
-  returnDate: string | undefined,
+  departureDate: string | undefined | null,
+  returnDate: string | undefined | null,
 ): number | undefined => {
   if (!departureDate || !returnDate) return undefined;
   const departure = new Date(departureDate);

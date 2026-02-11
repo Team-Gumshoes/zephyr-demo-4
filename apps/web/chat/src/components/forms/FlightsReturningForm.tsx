@@ -1,49 +1,17 @@
+import { FlightResults } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { formatDate } from '../../utils/formatDate';
-import FlightChip, { Flight } from '../chips/FlightsChip';
+import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
 
-export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
-  {
-    id: 4,
-    cost: '$ 875',
-    airline: 'Air France',
-    departureTime: '10:30 AM',
-    arrivalTime: '1:15 PM',
-    duration: '8 hr 45 min',
-    departureAirport: 'CDG',
-    arrivalAirport: 'JFK',
-  },
-  {
-    id: 5,
-    cost: '$ 950',
-    airline: 'Delta',
-    departureTime: '1:00 PM',
-    arrivalTime: '4:00 PM',
-    duration: '9 hr 00 min',
-    departureAirport: 'CDG',
-    arrivalAirport: 'JFK',
-  },
-  {
-    id: 6,
-    cost: '$ 810',
-    airline: 'United',
-    departureTime: '3:45 PM',
-    arrivalTime: '6:30 PM',
-    duration: '8 hr 45 min',
-    departureAirport: 'CDG',
-    arrivalAirport: 'JFK',
-  },
-];
-
 export type FlightsReturningFormData = {
-  flightReturningId: number;
-  returnDate: string;
+  flightReturningId?: string;
+  returnDate?: string;
   currentStepIndex: number;
 };
 
 type FlightsReturningFormProps = FlightsReturningFormData & {
-  returningFlightOptions: Flight[];
+  returningFlightOptions: FlightResults[];
   updateFields: (fields: Partial<FlightsReturningFormData>) => void;
 };
 
@@ -69,7 +37,7 @@ const FlightsReturningForm = ({
                 value={flight.id}
                 checked={flightReturningId === flight.id}
                 disabled={!isActive}
-                onChange={(e) => updateFields({ flightReturningId: Number(e.target.value) })}
+                onChange={(e) => updateFields({ flightReturningId: e.target.value })}
                 className="sr-only peer"
               />
               <div

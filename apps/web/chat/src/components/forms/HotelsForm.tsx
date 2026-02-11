@@ -1,58 +1,18 @@
+import { HotelResults } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatDate';
-import HotelChip, { Hotel } from '../chips/HotelChip';
+import HotelChip from '../chips/HotelChip';
 import clsx from 'clsx';
 
-export const SAMPLE_HOTELS: Hotel[] = [
-  {
-    id: 1,
-    name: 'Hôtel Le Marais',
-    city: 'Paris',
-    rating: 4.8,
-    reviewCount: 2847,
-    totalCost: '$ 1,750',
-    nightlyRate: '$ 250/night',
-    discount: '15% off',
-  },
-  {
-    id: 2,
-    name: 'Château Saint-Germain',
-    city: 'Paris',
-    rating: 4.5,
-    reviewCount: 1523,
-    totalCost: '$ 1,225',
-    nightlyRate: '$ 175/night',
-  },
-  {
-    id: 3,
-    name: 'Hôtel Montmartre',
-    city: 'Paris',
-    rating: 4.2,
-    reviewCount: 892,
-    totalCost: '$ 910',
-    nightlyRate: '$ 130/night',
-    discount: '10% off',
-  },
-  {
-    id: 4,
-    name: 'The Ritz Paris',
-    city: 'Paris',
-    rating: 4.9,
-    reviewCount: 3156,
-    totalCost: '$ 2,520',
-    nightlyRate: '$ 360/night',
-  },
-];
-
 export type HotelsFormData = {
-  hotelId: number;
-  departureDate: string;
-  returnDate: string;
+  hotelId?: string;
+  departureDate?: string;
+  returnDate?: string;
   currentStepIndex: number;
 };
 
 type HotelsFormProps = HotelsFormData & {
-  hotelOptions: Hotel[];
+  hotelOptions: HotelResults[];
   updateFields: (fields: Partial<HotelsFormData>) => void;
 };
 
@@ -83,7 +43,7 @@ const HotelsForm = ({
                 disabled={!isActive}
                 value={hotel.id}
                 checked={hotelId === hotel.id}
-                onChange={(e) => updateFields({ hotelId: Number(e.target.value) })}
+                onChange={(e) => updateFields({ hotelId: e.target.value })}
                 className="sr-only peer"
               />
               <div

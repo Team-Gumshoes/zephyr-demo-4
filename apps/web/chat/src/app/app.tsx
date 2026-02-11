@@ -1,9 +1,3 @@
-// import {
-//   Button,
-//   ActivityCard,
-//   BudgetOverview,
-//   Dialogue,
-// } from '@allorai/shared-ui';
 import { Button, Dialogue } from '@allorai/shared-ui';
 import { ModifyDetails } from '../components/modals/ModifyDetails';
 import clsx from 'clsx';
@@ -13,74 +7,45 @@ import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
 import useMultiStepChat from '../hooks/useMultiStepChat';
 import { ChatStep, createChatSteps } from '../utils/createChatSteps';
-import parseTripRequest, { fallbackTripRequest, TripRequest } from '../utils/parseTripRequest';
-import { BudgetPref } from '../components/forms/BudgetForm';
+import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripRequest';
 import { stepHandlers } from './handlers/steps';
-import { Flight } from '../components/chips/FlightsChip';
-import { Hotel } from '../components/chips/HotelChip';
-import { SAMPLE_DEPARTING_FLIGHTS } from '../components/forms/FlightsDepartingForm';
-import { SAMPLE_RETURNING_FLIGHTS } from '../components/forms/FlightsReturningForm';
-import { SAMPLE_HOTELS } from '../components/forms/HotelsForm';
+import {
+  createEmptyTrip,
+  FlightResults,
+  HotelResults,
+  SAMPLE_DEPARTING_FLIGHTS,
+  SAMPLE_HOTELS,
+  SAMPLE_RETURNING_FLIGHTS,
+  StartingPrefs,
+  TripData,
+} from '@allorai/shared-types';
 
 // #3358ae dark
 // #99abd7 light
 // #97dbd9 teal
 
-/*
-{
-  messages: [],
-  trip: {
-    destination: null,
-    dates: null,
-    budget: null,
-    hotel: null,
-    interests: [],
-    constraints: []
-  }
-}
-*/
-
-export interface TripData extends TripRequest {
-  flightPreference: BudgetPref | undefined;
-  lodgingPreference: BudgetPref | undefined;
-  flightDepartingId: number;
-  flightReturningId: number;
-  hotelId: number;
-  currentStepIndex: number;
-}
-
-const initialTripData: Pick<
-  TripData,
-  | 'flightPreference'
-  | 'lodgingPreference'
-  | 'flightDepartingId'
-  | 'flightReturningId'
-  | 'hotelId'
-  | 'currentStepIndex'
-> = {
-  flightPreference: undefined,
-  lodgingPreference: undefined,
-  flightDepartingId: 0,
-  flightReturningId: 0,
-  hotelId: 0,
+const initialTripData: TripData & { currentStepIndex: number } = {
+  ...createEmptyTrip(),
   currentStepIndex: 0,
 };
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
-  const tripRequest: TripRequest | null = parseTripRequest(searchParams);
+  const startingPrefs: StartingPrefs | null = parseStartingPrefs(searchParams);
+  console.log(startingPrefs);
 
   const [tripData, setTripData] = useState<TripData>({
-    ...(tripRequest || fallbackTripRequest),
     ...initialTripData,
+    ...(startingPrefs || fallbackStartingPrefs),
   });
 
+  console.log({ tripData });
   // TODO Consider putting all this state in Zustand
   const [departingFlightOptions, setDepartingFlightOptions] =
-    useState<Flight[]>(SAMPLE_DEPARTING_FLIGHTS);
+    useState<FlightResults[]>(SAMPLE_DEPARTING_FLIGHTS);
   const [returningFlightOptions, setReturningFlightOptions] =
-    useState<Flight[]>(SAMPLE_RETURNING_FLIGHTS);
-  const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
+    useState<FlightResults[]>(SAMPLE_RETURNING_FLIGHTS); // Change to a
+  const [hotelOptions, setHotelOptions] = useState<HotelResults[]>(SAMPLE_HOTELS);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -148,7 +113,7 @@ const ChatPage = () => {
     }
   };
 
-  if (!tripRequest) {
+  if (!startingPrefs) {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
 
