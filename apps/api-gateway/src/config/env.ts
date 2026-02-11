@@ -5,6 +5,7 @@ const environmentSchema = z.object({
   PORT: z.coerce.number().min(1000),
   TYPESCRIPT_AGENTS_URL: z.string(),
   PYTHON_AGENTS_URL: z.string(),
+  AGENTS_URL: z.string(),
 
   CORS_ORIGIN: z.string(),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]),

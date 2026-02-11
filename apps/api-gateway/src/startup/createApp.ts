@@ -42,7 +42,7 @@ const createApp = () => {
   });
 
   app.use(chatRouter);
-  // Add additional routers here
+  // Add additional routers here as needed
 
   // Error handling middleware (must be last)
   app.use(errorHandler);

@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
-import { createChatMessage, createChatSession } from '../services/chat.service';
-// import { typescriptAgentsClient } from '../services/typescriptAgentsClient';
+import { chatAgent } from '../services/agents/chat-agent.service';
+import { saveChatMessage, createChatSession } from '../services/chat.service';
+import { ChatRequest, ChatResponse } from '../types/agents';
 
 // ************* POST /chat/session - Create a new chat session ************
 const createChatSessionHandler = async (req: Request, res: Response): Promise<void> => {
   const { supabase } = req;
-  const { data } = await createChatSession({ supabase });
+  const {
+    data: { id },
+  } = await createChatSession({ supabase });
 
   // Set session ID in cookie
-  res.cookie('chat_session_id', data.id, {
+  res.cookie('chat_session_id', id, {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
@@ -18,47 +21,73 @@ const createChatSessionHandler = async (req: Request, res: Response): Promise<vo
 
   // Return the session ID to the front end
   res.status(201).json({
-    id: data.id,
+    id,
   });
 };
 
 // ************* POST /chat/message - Send a message and get LLM response ************
 const chatMessageHandler = async (req: Request, res: Response): Promise<void> => {
-  const { supabase, body: { sessionId, message } } = req;
-
-  // Validate required fields
-  if (!sessionId || !message) {
+  const {
+    supabase,
+    body: { sessionId },
+  } = req;
+  
+  // 1. Parse and validate req.body
+  if (!sessionId) {
     res.status(400).json({
-      error: 'sessionId and message are required',
+      error: 'sessionId is required',
     });
     return;
   }
 
-  // Save user message to database
-  await createChatMessage({
+  /*
+  TODO add zod validation for ALL of req.body
+  Here is the ChatResponse shape:
+  {
+    messages: Message[];
+    data: ResponseData | null;
+    trip: Trip;
+    debug: Message[];
+  }
+  And here is the Message shape:
+  {
+    type: "human" | "ai";
+    content: string;
+  }
+  */
+  const messages = req.body.messages;
+  const message = messages[messages.length - 1];
+
+  // 2. Save user message to database
+  await saveChatMessage({
     supabase,
     sessionId,
     role: 'user',
     content: { text: message },
   });
+  
+  // 3. Make request to agentAPI
+  const chatRequest: ChatRequest = {
+    messages: [{ type: 'human', content: message }],
+    trip: req.body.trip,
+  };
 
-  // const llmResponse = await typescriptAgentsClient.post('/coordinate', req.body );
-  const llmResponse = `This is a mock response to: "${message}". The LLM integration will be implemented later.`;
+  const response: ChatResponse = await chatAgent.sendChat(chatRequest);
 
-  // Save assistant message to database
-  const { data: modelMessage } = await createChatMessage({
+  console.log('^^^^^^^^ RESPONSE IN CHAT CONTROLLER ^^^^^^^^');
+  console.log(response);
+
+  // 4. Save AI response message to database
+  const { data } = await saveChatMessage({
     supabase,
     sessionId,
     role: 'assistant',
-    content: { text: llmResponse },
+    content: { text: JSON.stringify(response.data) },
   });
+  console.log(data)
 
-  // Return the assistant response
-  res.status(200).json({
-    message: llmResponse,
-    id: modelMessage?.id,
-    created_at: modelMessage?.created_at,
-  });
+  // 5. Return the assistant response
+  res.status(200).json(response);
 };
 
 export { chatMessageHandler, createChatSessionHandler };

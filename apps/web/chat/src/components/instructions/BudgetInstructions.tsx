@@ -1,18 +1,18 @@
 import { formatDate } from '../../utils/formatDate';
 
 interface BudgetInstructionsProps {
-  toCity: string;
-  fromCity: string;
-  departureDate: string;
-  returnDate: string;
+  origin: string | null;
+  destination: string | null;
+  departureDate: string | null;
+  returnDate: string | null;
   budgetIncludes: string[];
   transportation: string[];
   preferences?: string;
 }
 
 const BudgetInstructions = ({
-  toCity,
-  fromCity,
+  origin,
+  destination,
   departureDate,
   returnDate,
   budgetIncludes,
@@ -31,9 +31,9 @@ const BudgetInstructions = ({
     <div className="text-sm">
       <div>
         Sure thing. I am happy to help you plan a trip from{' '}
-        <strong>{fromCity}</strong> to <strong>{toCity}</strong> departing on{' '}
-        <strong>{formatDate(departureDate)}</strong> and returning on{' '}
-        <strong>{formatDate(returnDate)}</strong> while considering {budgetAndTransport}
+        <strong>{origin}</strong> to <strong>{destination}</strong> departing on{' '}
+        <strong>{formatDate(departureDate|| undefined)}</strong> and returning on{' '}
+        <strong>{formatDate(returnDate || undefined)}</strong> while considering {budgetAndTransport}
         { preferences ? <span> and <strong>{preferences}</strong>.</span> : "."}{' '}
         So that I can suggest an estimate{' '}
         for your flights and/or lodging, provide your preferences with your

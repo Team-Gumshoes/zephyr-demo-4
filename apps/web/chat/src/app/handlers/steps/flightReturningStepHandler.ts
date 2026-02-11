@@ -1,9 +1,9 @@
-import { sendChatMessage } from '../../api/chat';
+import { ChatRequest, sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 
 export const flightReturningStepHandler: StepHandler = async ({ tripData }) => {
   try {
-    if (!tripData.flightReturningId) {
+    if (!tripData.returnFlight) {
       return {
         success: false,
         error: 'Please select a returning flight',
@@ -12,11 +12,13 @@ export const flightReturningStepHandler: StepHandler = async ({ tripData }) => {
 
     // FORMAT: Here, we format the user selection to create a message that the LLM will understand and will
     // result in a response with a list of hotel options
-
+    const request: ChatRequest = {
+      messages: [],
+      data: null,
+      trip: tripData
+    }
     // SEND: Now we Send to LLM
-    const response = await sendChatMessage({
-      message: `Selected returning flight ID: ${tripData.flightReturningId}`,
-    });
+    const response = await sendChatMessage(request);
 
     // INSPECT RESPONSE: Here is where we will check if the response is the structured output that we expect
     // we expect a response with hotel options here

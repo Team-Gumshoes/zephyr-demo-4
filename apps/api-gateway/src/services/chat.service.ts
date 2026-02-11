@@ -28,18 +28,12 @@ export const createChatSession = async ({
 }> => {
   const { data, error } = await supabase.from('chat_sessions').insert({}).select('id').single();
 
-  if (error) {
-    throw error; // Throw Postgres Error
-  }
-
-  if (!data) {
-    throw new Error('Unable to create chat session');
-  }
-
+  if (error) throw error; // Throw Postgres Error
+  if (!data) throw new Error('Unable to create chat session');
   return { data };
 };
 
-export const createChatMessage = async ({
+export const saveChatMessage = async ({
   supabase,
   sessionId,
   role,
@@ -57,9 +51,6 @@ export const createChatMessage = async ({
     .select('id, content, created_at')
     .single();
 
-  if (error) {
-    throw error; // Throw Postgres Error
-  }
-
+  if (error) throw error; // Throw Postgres Error
   return { data };
 };

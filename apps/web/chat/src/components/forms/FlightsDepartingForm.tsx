@@ -4,7 +4,7 @@ import FlightChip, { Flight } from '../chips/FlightsChip';
 
 export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
   {
-    id: 1,
+    id: "1",
     cost: '$ 850',
     airline: 'Air France',
     departureTime: '6:30 PM',
@@ -14,7 +14,7 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
     arrivalAirport: 'CDG',
   },
   {
-    id: 2,
+    id: "2",
     cost: '$ 920',
     airline: 'Delta',
     departureTime: '10:00 PM',
@@ -24,7 +24,7 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
     arrivalAirport: 'CDG',
   },
   {
-    id: 3,
+    id: "3",
     cost: '$ 780',
     airline: 'United',
     departureTime: '8:45 PM',
@@ -36,8 +36,8 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
 ];
 
 export type FlightsDepartingFormData = {
-  flightDepartingId: number;
-  departureDate: string;
+  flightDepartingId?: string;
+  departureDate: string | null;
   currentStepIndex: number;
 };
 
@@ -71,7 +71,7 @@ const FlightsDepartingForm = ({
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
                 onChange={(e) =>
-                  updateFields({ flightDepartingId: Number(e.target.value) })
+                  updateFields({ flightDepartingId: e.target.value })
                 }
                 className="sr-only peer"
               />

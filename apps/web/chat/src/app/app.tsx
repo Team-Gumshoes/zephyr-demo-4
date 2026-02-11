@@ -15,7 +15,6 @@ import useMultiStepChat from '../hooks/useMultiStepChat';
 import { ChatStep, createChatSteps } from '../utils/createChatSteps';
 import parseTripRequest, {
   fallbackTripRequest,
-  TripRequest,
 } from '../utils/parseTripRequest';
 import { BudgetPref } from '../components/forms/BudgetForm';
 import { stepHandlers } from './handlers/steps';
@@ -29,55 +28,61 @@ import { SAMPLE_HOTELS } from '../components/forms/HotelsForm';
 // #99abd7 light
 // #97dbd9 teal
 
-/*
-{
-  messages: [],
-  trip: {
-    destination: null,
-    dates: null,
-    budget: null,
-    hotel: null,
-    interests: [],
-    constraints: []
-  }
+// TripRequest comes from the form on the landing page (query string)
+export interface TripRequest {
+  origin: string | null;
+  destination: string | null;
+  departureDate: string | null;
+  returnDate: string | null;
+  preferences?: string;
+  budgetIncludes: string[];
+  transportation: string[];
 }
-*/
 
 export interface TripData extends TripRequest {
-  flightPreference: BudgetPref | undefined;
-  lodgingPreference: BudgetPref | undefined;
-  flightDepartingId: number;
-  flightReturningId: number;
-  hotelId: number;
+  departureFlight: string | null;
+  returnFlight: string | null;
+  budget: number | null;
+  hotel: string | null;
+  interests: string[];
+  constraints: string[];
+  flightPreference?: BudgetPref;
+  lodgingPreference?: BudgetPref;
   currentStepIndex: number;
 }
 
-const initialTripData: Pick<
-  TripData,
-  | 'flightPreference'
-  | 'lodgingPreference'
-  | 'flightDepartingId'
-  | 'flightReturningId'
-  | 'hotelId'
-  | 'currentStepIndex'
-> = {
-  flightPreference: undefined,
-  lodgingPreference: undefined,
-  flightDepartingId: 0,
-  flightReturningId: 0,
-  hotelId: 0,
-  currentStepIndex: 0,
-};
+export function createEmptyTrip(): TripData {
+  return {
+    origin: null,
+    destination: null,
+    departureFlight: null,
+    returnFlight: null,
+    departureDate: null,
+    returnDate: null,
+    budget: null,
+    hotel: null,
+    interests: [],
+    constraints: [],
+    preferences: "",
+    budgetIncludes: [],
+    transportation: [],
+    currentStepIndex: 0,
+  };
+}
+
+const initialTripData = { ...createEmptyTrip(), currentStepIndex: 0}
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
   const tripRequest: TripRequest | null = parseTripRequest(searchParams);
+  console.log(tripRequest)
 
   const [tripData, setTripData] = useState<TripData>({
-    ...(tripRequest || fallbackTripRequest),
     ...initialTripData,
+    ...(tripRequest || fallbackTripRequest),
   });
 
+  console.log({tripData})
   // TODO Consider putting all this state in Zustand
   const [departingFlightOptions, setDepartingFlightOptions] = useState<
     Flight[]

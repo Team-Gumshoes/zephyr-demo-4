@@ -4,7 +4,7 @@ import HotelChip, { Hotel } from '../chips/HotelChip';
 
 export const SAMPLE_HOTELS: Hotel[] = [
   {
-    id: 1,
+    id: "1",
     name: 'Hôtel Le Marais',
     city: 'Paris',
     rating: 4.8,
@@ -14,7 +14,7 @@ export const SAMPLE_HOTELS: Hotel[] = [
     discount: '15% off',
   },
   {
-    id: 2,
+    id: "2",
     name: 'Château Saint-Germain',
     city: 'Paris',
     rating: 4.5,
@@ -23,7 +23,7 @@ export const SAMPLE_HOTELS: Hotel[] = [
     nightlyRate: '$ 175/night',
   },
   {
-    id: 3,
+    id: "3",
     name: 'Hôtel Montmartre',
     city: 'Paris',
     rating: 4.2,
@@ -33,7 +33,7 @@ export const SAMPLE_HOTELS: Hotel[] = [
     discount: '10% off',
   },
   {
-    id: 4,
+    id: "4",
     name: 'The Ritz Paris',
     city: 'Paris',
     rating: 4.9,
@@ -44,9 +44,9 @@ export const SAMPLE_HOTELS: Hotel[] = [
 ];
 
 export type HotelsFormData = {
-  hotelId: number;
-  departureDate: string;
-  returnDate: string;
+  hotelId?: string;
+  departureDate: string | null;
+  returnDate: string | null;
   currentStepIndex: number;
 };
 
@@ -87,7 +87,7 @@ const HotelsForm = ({
                 value={hotel.id}
                 checked={hotelId === hotel.id}
                 onChange={(e) =>
-                  updateFields({ hotelId: Number(e.target.value) })
+                  updateFields({ hotelId: e.target.value})
                 }
                 className="sr-only peer"
               />

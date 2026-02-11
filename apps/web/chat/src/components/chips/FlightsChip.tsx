@@ -1,5 +1,5 @@
 export type Flight = {
-  id: number;
+  id: string;
   cost: string;
   airlineLogo?: string;
   airline: string;

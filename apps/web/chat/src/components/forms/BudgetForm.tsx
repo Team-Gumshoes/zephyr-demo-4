@@ -4,8 +4,8 @@ import { ChatStepSequence } from '../../utils/createChatSteps';
 export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
 
 export type BudgetFormData = {
-  flightPreference: BudgetPref | undefined;
-  lodgingPreference: BudgetPref | undefined;
+  flightPreference?: BudgetPref;
+  lodgingPreference?: BudgetPref;
   currentStepIndex: number;
 };
 

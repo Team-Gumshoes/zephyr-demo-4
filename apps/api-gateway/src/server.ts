@@ -16,12 +16,8 @@ app.listen(config.PORT, () => {
 ║                                                           ║
 ║   🚀 Allorai API Gateway                                  ║
 ║                                                           ║
-║   Port:        ${config.PORT}                                      ║
-║   Environment: ${config.NODE_ENV}                             ║
-║                                                           ║
-║   Services:                                               ║
-║   • TypeScript Agents: ${config.TYPESCRIPT_AGENTS_URL.padEnd(30)} ║
-║   • Python Agents:     ${config.PYTHON_AGENTS_URL.padEnd(30)} ║
+║   Port:        ${String(config.PORT).padEnd(43," ")}║
+║   Environment: ${String(config.NODE_ENV).padEnd(43," ")}║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
   `);

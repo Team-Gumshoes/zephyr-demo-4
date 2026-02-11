@@ -1,16 +1,18 @@
-export interface TripRequest {
-  fromCity: string;
-  toCity: string;
-  departureDate: string;
-  returnDate: string;
-  budgetIncludes: string[];
-  transportation: string[];
-  preferences?: string;
-}
+// export interface TripRequest {
+//   fromCity: string;
+//   toCity: string;
+//   departureDate: string;
+//   returnDate: string;
+//   budgetIncludes: string[];
+//   transportation: string[];
+//   preferences?: string;
+// }
 
-export const fallbackTripRequest = {
-  fromCity: 'Paris, France',
-  toCity: 'New York, NY',
+import { TripRequest } from "../app/app";
+
+export const fallbackTripRequest: TripRequest = {
+  origin: 'JFK',
+  destination: 'CDG',
   departureDate: 'March 15, 2026',
   returnDate: 'March 22, 2026',
   budgetIncludes: ['flights', 'lodging', 'dining'],
@@ -21,8 +23,8 @@ export const fallbackTripRequest = {
 export default function parseTripRequest(
   searchParams: URLSearchParams,
 ): TripRequest | null {
-  const fromCity = searchParams.get('fromCity');
-  const toCity = searchParams.get('toCity');
+  const origin = searchParams.get('fromCity');
+  const destination = searchParams.get('toCity');
   const departureDate = searchParams.get('departureDate');
   const returnDate = searchParams.get('returnDate');
   const budgetIncludes =
@@ -31,8 +33,8 @@ export default function parseTripRequest(
     searchParams.get('transportation')?.split(',').filter(Boolean) || [];
 
   if (
-    !fromCity ||
-    !toCity ||
+    !origin ||
+    !destination ||
     !departureDate ||
     !returnDate ||
     budgetIncludes.length < 1 ||
@@ -43,8 +45,8 @@ export default function parseTripRequest(
   }
 
   return {
-    fromCity,
-    toCity,
+    origin,
+    destination,
     departureDate,
     returnDate,
     budgetIncludes,

@@ -8,7 +8,7 @@ const FLIGHT_PREFS = {
 };
 
 type FlightDepartingInstructionsProps = {
-  flightPreference: BudgetPref | undefined;
+  flightPreference?: BudgetPref;
 };
 
 const FlightDepartingInstructions = ({

@@ -8,7 +8,7 @@ const HOTEL_PREFS = {
 };
 
 type HotelInstructionsProps = {
-  lodgingPreference: BudgetPref | undefined;
+  lodgingPreference?: BudgetPref;
 };
 
 const HotelInstructions = ({ lodgingPreference }: HotelInstructionsProps) => {
