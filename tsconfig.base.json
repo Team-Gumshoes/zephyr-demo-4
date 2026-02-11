@@ -20,7 +20,8 @@
     "baseUrl": ".",
     "paths": {
       "itineraries/*": ["apps/web/itineraries/src/*"],
-      "@allorai/shared-ui": ["libs/shared/ui/src/index.ts"]
+      "@allorai/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@allorai/shared-types": ["libs/shared/types/src/index.ts"]
     }
   }
 }

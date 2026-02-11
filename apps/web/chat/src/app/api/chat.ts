@@ -1,71 +1,9 @@
 import { apiClient } from '../lib/api-client';
+import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 
-export interface Trip {
-  origin: string | null;
-  destination: string | null;
-  departureFlight: string | null;
-  returnFlight: string | null;
-  departureDate: string | null;
-  returnDate: string | null;
-  budget: number | null;
-  hotel: string | null;
-  interests: string[];
-  constraints: string[];
-}
-
-export interface FlightSegment {
-  duration: string;
-  departure: {
-    airport: string;
-    time: string;
-  };
-  arrival: {
-    airport: string;
-    time: string;
-  };
-  airline: string;
-}
-
-export interface FlightLeg {
-  direction: "outbound" | "return";
-  legDuration: string;
-  segments: FlightSegment[];
-}
-
-export interface FlightResults {
-  // totalDuration: string;
-  price: number;
-  currency: string;
-  legs: FlightLeg[];
-}
-
-
-export interface FlightResponseData {
-  type: "flight";
-  summary?: string;
-  options?: FlightResults[];
-}
-
-export type ResponseData =
- FlightResponseData
-
- export interface Message {
-  type: "human" | "ai";
-  content: string;
-}
-
-export interface ChatRequest {
-  messages: Message[];
-  data?: ResponseData | null;
-  trip: Trip;
-}
-
-export interface ChatResponse {
-  messages: Message[];
-  data: ResponseData | null;
-  trip: Trip;
-  debug: Message[];
-}
+// Re-export shared types so existing imports from this file still work
+export type { ChatRequest, ChatResponse } from '@allorai/shared-types';
+export type { Message, Trip, FlightSegment, FlightLeg, FlightResults, FlightResponseData, ResponseData } from '@allorai/shared-types';
 
 // TODO Fix the type here
 export interface CreateSessionResponse {
@@ -81,15 +19,6 @@ export async function createChatSession(): Promise<CreateSessionResponse> {
   );
   return response.data;
 }
-/*
-  export interface ChatRequest {
-    messages: Message[];
-    data?: ResponseData | null;
-    trip: Trip;
-  }
-
-*/
-
 
 export async function sendChatMessage(
   data: ChatRequest,

@@ -1,4 +1,5 @@
-import { ChatRequest, sendChatMessage } from '../../api/chat';
+import type { ChatRequest } from '@allorai/shared-types';
+import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 
 export const flightDepartingStepHandler: StepHandler = async ({ tripData }) => {

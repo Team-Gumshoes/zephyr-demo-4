@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { chatAgent } from '../services/agents/chat-agent.service';
 import { saveChatMessage, createChatSession } from '../services/chat.service';
-import { ChatRequest, ChatResponse } from '../types/agents';
+import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 
 // ************* POST /chat/session - Create a new chat session ************
 const createChatSessionHandler = async (req: Request, res: Response): Promise<void> => {

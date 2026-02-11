@@ -1,15 +1,9 @@
-import type { Trip } from "../trip.js";
-import type { ArithmeticResult } from "./arithmetic.types.js";
-import type { FlightResults } from "./flights.types.js";
-import type { HotelResults } from "./hotels.types.js";
-import type { RestaurantResults } from "./restaurants.js";
-import type { SelfieSpots } from "./selfieSpots.types.js";
-import type { Sights } from "./sights.types.js";
-
-export interface Message {
-  type: "human" | "ai";
-  content: string;
-}
+import type { ArithmeticResult } from './arithmetic';
+import type { FlightResults } from './flights';
+import type { HotelResults } from './hotels';
+import type { RestaurantResults } from './restaurants';
+import type { SelfieSpots } from './selfie-spots';
+import type { Sights } from './sights';
 
 export interface ArithmeticResponseData {
   type: "arithmetic";
@@ -54,16 +48,3 @@ export type ResponseData =
   | RestaurantResponseData
   | SelfieResponseData
   | SightseeingResponseData;
-
-export interface ChatRequest {
-  messages: Message[];
-  data?: ResponseData | null;
-  trip: Trip;
-}
-
-export interface ChatResponse {
-  messages: Message[];
-  data: ResponseData | null;
-  trip: Trip;
-  debug: Message[];
-}

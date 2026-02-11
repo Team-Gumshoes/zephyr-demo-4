@@ -1,4 +1,4 @@
-import { ChatRequest, ChatResponse } from '../../types/agents';
+import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 import { BaseAgentService } from './base-agent.service';
 
 export class ChatAgentService extends BaseAgentService {

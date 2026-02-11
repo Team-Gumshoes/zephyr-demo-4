@@ -252,6 +252,8 @@ importers:
         specifier: workspace:*
         version: link:../landing
 
+  libs/shared/types: {}
+
   libs/shared/ui: {}
 
 packages:

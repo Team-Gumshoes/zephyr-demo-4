@@ -1,5 +1,6 @@
 import { SAMPLE_DEPARTING_FLIGHTS } from '../../../components/forms/FlightsDepartingForm';
-import { ChatRequest, Message, sendChatMessage } from '../../api/chat';
+import type { ChatRequest, Message } from '@allorai/shared-types';
+import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 
 export const budgetStepHandler: StepHandler = async ({ tripData, setDepartingFlightOptions }) => {
