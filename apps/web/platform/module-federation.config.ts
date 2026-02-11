@@ -18,6 +18,8 @@ const config: ModuleFederationConfig = {
   shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {
       return { singleton: true, requiredVersion: false, eager: true };
+    } else if (libraryName === '@allorai/shared-ui') {
+      return { singleton: true, requiredVersion: false };
     }
     return defaultConfig;
   },

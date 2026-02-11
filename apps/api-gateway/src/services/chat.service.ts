@@ -6,6 +6,7 @@ interface CreateChatSessionParams {
 
 interface ChatSession {
   id: string;
+  supabase?: SupabaseClient;
 }
 
 interface CreateChatMessageParams {
@@ -53,4 +54,23 @@ export const saveChatMessage = async ({
 
   if (error) throw error; // Throw Postgres Error
   return { data };
+};
+
+interface DeleteChatSessionParams {
+  supabase: SupabaseClient;
+  sessionId: string;
+}
+
+export const deleteChatSession = async ({
+  supabase,
+  sessionId,
+}: DeleteChatSessionParams): Promise<void> => {
+  const { error } = await supabase
+    .from('chat_sessions')
+    .delete()
+    .eq('id', sessionId);
+
+  if (error) {
+    throw error;
+  }
 };

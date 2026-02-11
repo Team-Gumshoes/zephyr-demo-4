@@ -107,6 +107,9 @@ const ChatPage = () => {
       setError('An unexpected error occurred');
     } finally {
       setChatLoading(false);
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, 100);
     }
   };
 
