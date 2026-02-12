@@ -1,6 +1,6 @@
 import { HotelResults } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
-import { calculateNights, formatDate } from '../../utils/formatDate';
+import { calculateNights, formatDate } from '../../utils/formatData';
 import HotelChip from '../chips/HotelChip';
 import clsx from 'clsx';
 
@@ -54,7 +54,7 @@ const HotelsForm = ({
                   !isActive && hotelId !== hotel.id && 'hidden',
                 )}
               >
-                <HotelChip hotel={hotel} />
+                <HotelChip hotel={hotel} departureDate={departureDate} returnDate={returnDate} />
               </div>
             </label>
           ))}

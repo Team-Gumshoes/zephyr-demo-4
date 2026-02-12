@@ -1,11 +1,10 @@
 import { FlightResults } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
-import { formatDate } from '../../utils/formatDate';
+import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
 
 export type FlightsDepartingFormData = {
-  flightDepartingId?: string;
   departureFlight?: FlightResults;
   departureDate?: string;
   currentStepIndex: number;
@@ -17,13 +16,14 @@ type FlightsDepartingFormProps = FlightsDepartingFormData & {
 };
 
 const FlightsDepartingForm = ({
-  flightDepartingId,
+  departureFlight,
   departureDate,
   currentStepIndex,
   departingFlightOptions,
   updateFields,
 }: FlightsDepartingFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Departing;
+  let flightDepartingId = departureFlight?.id;
 
   return (
     <div className="w-full">
@@ -38,12 +38,11 @@ const FlightsDepartingForm = ({
                 disabled={!isActive}
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
-                onChange={(e) =>
+                onChange={(e) => {
                   updateFields({
-                    flightDepartingId: e.target.value,
                     departureFlight: flight,
-                  })
-                }
+                  });
+                }}
                 className="sr-only peer"
               />
               <div

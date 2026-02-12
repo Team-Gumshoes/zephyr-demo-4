@@ -31,7 +31,7 @@ export const SAMPLE_HOTELS: HotelResults[] = [
     price: 198,
   },
   {
-    id: 'c',
+    id: 'd',
     name: "The Wanderer's Lodge",
     location: 'Venice Beach, Los Angeles',
     num_of_stars: 2,

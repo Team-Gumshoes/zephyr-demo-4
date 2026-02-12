@@ -10,7 +10,7 @@ import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
 
 export const flightDepartingStepHandler: StepHandler = async ({
   tripData,
-  setDepartingFlightOptions,
+  setReturningFlightOptions,
 }) => {
   try {
     let shouldAdvance = false;
@@ -53,7 +53,7 @@ export const flightDepartingStepHandler: StepHandler = async ({
     }
 
     if (parsedResponseData.data.options) {
-      setDepartingFlightOptions(parsedResponseData.data.options);
+      setReturningFlightOptions(parsedResponseData.data.options);
       shouldAdvance = true; // If everything worked out
     }
 

@@ -1,11 +1,10 @@
 import { FlightResults } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
-import { formatDate } from '../../utils/formatDate';
+import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
 
 export type FlightsReturningFormData = {
-  flightReturningId?: string;
   returnFlight?: FlightResults;
   returnDate?: string;
   currentStepIndex: number;
@@ -17,13 +16,14 @@ type FlightsReturningFormProps = FlightsReturningFormData & {
 };
 
 const FlightsReturningForm = ({
-  flightReturningId,
+  returnFlight,
   returnDate,
   currentStepIndex,
   returningFlightOptions,
   updateFields,
 }: FlightsReturningFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Returning;
+  let flightReturningId = returnFlight?.id;
 
   return (
     <div className="w-full">
@@ -40,7 +40,6 @@ const FlightsReturningForm = ({
                 disabled={!isActive}
                 onChange={(e) =>
                   updateFields({
-                    flightReturningId: e.target.value,
                     returnFlight: flight,
                   })
                 }
