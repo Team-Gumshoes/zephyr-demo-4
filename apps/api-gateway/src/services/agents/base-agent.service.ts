@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { config } from '../../config/env';
+import logger from '../../utils/logger';
 
 export class BaseAgentService {
   protected client: AxiosInstance;
@@ -7,7 +8,7 @@ export class BaseAgentService {
   constructor(baseURL: string = config.AGENTS_URL ?? 'http://localhost:8000') {
     this.client = axios.create({
       baseURL,
-      timeout: 60_000,
+      timeout: 30_000,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -21,8 +22,7 @@ export class BaseAgentService {
     this.client.interceptors.response.use(
       (response) => response,
       (error) => {
-        // Centralized error handling
-        console.error('Agent API Error:', error.message);
+        logger.warn('Agent API Error:', error.message); // TODO error handling and logging here possibly redundant ?
         throw error;
       },
     );
