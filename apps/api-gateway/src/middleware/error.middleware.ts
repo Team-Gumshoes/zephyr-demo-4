@@ -1,62 +1,47 @@
 import { Request, Response, NextFunction } from 'express';
-import { type AxiosError } from 'axios';
-import { PostgrestError } from '@supabase/supabase-js';
+import { AxiosError } from 'axios';
+import logger from '../utils/logger';
 
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    public statusCode = 500,
-    public details?: string,
-  ) {
-    super(message);
-    this.name = statusCode === 500 ? 'DatabaseError' : 'UnknownApiError';
-    this.statusCode = statusCode;
-  }
+export interface ApiError extends Error {
+  code?: string;
+  statusCode?: number;
+  details?: string;
 }
 
+// 502 is bad gateway
+//504 gateway timeout
 export const errorHandler = (
-  err: PostgrestError | ApiError | AxiosError,
+  err: ApiError | AxiosError,
   req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
-  console.error('[Error]', err);
-
-  if ('isAxiosError' in err && err.isAxiosError) {
+  if (err instanceof AxiosError) {
     // Handle Axios errors (from service calls)
-    const axiosError = err as AxiosError;
-    const status = axiosError.response?.status || 500;
-    const message = axiosError.response?.data || axiosError.message;
+    const code = err.code || '';
+    const message = err.response?.data || err.message || err.name;
 
-    res.status(status).json({
+    logger.error(err, `Axios Error (${code}):  ${message}`);
+    res.status(err.response?.status || 500).json({
       error: 'Service Error',
       message:
         typeof message === 'string'
           ? message
           : 'An error occurred while communicating with the service',
-      details: axiosError.response?.data,
-    });
-    return;
-  } else if (err instanceof PostgrestError) {
-    // Handle Database errors
-    const { code, message, details } = err;
-    res.status(Number(code) || 500).json({
-      error: 'Database Error',
-      message,
-      details,
-    });
-    return;
-  } else {
-    // Handle other API errors
-    const customError = err as any;
-    const statusCode = customError.statusCode || 500;
-    const message = customError.message || 'Internal Server Error';
-
-    res.status(statusCode).json({
-      error: customError.name || 'Error',
-      message,
-      details: customError.details,
+      details: err.response?.data,
     });
     return;
   }
+  
+  // Handle Non-axios errors
+  const name = err.code && err.code.includes('PGRST') ? 'Database Error' : 'Internal Server Error';
+  const { code, message, details, statusCode } = err;
+
+  logger.error(err, `${name} (${code}):  ${message}`);
+  res.status(statusCode || 500).json({
+    error: name,
+    message,
+    details,
+  });
+  return;
 };

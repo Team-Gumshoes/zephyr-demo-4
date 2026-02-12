@@ -1,5 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { config } from '../config/env.js';
+import logger from '../utils/logger.js';
 
 let supabaseClient: SupabaseClient | null = null;
 
@@ -16,10 +17,10 @@ export const connectToSupabase = (): SupabaseClient => {
       },
     });
 
-    console.log('✅ Successfully connected to Supabase');
+    logger.info('✅ Successfully connected to Supabase');
     return supabaseClient;
   } catch (error) {
-    console.error('❌ Failed to connect to Supabase:', error);
+    logger.error(error, '❌ Failed to connect to Supabase:');
     throw error;
   }
 };

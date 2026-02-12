@@ -14,7 +14,6 @@ const asyncError = (handler: (req: Request, res: Response, next: NextFunction) =
     try {
       await handler(req, res, next); // 'await' is needed here (ignore linting)
     } catch (error) {
-      console.log('Caught in asyncError');
       next(error);
     }
   };

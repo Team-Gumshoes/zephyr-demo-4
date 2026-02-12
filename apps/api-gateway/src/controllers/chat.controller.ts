@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { chatAgent } from '../services/agents/chat-agent.service';
 import { saveChatMessage, createChatSession } from '../services/chat.service';
 import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
+import logger from '../utils/logger';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -75,12 +76,14 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
   const message = messages[messages.length - 1];
 
   // 2. Save user message to database
-  await saveChatMessage({
+  const {data: humanChatData} = await saveChatMessage({
     supabase,
     sessionId,
     role: 'user',
     content: { text: message },
   });
+  logger.debug("Human chat request saved to database:")
+  logger.debug(humanChatData)
   
   // 3. Make request to agentAPI
   const chatRequest: ChatRequest = {
@@ -90,17 +93,18 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
 
   const response: ChatResponse = await chatAgent.sendChat(chatRequest);
 
-  console.log('^^^^^^^^ RESPONSE IN CHAT CONTROLLER ^^^^^^^^');
-  console.log(response);
+  logger.debug('^^^^^^^^ RESPONSE IN CHAT CONTROLLER ^^^^^^^^');
+  logger.debug(response);
 
   // 4. Save AI response message to database
-  const { data } = await saveChatMessage({
+  const { data: aiChatData } = await saveChatMessage({
     supabase,
     sessionId,
     role: 'assistant',
     content: { text: JSON.stringify(response.data) },
   });
-  console.log(data)
+  logger.debug("AI chat response saved to database:")
+  logger.debug(aiChatData)
 
   // 5. Return the assistant response
   res.status(200).json(response);
