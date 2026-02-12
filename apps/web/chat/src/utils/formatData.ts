@@ -1,6 +1,4 @@
-export const formatDate = (
-  dateString: string | undefined | null ,
-): string | undefined => {
+export const formatDate = (dateString: string | undefined | null): string | undefined => {
   if (!dateString) return undefined;
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return dateString;
@@ -10,6 +8,15 @@ export const formatDate = (
     year: 'numeric',
   });
 };
+
+export function formatTime(isoTime: string): string {
+  const date = new Date(isoTime);
+  return date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
 
 export const calculateNights = (
   departureDate: string | undefined | null,
