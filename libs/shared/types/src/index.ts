@@ -6,6 +6,6 @@ export * from './lib/flights';
 export * from './lib/hotels';
 export * from './lib/restaurants';
 export * from './lib/selfie-spots';
-export * from './lib/sights';
+export * from './lib/activities';
 export * from './lib/arithmetic';
 export * from './lib/response-data';

@@ -30,6 +30,8 @@ export interface StartingPrefs {
 export interface TripPrefs extends StartingPrefs {
   flightPreference?: BudgetPref;
   lodgingPreference?: BudgetPref;
+  diningPreference?: BudgetPref;
+  activityPreference?: BudgetPref;
   currentStepIndex: number;
   budget?: number;
   interests: string[];
