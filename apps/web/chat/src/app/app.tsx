@@ -1,4 +1,5 @@
-import { Button, Dialogue } from '@allorai/shared-ui';
+// @ts-ignore
+import { Button, Dialogue, ActivityCard, BudgetOverview } from '@allorai/shared-ui';
 import { ModifyDetails } from '../components/modals/ModifyDetails';
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
@@ -16,8 +17,10 @@ import {
   SAMPLE_DEPARTING_FLIGHTS,
   SAMPLE_HOTELS,
   SAMPLE_RETURNING_FLIGHTS,
+  SAMPLE_ACTIVITIES,
   StartingPrefs,
   TripData,
+  Activity,
 } from '@allorai/shared-types';
 
 // #3358ae dark
@@ -32,6 +35,7 @@ const initialTripData: TripData & { currentStepIndex: number } = {
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
   const startingPrefs: StartingPrefs | null = parseStartingPrefs(searchParams);
+  console.log('-------Starting Preferences--------');
   console.log(startingPrefs);
 
   const [tripData, setTripData] = useState<TripData>({
@@ -39,6 +43,7 @@ const ChatPage = () => {
     ...(startingPrefs || fallbackStartingPrefs),
   });
 
+  console.log('-------Trip Data--------');
   console.log({ tripData });
   // TODO Consider putting all this state in Zustand
   const [departingFlightOptions, setDepartingFlightOptions] =
@@ -46,6 +51,7 @@ const ChatPage = () => {
   const [returningFlightOptions, setReturningFlightOptions] =
     useState<FlightResults[]>(SAMPLE_RETURNING_FLIGHTS); // Change to a
   const [hotelOptions, setHotelOptions] = useState<HotelResults[]>(SAMPLE_HOTELS);
+  const [activityOptions, setActivityOptions] = useState<Activity[]>(SAMPLE_ACTIVITIES);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -63,6 +69,7 @@ const ChatPage = () => {
         departingFlightOptions,
         returningFlightOptions,
         hotelOptions,
+        activityOptions,
         updateFields,
       ),
     [tripData, updateFields, departingFlightOptions, returningFlightOptions, hotelOptions],
@@ -86,6 +93,7 @@ const ChatPage = () => {
         setDepartingFlightOptions,
         setReturningFlightOptions,
         setHotelOptions,
+        setActivityOptions,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
       });
@@ -124,7 +132,7 @@ const ChatPage = () => {
         <div className="flex justify-end gap-2">
           <div className={`flex flex-col items-end mr-14 mb-6 justify-end`}>
             <div className="flex gap-2">
-              {!isFirstStep && (
+              {!isFirstStep && !isLastStep && (
                 <>
                   <Button onClick={() => setIsDialogOpen(true)} variant="secondary">
                     Modify Details
@@ -138,13 +146,15 @@ const ChatPage = () => {
                   </Dialogue>
                 </>
               )}
-              <Button onClick={onSubmit}>
-                {isChatLoading ? (
-                  <ChatTypingIndicator content="Thinking" color="white" />
-                ) : (
-                  'Next Step'
-                )}
-              </Button>
+              {!isLastStep && (
+                <Button onClick={onSubmit}>
+                  {isChatLoading ? (
+                    <ChatTypingIndicator content="Thinking" color="white" />
+                  ) : (
+                    'Next Step'
+                  )}
+                </Button>
+              )}
             </div>
             {error && <div className="text-red-600 font-semibold mt-2">{error}</div>}
           </div>
@@ -183,5 +193,5 @@ export default ChatPage;
       { label: 'Attractions', amount: 0 },
     ]}
   />
-</div>; */
+</div> */
 }

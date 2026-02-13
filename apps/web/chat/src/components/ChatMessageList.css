@@ -1,0 +1,19 @@
+.form-container:has(.summary-card) {
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+
+  > div:first-child {
+    background-color: #99abd7;
+  }
+}
+
+.form-container:has(.activities-form) {
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+
+  > div:first-child {
+    background-color: transparent;
+  }
+}

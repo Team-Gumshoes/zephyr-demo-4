@@ -7,7 +7,11 @@ import FlightReturnInstructions from '../components/instructions/FlightReturnIns
 import FlightsReturningForm from '../components/forms/FlightsReturningForm';
 import HotelInstructions from '../components/instructions/HotelInstructions';
 import HotelsForm from '../components/forms/HotelsForm';
-import { FlightResults, HotelResults, TripData } from '@allorai/shared-types';
+import SummaryCard from '../components/SummaryCard';
+import ActivityBudgetInstructions from '../components/instructions/ActivityBudgetInstructions';
+import ActivityBudgetForm from '../components/forms/ActivityBudgetForm';
+import ActivitiesForm from '../components/forms/ActivitiesForm';
+import { FlightResults, HotelResults, TripData, Activity } from '@allorai/shared-types';
 
 export enum ChatStepSequence {
   Budget,
@@ -15,7 +19,8 @@ export enum ChatStepSequence {
   Returning,
   Hotels,
   Summary,
-  Other,
+  ActivityBudget,
+  Activities,
 }
 
 export type ChatStepName = keyof typeof ChatStepSequence;
@@ -31,6 +36,7 @@ const createChatSteps = (
   departingFlightOptions: FlightResults[],
   returningFlightOptions: FlightResults[],
   hotelOptions: HotelResults[],
+  activityOptions: Activity[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [
   {
@@ -64,6 +70,21 @@ const createChatSteps = (
     stepName: 'Hotels',
     instructions: <HotelInstructions {...tripData} />,
     form: <HotelsForm {...tripData} hotelOptions={hotelOptions} updateFields={updateFields} />,
+  },
+  {
+    stepName: 'Summary',
+    form: <SummaryCard data={tripData} />,
+  },
+  {
+    stepName: 'ActivityBudget',
+    instructions: <ActivityBudgetInstructions />,
+    form: <ActivityBudgetForm {...tripData} updateFields={updateFields} />,
+  },
+  {
+    stepName: 'Activities',
+    form: (
+      <ActivitiesForm {...tripData} activityOptions={activityOptions} updateFields={updateFields} />
+    ),
   },
 ];
 
