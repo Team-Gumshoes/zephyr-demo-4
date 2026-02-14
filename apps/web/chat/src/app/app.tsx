@@ -12,8 +12,8 @@ import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripReq
 import { stepHandlers } from './handlers/steps';
 import {
   createEmptyTrip,
-  FlightResults,
-  HotelResults,
+  Flight,
+  Hotel,
   SAMPLE_DEPARTING_FLIGHTS,
   SAMPLE_HOTELS,
   SAMPLE_RETURNING_FLIGHTS,
@@ -47,10 +47,10 @@ const ChatPage = () => {
   console.log({ tripData });
   // TODO Consider putting all this state in Zustand
   const [departingFlightOptions, setDepartingFlightOptions] =
-    useState<FlightResults[]>(SAMPLE_DEPARTING_FLIGHTS);
+    useState<Flight[]>(SAMPLE_DEPARTING_FLIGHTS);
   const [returningFlightOptions, setReturningFlightOptions] =
-    useState<FlightResults[]>(SAMPLE_RETURNING_FLIGHTS); // Change to a
-  const [hotelOptions, setHotelOptions] = useState<HotelResults[]>(SAMPLE_HOTELS);
+    useState<Flight[]>(SAMPLE_RETURNING_FLIGHTS); // Change to a
+  const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
   const [activityOptions, setActivityOptions] = useState<Activity[]>(SAMPLE_ACTIVITIES);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);

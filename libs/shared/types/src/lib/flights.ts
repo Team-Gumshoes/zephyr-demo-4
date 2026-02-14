@@ -19,7 +19,7 @@ export interface FlightLeg {
   segments: FlightSegment[];
 }
 
-export interface FlightResults {
+export interface Flight {
   id: string;
   price: number;
   currency: string;
@@ -27,7 +27,7 @@ export interface FlightResults {
   date?: string;
 }
 
-export const SAMPLE_DEPARTING_FLIGHTS: FlightResults[] = [
+export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
   {
     id: '1',
     price: 342,
@@ -99,7 +99,7 @@ export const SAMPLE_DEPARTING_FLIGHTS_RESPONSE: FlightResponseData = {
   options: SAMPLE_DEPARTING_FLIGHTS,
 };
 
-export const SAMPLE_RETURNING_FLIGHTS: FlightResults[] = [
+export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   {
     id: '4',
     price: 318,

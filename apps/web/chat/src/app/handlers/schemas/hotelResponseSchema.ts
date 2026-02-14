@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const HotelResultsSchema = z.object({
+const HotelSchema = z.object({
   id: z.string(),
   name: z.string(),
   location: z.string(),
@@ -11,5 +11,5 @@ const HotelResultsSchema = z.object({
 export const HotelResponseDataSchema = z.object({
   type: z.literal('hotel'),
   summary: z.string().optional(),
-  options: z.array(HotelResultsSchema).optional(),
+  options: z.array(HotelSchema).optional(),
 });

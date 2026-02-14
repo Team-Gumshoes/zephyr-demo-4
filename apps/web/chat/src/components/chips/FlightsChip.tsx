@@ -11,7 +11,7 @@
 //   date?: string;
 // };
 
-import { FlightResults, FlightSegment } from '@allorai/shared-types';
+import { Flight, FlightSegment } from '@allorai/shared-types';
 import { formatTime } from '../../utils/formatData';
 
 function SegmentRow({ segment }: { segment: FlightSegment }) {
@@ -43,7 +43,7 @@ function SegmentRow({ segment }: { segment: FlightSegment }) {
   );
 }
 
-const FlightChip = ({ flight }: { flight: FlightResults }) => {
+const FlightChip = ({ flight }: { flight: Flight }) => {
   const leg = flight.legs[0];
   if (!leg) return null;
 

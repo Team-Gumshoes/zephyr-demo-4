@@ -1,17 +1,17 @@
-import { FlightResults } from '@allorai/shared-types';
+import { Flight } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
 
 export type FlightsDepartingFormData = {
-  departureFlight?: FlightResults;
+  departureFlight?: Flight;
   departureDate?: string;
   currentStepIndex: number;
 };
 
 type FlightsDepartingFormProps = FlightsDepartingFormData & {
-  departingFlightOptions: FlightResults[];
+  departingFlightOptions: Flight[];
   updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
 };
 

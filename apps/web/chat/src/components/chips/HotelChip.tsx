@@ -1,8 +1,8 @@
-import { HotelResults } from '@allorai/shared-types';
+import { Hotel } from '@allorai/shared-types';
 import { calculateNights } from '../../utils/formatData';
 
 type HotelChipProps = {
-  hotel: HotelResults;
+  hotel: Hotel;
   departureDate?: string;
   returnDate?: string;
 };
@@ -18,9 +18,7 @@ const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
         <span className="font-semibold text-black text-base leading-6">
           ${totalCost != null ? totalCost.toLocaleString() : '—'}
         </span>
-        <span className="font-normal text-black text-base leading-6">
-          ${hotel.price} /night
-        </span>
+        <span className="font-normal text-black text-base leading-6">${hotel.price} /night</span>
       </div>
 
       {/* Hotel Name and Location */}

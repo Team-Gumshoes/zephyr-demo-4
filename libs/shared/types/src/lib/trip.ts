@@ -12,8 +12,8 @@
 //   constraints: string[];
 // }
 
-import { FlightResults } from './flights';
-import { HotelResults } from './hotels';
+import { Flight } from './flights';
+import { Hotel } from './hotels';
 
 export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
 
@@ -39,9 +39,9 @@ export interface TripPrefs extends StartingPrefs {
 }
 
 export interface TripData extends TripPrefs {
-  departureFlight?: FlightResults;
-  returnFlight?: FlightResults;
-  hotel?: HotelResults;
+  departureFlight?: Flight;
+  returnFlight?: Flight;
+  hotel?: Hotel;
 }
 
 // TODO AgentApiTrip is here for reference only (Delete later)

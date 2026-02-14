@@ -1,6 +1,6 @@
 import type { ArithmeticResult } from './arithmetic';
-import type { FlightResults } from './flights';
-import type { HotelResults } from './hotels';
+import type { Flight } from './flights';
+import type { Hotel } from './hotels';
 import type { RestaurantResults } from './restaurants';
 import type { SelfieSpots } from './selfie-spots';
 import type { Activity } from './activities';
@@ -14,13 +14,13 @@ export interface ArithmeticResponseData {
 export interface FlightResponseData {
   type: 'flight';
   summary?: string;
-  options?: FlightResults[];
+  options?: Flight[];
 }
 
 export interface HotelResponseData {
   type: 'hotel';
   summary?: string;
-  options?: HotelResults[];
+  options?: Hotel[];
 }
 
 export interface RestaurantResponseData {

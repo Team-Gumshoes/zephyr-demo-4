@@ -19,7 +19,7 @@ const FlightLegSchema = z.object({
   segments: z.array(FlightSegmentSchema),
 });
 
-const FlightResultsSchema = z.object({
+const FlightSchema = z.object({
   id: z.string(),
   price: z.number(),
   currency: z.string(),
@@ -29,5 +29,5 @@ const FlightResultsSchema = z.object({
 export const FlightResponseDataSchema = z.object({
   type: z.literal('flight'),
   summary: z.string().optional(),
-  options: z.array(FlightResultsSchema).optional(),
+  options: z.array(FlightSchema).optional(),
 });

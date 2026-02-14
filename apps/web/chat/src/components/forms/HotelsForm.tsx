@@ -1,4 +1,4 @@
-import { HotelResults } from '@allorai/shared-types';
+import { Hotel } from '@allorai/shared-types';
 import { ChatStepSequence } from '../../utils/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatData';
 import HotelChip from '../chips/HotelChip';
@@ -6,14 +6,14 @@ import clsx from 'clsx';
 
 export type HotelsFormData = {
   hotelId?: string;
-  hotel?: HotelResults;
+  hotel?: Hotel;
   departureDate?: string;
   returnDate?: string;
   currentStepIndex: number;
 };
 
 type HotelsFormProps = HotelsFormData & {
-  hotelOptions: HotelResults[];
+  hotelOptions: Hotel[];
   updateFields: (fields: Partial<HotelsFormData>) => void;
 };
 
