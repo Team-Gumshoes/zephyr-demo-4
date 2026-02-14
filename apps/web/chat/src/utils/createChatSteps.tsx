@@ -11,7 +11,7 @@ import SummaryCard from '../components/SummaryCard';
 import ActivityBudgetInstructions from '../components/instructions/ActivityBudgetInstructions';
 import ActivityBudgetForm from '../components/forms/ActivityBudgetForm';
 import ActivitiesForm from '../components/forms/ActivitiesForm';
-import { FlightResults, HotelResults, TripData, Activity } from '@allorai/shared-types';
+import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
 
 export enum ChatStepSequence {
   Budget,
@@ -33,9 +33,9 @@ export type ChatStep = {
 
 const createChatSteps = (
   tripData: TripData,
-  departingFlightOptions: FlightResults[],
-  returningFlightOptions: FlightResults[],
-  hotelOptions: HotelResults[],
+  departingFlightOptions: Flight[],
+  returningFlightOptions: Flight[],
+  hotelOptions: Hotel[],
   activityOptions: Activity[],
   updateFields: (fields: Partial<TripData>) => void,
 ): ChatStep[] => [

@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FlightResults, HotelResults, TripData, Activity } from '@allorai/shared-types';
+import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
 
 // This is what the handler might need to be passed to it to get its job done
 export interface StepHandlerContext {
   tripData: TripData;
-  setDepartingFlightOptions: Dispatch<SetStateAction<FlightResults[]>>;
-  setReturningFlightOptions: Dispatch<SetStateAction<FlightResults[]>>;
-  setHotelOptions: Dispatch<SetStateAction<HotelResults[]>>;
+  setDepartingFlightOptions: Dispatch<SetStateAction<Flight[]>>;
+  setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
+  setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;
   setActivityOptions: Dispatch<SetStateAction<Activity[]>>;
   updateFields: (fields: Partial<TripData>) => void; // not totally clear if we need this
   next: () => void; // not totally clear if we need this

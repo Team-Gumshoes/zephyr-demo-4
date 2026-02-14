@@ -1,6 +1,6 @@
 import { HotelResponseData } from './response-data';
 
-export interface HotelResults {
+export interface Hotel {
   id: string;
   name: string;
   location: string;
@@ -8,7 +8,7 @@ export interface HotelResults {
   price: number;
 }
 
-export const SAMPLE_HOTELS: HotelResults[] = [
+export const SAMPLE_HOTELS: Hotel[] = [
   {
     id: 'a',
     name: 'The Sapphire Grand',

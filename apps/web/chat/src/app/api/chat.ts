@@ -7,7 +7,7 @@ export type {
   Message,
   FlightSegment,
   FlightLeg,
-  FlightResults,
+  Flight,
   FlightResponseData,
   ResponseData,
 } from '@allorai/shared-types';
