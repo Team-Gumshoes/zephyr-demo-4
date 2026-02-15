@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 // import { ChatStepSequence } from '../../utils/createChatSteps';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
-import { Lightbulb, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
-import { ActivityFilterType, Activity } from '@allorai/shared-types';
+import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
+import { ActivityFilterType, Activity, Flight, Hotel } from '@allorai/shared-types';
+import { calculateNights } from '../../utils/formatData';
 
 export type ActivityFormData = {
   currentStepIndex: number;
+  departureDate?: string;
+  returnDate?: string;
+  departureFlight?: Flight;
+  returnFlight?: Flight;
+  hotel?: Hotel;
 };
 
 type ActivityFormProps = ActivityFormData & {
@@ -15,32 +21,30 @@ type ActivityFormProps = ActivityFormData & {
 };
 
 const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
+  Nature: Trees,
   Food: UtensilsCrossed,
   Activities: Ticket,
   'Selfie Spots': Camera,
 };
 
-const BUDGET_ITEMS = [
-  { label: 'Flights', amount: 800 },
-  { label: 'Hotels', amount: 600 },
-  { label: 'Attractions', amount: 0 },
-];
+const parseCost = (cost: string): number => Number(cost.replace(/[^0-9.]/g, '')) || 0;
 
-const ActivitiesForm = ({ activityOptions, currentStepIndex, updateFields }: ActivityFormProps) => {
+const ActivitiesForm = ({
+  activityOptions,
+  currentStepIndex,
+  departureDate,
+  returnDate,
+  departureFlight,
+  returnFlight,
+  hotel,
+  updateFields,
+}: ActivityFormProps) => {
   //   const isActive = currentStepIndex === ChatStepSequence.Activities;
-  const [selectedFilters, setSelectedFilters] = useState<Set<ActivityFilterType>>(new Set());
+  const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
   const [activities, setActivities] = useState<Activity[]>(activityOptions);
 
   const toggleFilter = (filter: ActivityFilterType) => {
-    setSelectedFilters((prev) => {
-      const newFilters = new Set(prev);
-      if (newFilters.has(filter)) {
-        newFilters.delete(filter);
-      } else {
-        newFilters.add(filter);
-      }
-      return newFilters;
-    });
+    setSelectedFilter((prev) => (prev === filter ? null : filter));
   };
 
   const togglePin = (activityId: string) => {
@@ -51,7 +55,25 @@ const ActivitiesForm = ({ activityOptions, currentStepIndex, updateFields }: Act
     );
   };
 
-  const filters: ActivityFilterType[] = ['Food', 'Activities', 'Selfie Spots'];
+  const budgetItems = useMemo(() => {
+    const attractionsTotal = activities
+      .filter((a) => a.pinned)
+      .reduce((sum, a) => sum + parseCost(a.estimatedCost), 0);
+    return [
+      { label: 'Flights', amount: (departureFlight?.price ?? 0) + (returnFlight?.price ?? 0) },
+      { label: 'Hotels', amount: (hotel?.price ?? 0) * (calculateNights(departureDate, returnDate) ?? 1) },
+      { label: 'Attractions', amount: attractionsTotal },
+    ];
+  }, [activities, departureDate, returnDate, departureFlight, returnFlight, hotel]);
+
+  const filteredActivities = useMemo(() => {
+    const filtered = selectedFilter
+      ? activities.filter((activity) => activity.category === selectedFilter)
+      : activities;
+    return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
+  }, [activities, selectedFilter]);
+
+  const filters: ActivityFilterType[] = ['Nature', 'Food', 'Activities', 'Selfie Spots'];
 
   return (
     <div className="activities-form flex w-full gap-5 border-t-2 border-black pt-6">
@@ -67,7 +89,7 @@ const ActivitiesForm = ({ activityOptions, currentStepIndex, updateFields }: Act
           <div className="flex flex-wrap gap-3">
             {filters.map((filter) => {
               const Icon = FILTER_ICONS[filter];
-              const isSelected = selectedFilters.has(filter);
+              const isSelected = selectedFilter === filter;
 
               return (
                 <button
@@ -92,7 +114,7 @@ const ActivitiesForm = ({ activityOptions, currentStepIndex, updateFields }: Act
 
         {/* AI Results - Activity Cards */}
         <div className="flex flex-col items-end gap-4">
-          {activities.map((activity) => (
+          {filteredActivities.map((activity) => (
             <ActivityCard
               key={activity.id}
               title={activity.title}
@@ -123,7 +145,7 @@ const ActivitiesForm = ({ activityOptions, currentStepIndex, updateFields }: Act
       <div className="flex w-[273px] shrink-0 flex-col gap-10">
         {/* Budget Overview and Buttons */}
         <div className="flex flex-col gap-6">
-          <BudgetOverview items={BUDGET_ITEMS} />
+          <BudgetOverview items={budgetItems} />
 
           {/* Action Buttons */}
           <div className="flex flex-col gap-4">
