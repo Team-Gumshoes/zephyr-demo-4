@@ -15,3 +15,7 @@ pnpx nx serve api-gateway
 # navigate to localhost:3001 should work 
 
 ```
+
+Occasionally, the port for one of the MFEs does not get freed up correctly. Try using this command in the terminal (e.g. port 4202 already in use):
+
+`lsof -ti:4202 | xargs kill -9 2>/dev/null || echo "No process found on port 4202"`

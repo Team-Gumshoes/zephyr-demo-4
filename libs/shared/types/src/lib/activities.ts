@@ -1,3 +1,5 @@
+import { ActivitiesResponseData } from "./response-data";
+
 export type ActivityFilterType = 'Food' | 'Activities' | 'Selfie Spots';
 
 export type Activity = {
@@ -53,3 +55,9 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     pinned: false,
   },
 ];
+
+export const SAMPLE_ACTIVITIES_RESPONSE: ActivitiesResponseData = {
+  type: 'activities',
+  summary: 'sample hotel response summary',
+  options: SAMPLE_ACTIVITIES,
+};

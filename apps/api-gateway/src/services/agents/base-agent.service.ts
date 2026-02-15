@@ -8,7 +8,7 @@ export class BaseAgentService {
   constructor(baseURL: string = config.AGENTS_URL ?? 'http://localhost:8000') {
     this.client = axios.create({
       baseURL,
-      timeout: 30_000,
+      timeout: 10_000,
       headers: {
         'Content-Type': 'application/json',
       },
