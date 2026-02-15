@@ -41,10 +41,17 @@ export interface SightseeingResponseData {
   options?: Activity[];
 }
 
+export interface ActivitiesResponseData {
+  type: 'activities';
+  summary?: string;
+  options?: Activity[];
+}
+
 export type ResponseData =
   | ArithmeticResponseData
   | FlightResponseData
   | HotelResponseData
   | RestaurantResponseData
+  | ActivitiesResponseData
   | SelfieResponseData
   | SightseeingResponseData;

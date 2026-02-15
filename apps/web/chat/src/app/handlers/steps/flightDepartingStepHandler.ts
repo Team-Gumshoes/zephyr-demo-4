@@ -1,9 +1,4 @@
-import {
-  SAMPLE_RETURNING_FLIGHTS_RESPONSE,
-  type ChatRequest,
-  type ChatResponse,
-  type Message,
-} from '@allorai/shared-types';
+import { type ChatRequest, type ChatResponse, type Message } from '@allorai/shared-types';
 import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
@@ -13,7 +8,6 @@ export const flightDepartingStepHandler: StepHandler = async ({
   setReturningFlightOptions,
 }) => {
   try {
-    let shouldAdvance = false;
     if (!tripData.departureFlight) {
       return {
         success: false,
@@ -21,28 +15,21 @@ export const flightDepartingStepHandler: StepHandler = async ({
       };
     }
 
-    // 2. Format api request correctly
     const newMessage: Message = {
       type: 'human',
-      content: 'Please find outbound flights for the trip',
+      content: 'Please find return flights for the trip',
     };
-
     const request: ChatRequest = {
       messages: [newMessage],
       data: null,
       trip: tripData,
     };
 
-    // 3. Make request to api-gateway
     const response: ChatResponse = await sendChatMessage(request);
     console.log('response received in flightDepartingStepHandler:');
     console.log(response);
 
-    // 4. Parse and validate response into flight options
-    const parsedResponseData = FlightResponseDataSchema.safeParse(
-      SAMPLE_RETURNING_FLIGHTS_RESPONSE,
-    );
-    // const parsed = FlightResponseDataSchema.safeParse(response.data);
+    const parsedResponseData = FlightResponseDataSchema.safeParse(response.data);
 
     if (!parsedResponseData.success) {
       console.error('Invalid flight response data:', parsedResponseData.error.issues);
@@ -54,10 +41,14 @@ export const flightDepartingStepHandler: StepHandler = async ({
 
     if (parsedResponseData.data.options) {
       setReturningFlightOptions(parsedResponseData.data.options);
-      shouldAdvance = true; // If everything worked out
+      return { success: true, shouldAdvance: true };
+    } else {
+      console.error("Missing 'options' from response in request for returning flights");
+      return {
+        success: false,
+        error: 'Response from api-gateway did not contain the needed data',
+      };
     }
-
-    return { success: true, shouldAdvance };
   } catch (error) {
     return {
       success: false,

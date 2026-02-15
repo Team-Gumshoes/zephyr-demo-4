@@ -1,29 +1,32 @@
-import { SAMPLE_HOTELS_RESPONSE, type ChatRequest } from '@allorai/shared-types';
+import { type Message, type ChatRequest } from '@allorai/shared-types';
 import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 import { HotelResponseDataSchema } from '../schemas/hotelResponseSchema';
 
 export const flightReturningStepHandler: StepHandler = async ({ tripData, setHotelOptions }) => {
   try {
-    let shouldAdvance = false;
     if (!tripData.returnFlight) {
       return {
         success: false,
         error: 'Please select a returning flight',
       };
     }
+
+    const newMessage: Message = {
+      type: 'human',
+      content: 'Please find hotels for the trip',
+    };
     const request: ChatRequest = {
-      messages: [],
+      messages: [newMessage],
       data: null,
       trip: tripData,
     };
 
     const response = await sendChatMessage(request);
     console.log('response received in flightReturningStepHandler:');
-    console.log(response);
+    console.log(request);
 
-    const parsedResponseData = HotelResponseDataSchema.safeParse(SAMPLE_HOTELS_RESPONSE);
-    // const parsedResponseData = HotelResponseDataSchema.safeParse(response.data)
+    const parsedResponseData = HotelResponseDataSchema.safeParse(response.data);
 
     if (!parsedResponseData.success) {
       console.error('Invalid hotel response data', parsedResponseData.error.issues);
@@ -35,10 +38,15 @@ export const flightReturningStepHandler: StepHandler = async ({ tripData, setHot
 
     if (parsedResponseData.data.options) {
       setHotelOptions(parsedResponseData.data.options);
-      shouldAdvance = true; // If everything worked out
+      return { success: true, shouldAdvance: true };
+    } else {
+      console.error("Missing 'options' from response in request for returning flights");
+      return {
+        success: false,
+        error: 'Response from api-gateway did not contain the needed data',
+      };
     }
 
-    return { success: true, shouldAdvance };
   } catch (error) {
     return {
       success: false,
