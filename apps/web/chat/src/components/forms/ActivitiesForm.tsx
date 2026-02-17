@@ -5,6 +5,8 @@ import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
 import { ActivityFilterType, Activity, Flight, Hotel } from '@allorai/shared-types';
 import { calculateNights } from '../../utils/formatData';
+import { Dialogue } from '@allorai/shared-ui';
+import { ViewDetails } from '../modals/ViewDetails';
 
 export type ActivityFormData = {
   currentStepIndex: number;
@@ -42,6 +44,7 @@ const ActivitiesForm = ({
   //   const isActive = currentStepIndex === ChatStepSequence.Activities;
   const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
   const [activities, setActivities] = useState<Activity[]>(activityOptions);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
   const toggleFilter = (filter: ActivityFilterType) => {
     setSelectedFilter((prev) => (prev === filter ? null : filter));
@@ -61,7 +64,10 @@ const ActivitiesForm = ({
       .reduce((sum, a) => sum + parseCost(a.estimatedCost), 0);
     return [
       { label: 'Flights', amount: (departureFlight?.price ?? 0) + (returnFlight?.price ?? 0) },
-      { label: 'Hotels', amount: (hotel?.price ?? 0) * (calculateNights(departureDate, returnDate) ?? 1) },
+      {
+        label: 'Hotels',
+        amount: (hotel?.price ?? 0) * (calculateNights(departureDate, returnDate) ?? 1),
+      },
       { label: 'Attractions', amount: attractionsTotal },
     ];
   }, [activities, departureDate, returnDate, departureFlight, returnFlight, hotel]);
@@ -121,10 +127,10 @@ const ActivitiesForm = ({
               description={activity.description}
               estimatedCost={activity.estimatedCost}
               distance={activity.distance}
-              imageUrl={activity.imageUrl}
+              imageUrl={activity.imageUrl?.[0]}
               pinned={activity.pinned}
               onPin={() => togglePin(activity.id)}
-              onViewDetails={() => console.log('View details:', activity.id)}
+              onViewDetails={() => setSelectedActivity(activity)}
               className="w-[505px]"
             />
           ))}
@@ -202,6 +208,16 @@ const ActivitiesForm = ({
           </div>
         </div>
       </div>
+      {selectedActivity && (
+        <Dialogue
+          isOpen={!!selectedActivity}
+          onClose={() => setSelectedActivity(null)}
+          title={selectedActivity.title}
+          className="max-w-3xl"
+        >
+          <ViewDetails activity={selectedActivity} />
+        </Dialogue>
+      )}
     </div>
   );
 };

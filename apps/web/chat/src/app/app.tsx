@@ -141,6 +141,7 @@ const ChatPage = () => {
                     isOpen={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
                     title="How would you like to modify your trip details?"
+                    className="max-w-md"
                   >
                     <ModifyDetails />
                   </Dialogue>

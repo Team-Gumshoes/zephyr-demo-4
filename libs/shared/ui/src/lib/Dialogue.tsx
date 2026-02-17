@@ -18,16 +18,13 @@ export const Dialogue = ({
   className = '',
 }: PropsWithChildren<DialogueProps>) => {
   return (
-    <DialogPrimitive.Root
-      open={isOpen}
-      onOpenChange={(open: boolean) => !open && onClose()}
-    >
+    <DialogPrimitive.Root open={isOpen} onOpenChange={(open: boolean) => !open && onClose()}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/50" />
         <DialogPrimitive.Content
           className={clsx(
             'fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
-            'bg-white rounded-2xl shadow-xl max-w-md w-full mx-4 p-6',
+            'bg-white rounded-2xl shadow-xl w-full mx-4 p-6',
             className,
           )}
         >
