@@ -75,14 +75,8 @@ export const ActivityCard = ({
           >
             <Pin size={24} fill={pinned ? 'currentColor' : 'none'} />
           </button>
-          <div className="flex-1 w-[158px] min-h-[1px] overflow-hidden rounded-sm bg-[#333]">
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt={title}
-                className="h-full w-full object-cover"
-              />
-            )}
+          <div className="flex-1 w-[158px] min-h-[1px] max-h-[139px] overflow-hidden rounded-sm bg-[#333]">
+            {imageUrl && <img src={imageUrl} alt={title} className="h-full w-full object-cover" />}
           </div>
         </div>
       </div>
