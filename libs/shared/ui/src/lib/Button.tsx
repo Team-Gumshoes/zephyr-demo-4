@@ -39,7 +39,7 @@ export const Button = ({
   const classes = clsx(baseStyles, variants[variant], sizes[size], className);
 
   return (
-    <button className={classes} disabled={disabled} onClick={onClick}>
+    <button type="button" className={classes} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );

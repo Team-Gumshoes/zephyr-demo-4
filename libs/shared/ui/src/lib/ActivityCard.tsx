@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Pin, Landmark } from 'lucide-react';
+import { Pin } from 'lucide-react';
 import { Button } from './Button';
 
 type ActivityCardProps = {
@@ -28,7 +28,7 @@ export const ActivityCard = ({
   return (
     <div
       className={clsx(
-        'flex items-center justify-center rounded-lg border border-black/50 bg-[#fbfbfe] px-5 py-6 shadow-md',
+        'flex items-center justify-center rounded-lg border border-black/50 bg-[#fbfbfe] px-5 py-6 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]',
         className,
       )}
     >
@@ -53,9 +53,6 @@ export const ActivityCard = ({
 
           {/* Buttons */}
           <div className="flex items-center gap-4">
-            <div className="flex min-h-[32px] items-center justify-center rounded-[10px] border-2 border-[#52c3bf] bg-[#fbfbfe] p-1.5">
-              <Landmark size={18} className="text-black" />
-            </div>
             {onViewDetails && (
               <Button size="medium" onClick={onViewDetails}>
                 View Details
@@ -67,6 +64,7 @@ export const ActivityCard = ({
         {/* Right section */}
         <div className="flex flex-col items-end gap-2 self-stretch">
           <button
+            type="button"
             onClick={onPin}
             className={clsx(
               'cursor-pointer p-0 border-none bg-transparent',

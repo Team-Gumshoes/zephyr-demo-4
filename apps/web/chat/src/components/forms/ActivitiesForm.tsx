@@ -76,8 +76,22 @@ const ActivitiesForm = ({
     const filtered = selectedFilter
       ? activities.filter((activity) => activity.category === selectedFilter)
       : activities;
-    return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
+    // return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
+    return filtered;
   }, [activities, selectedFilter]);
+
+  const pinnedCountByFilter = useMemo(() => {
+    const counts: Record<ActivityFilterType, number> = {
+      Nature: 0,
+      Food: 0,
+      Activities: 0,
+      'Selfie Spots': 0,
+    };
+    for (const activity of activities) {
+      if (activity.pinned) counts[activity.category]++;
+    }
+    return counts;
+  }, [activities]);
 
   const filters: ActivityFilterType[] = ['Nature', 'Food', 'Activities', 'Selfie Spots'];
 
@@ -91,26 +105,34 @@ const ActivitiesForm = ({
             Experiences Based on Your Preferences
           </h2>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-3">
+          {/* Filter Tabs */}
+          <div className="flex items-center gap-0 rounded-lg bg-[#75cfcc] p-2 w-fit">
             {filters.map((filter) => {
               const Icon = FILTER_ICONS[filter];
               const isSelected = selectedFilter === filter;
+              const pinnedCount = pinnedCountByFilter[filter];
 
               return (
                 <button
+                  type="button"
                   key={filter}
                   onClick={() => toggleFilter(filter)}
                   className={clsx(
-                    'flex min-h-[32px] items-center gap-1.5 rounded-full border-2 px-3 py-1.5 transition-colors',
-                    isSelected
-                      ? 'border-[#52c3bf] bg-[#fbfbfe]'
-                      : 'border-gray-300 bg-white hover:border-[#52c3bf]',
+                    'flex min-h-[32px] items-center gap-2 rounded-lg px-2.5 py-[5.5px] transition-colors',
+                    isSelected ? 'bg-[#fbfbfe]' : 'hover:bg-[#75cfcc]/80',
                   )}
                 >
-                  <Icon size={20} className="shrink-0" />
+                  <Icon size={18} className="shrink-0" />
                   <span className="text-sm font-semibold tracking-[0.07px] text-black">
                     {filter}
+                  </span>
+                  <span
+                    className={clsx(
+                      'flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[12px] font-semibold leading-4 tracking-[0.18px] text-[#020617] transition-colors',
+                      pinnedCount > 0 ? (isSelected ? 'bg-[#75cfcc]' : 'bg-white') : 'invisible',
+                    )}
+                  >
+                    {pinnedCount}
                   </span>
                 </button>
               );
@@ -161,7 +183,7 @@ const ActivitiesForm = ({
               onClick={() => console.log('Save plan')}
               className="h-10 w-full"
             >
-              Save Plan
+              Review & Save
             </Button>
             <Button
               variant="outline"
@@ -169,7 +191,7 @@ const ActivitiesForm = ({
               onClick={() => console.log('New plan')}
               className="h-10 w-full"
             >
-              New Plan
+              New Trip
             </Button>
           </div>
         </div>
