@@ -4,6 +4,7 @@ const pinIcon = 'http://localhost:3845/assets/33e4ecf75ce926ab66ff9cf3bc3b540c9a
 const pinNotClickedIcon = 'http://localhost:3845/assets/b1f45d2cd7d1d4cb3fdfb952b7b6f8dc476a7efc.svg';
 const pinClickedIcon = 'http://localhost:3845/assets/90e411bdf1e87778191fa8fb20eeb395d6e1b1f3.svg';
 const categoryIcon = 'http://localhost:3845/assets/cf10a37442fd3adc95293ba8e2368aa1b20bcfa2.svg';
+const experienceImage = 'http://localhost:3845/assets/535ec78372cc4d599c21afa7484521415f24ecd9.png';
 
 type ExperienceCardProps = {
   className?: string;
@@ -106,7 +107,11 @@ export default function ExperienceCard({
         {/* Right Section */}
         <div className="flex flex-col gap-2 items-end h-full w-[158px]">
           <PinButton isPinned={isPinned} onClick={onPin} />
-          <div className="flex-1 min-h-px w-full bg-[#333] rounded-sm" />
+          <img
+            alt={title}
+            src={experienceImage}
+            className="w-[158px] h-[140px] rounded-lg object-cover flex-shrink-0"
+          />
         </div>
       </div>
     </div>

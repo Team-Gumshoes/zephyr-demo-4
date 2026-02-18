@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 const categoryIcon = 'http://localhost:3845/assets/cf10a37442fd3adc95293ba8e2368aa1b20bcfa2.svg';
+const experienceImage = 'http://localhost:3845/assets/535ec78372cc4d599c21afa7484521415f24ecd9.png';
 
 type ExperienceCardReviewProps = {
   className?: string;
@@ -76,7 +77,11 @@ export default function ExperienceCardReview({
 
         {/* Right Section */}
         <div className="flex flex-col gap-2 items-end justify-end h-[139px] w-[158px]">
-          <div className="bg-[#333] h-[139px] w-full rounded-sm" />
+          <img
+            alt={title}
+            src={experienceImage}
+            className="w-[158px] h-[140px] rounded-lg object-cover flex-shrink-0"
+          />
         </div>
       </div>
     </div>
