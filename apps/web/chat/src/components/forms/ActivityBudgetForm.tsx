@@ -1,15 +1,16 @@
 import clsx from 'clsx';
-import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { BudgetPref } from '@allorai/shared-types';
 
 export type ActivityFormData = {
   diningPreference?: BudgetPref;
   activityPreference?: BudgetPref;
-  currentStepIndex: number;
 };
 
 export type ActivityFormProps = ActivityFormData & {
   updateFields: (fields: Partial<ActivityFormData>) => void;
+  currentStepIndex: number;
+  isChatLoading: boolean;
 };
 
 const ActivityBudgetForm = ({
@@ -17,6 +18,7 @@ const ActivityBudgetForm = ({
   activityPreference,
   updateFields,
   currentStepIndex,
+  isChatLoading,
 }: ActivityFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.ActivityBudget;
 
@@ -46,7 +48,7 @@ const ActivityBudgetForm = ({
               className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 type="radio"
                 name="diningPreference"
                 value={option.value}
@@ -71,7 +73,7 @@ const ActivityBudgetForm = ({
               className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 type="radio"
                 name="activityPreference"
                 value={option.value}

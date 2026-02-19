@@ -1,5 +1,5 @@
 import { Flight } from '@allorai/shared-types';
-import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
@@ -7,12 +7,13 @@ import clsx from 'clsx';
 export type FlightsDepartingFormData = {
   departureFlight?: Flight;
   departureDate?: string;
-  currentStepIndex: number;
 };
 
 type FlightsDepartingFormProps = FlightsDepartingFormData & {
   departingFlightOptions: Flight[];
   updateFields: (fields: Partial<FlightsDepartingFormData>) => void;
+  currentStepIndex: number;
+  isChatLoading: boolean;
 };
 
 const FlightsDepartingForm = ({
@@ -21,12 +22,14 @@ const FlightsDepartingForm = ({
   currentStepIndex,
   departingFlightOptions,
   updateFields,
+  isChatLoading,
 }: FlightsDepartingFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Departing;
   let flightDepartingId = departureFlight?.id;
 
   return (
     <div className="w-full">
+
       <h2 className="text-xl font-bold mb-6">Departing Flights - {formatDate(departureDate)}</h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
@@ -35,7 +38,7 @@ const FlightsDepartingForm = ({
               <input
                 type="radio"
                 name="departingFlight"
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
                 onChange={(e) => {

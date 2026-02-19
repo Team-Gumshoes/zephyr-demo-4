@@ -9,7 +9,6 @@ import { Dialogue } from '@allorai/shared-ui';
 import { ViewDetails } from '../modals/ViewDetails';
 
 export type ActivityFormData = {
-  currentStepIndex: number;
   departureDate?: string;
   returnDate?: string;
   departureFlight?: Flight;
@@ -20,6 +19,8 @@ export type ActivityFormData = {
 type ActivityFormProps = ActivityFormData & {
   activityOptions: Activity[];
   updateFields: (fields: Partial<ActivityFormData>) => void;
+  isChatLoading: boolean;
+  currentStepIndex: number;
 };
 
 const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
@@ -40,6 +41,7 @@ const ActivitiesForm = ({
   returnFlight,
   hotel,
   updateFields,
+  isChatLoading,
 }: ActivityFormProps) => {
   //   const isActive = currentStepIndex === ChatStepSequence.Activities;
   const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
@@ -145,7 +147,7 @@ const ActivitiesForm = ({
           {filteredActivities.map((activity) => (
             <ActivityCard
               key={activity.id}
-              title={activity.title}
+              name={activity.name}
               description={activity.description}
               estimatedCost={activity.estimatedCost}
               distance={activity.distance}
@@ -234,7 +236,7 @@ const ActivitiesForm = ({
         <Dialogue
           isOpen={!!selectedActivity}
           onClose={() => setSelectedActivity(null)}
-          title={selectedActivity.title}
+          title={selectedActivity.name}
           className="max-w-3xl"
         >
           <ViewDetails activity={selectedActivity} />

@@ -1,5 +1,5 @@
 import { Hotel } from '@allorai/shared-types';
-import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatData';
 import HotelChip from '../chips/HotelChip';
 import clsx from 'clsx';
@@ -9,12 +9,13 @@ export type HotelsFormData = {
   hotel?: Hotel;
   departureDate?: string;
   returnDate?: string;
-  currentStepIndex: number;
 };
 
 type HotelsFormProps = HotelsFormData & {
   hotelOptions: Hotel[];
   updateFields: (fields: Partial<HotelsFormData>) => void;
+  isChatLoading: boolean;
+  currentStepIndex: number;
 };
 
 const HotelsForm = ({
@@ -24,6 +25,7 @@ const HotelsForm = ({
   currentStepIndex,
   hotelOptions,
   updateFields,
+  isChatLoading,
 }: HotelsFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Hotels;
 
@@ -41,7 +43,7 @@ const HotelsForm = ({
               <input
                 type="radio"
                 name="hotel"
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 value={hotel.id}
                 checked={hotelId === hotel.id}
                 onChange={(e) => updateFields({ hotelId: e.target.value, hotel: hotel })}

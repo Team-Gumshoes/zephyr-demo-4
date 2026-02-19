@@ -1,40 +1,27 @@
 import { Dispatch, SetStateAction } from 'react';
-import { type ChatStep } from '../utils/createChatSteps';
-import { TripData } from '@allorai/shared-types';
+import { type ChatStep } from '../app/lib/createChatSteps';
 
 const useMultiStepChat = (
   steps: ChatStep[],
-  data: TripData,
-  setTripData: Dispatch<SetStateAction<TripData>>,
+  currentStepIndex: number,
+  setCurrentStepIndex: Dispatch<SetStateAction<number>>,
 ) => {
   function next() {
-    setTripData((prevTripData) => {
-      const prevIdx = prevTripData.currentStepIndex;
-      return {
-        ...prevTripData,
-        currentStepIndex: prevIdx === steps.length - 1 ? prevIdx : prevIdx + 1,
-      };
-    });
+    console.log('Advancing 2');
+    setCurrentStepIndex((prevIdx) => (prevIdx === steps.length - 1 ? prevIdx : prevIdx + 1));
   }
 
   function back() {
-    setTripData((prevTripData) => {
-      const prevIdx = prevTripData.currentStepIndex;
-      return {
-        ...prevTripData,
-        currentStepIndex: prevIdx === 0 ? prevIdx : prevIdx - 1,
-      };
-    });
+    setCurrentStepIndex((prevIdx) => (prevIdx === 0 ? prevIdx : prevIdx - 1));
   }
 
   return {
-    currentStepIndex: data.currentStepIndex,
-    currentStep: steps[data.currentStepIndex],
+    currentStep: steps[currentStepIndex],
     steps,
     next,
     back,
-    isFirstStep: data.currentStepIndex === 0,
-    isLastStep: data.currentStepIndex === steps.length - 1,
+    isFirstStep: currentStepIndex === 0,
+    isLastStep: currentStepIndex === steps.length - 1,
   };
 };
 

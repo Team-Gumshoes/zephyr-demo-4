@@ -14,7 +14,7 @@ type FlightReturnInstructionsProps = {
 const FlightReturnInstructions = ({ flightPreference }: FlightReturnInstructionsProps) => {
   if (!flightPreference) return <div>Invalid data</div>;
   return (
-    <div className="text-sm">
+    <div className="text-sm max-w-72">
       <div>
         Here are a few possible <b>return flights</b> that are{' '}
         <b>{FLIGHT_PREFS[flightPreference]}</b> that you can select for your trip plan estimate.

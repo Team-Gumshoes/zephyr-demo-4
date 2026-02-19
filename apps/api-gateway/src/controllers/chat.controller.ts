@@ -1,8 +1,45 @@
 import { Request, Response } from 'express';
+import { z } from 'zod';
 import { chatAgent } from '../services/agents/chat-agent.service';
 import { saveChatMessage, createChatSession } from '../services/chat.service';
 import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 import logger from '../utils/logger';
+
+// Zod schema for request body validation
+const MessageSchema = z.object({
+  type: z.enum(['human', 'ai']),
+  content: z.string(),
+});
+
+const TripDataSchema = z
+  .object({
+    origin: z.string().optional(),
+    destination: z.string().optional(),
+    departureDate: z.string().optional(),
+    returnDate: z.string().optional(),
+    preferences: z.string().optional(),
+    budgetIncludes: z.array(z.string()).optional(),
+    transportation: z.array(z.string()).optional(),
+    flightPreference: z.enum(['budget', 'balanced', 'premium', 'none']).optional(),
+    lodgingPreference: z.enum(['budget', 'balanced', 'premium', 'none']).optional(),
+    diningPreference: z.enum(['budget', 'balanced', 'premium', 'none']).optional(),
+    activityPreference: z.enum(['budget', 'balanced', 'premium', 'none']).optional(),
+    currentStepIndex: z.number().optional(),
+    budget: z.number().optional(),
+    interests: z.array(z.string()).optional(),
+    constraints: z.array(z.string()).optional(),
+    departureFlight: z.any().optional(),
+    returnFlight: z.any().optional(),
+    hotel: z.any().optional(),
+  })
+  .passthrough();
+
+const ChatMessageRequestSchema = z.object({
+  sessionId: z.string(),
+  messages: z.array(MessageSchema).min(1),
+  trip: TripDataSchema,
+  data: z.any().nullable().optional(),
+});
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -44,51 +81,38 @@ const createChatSessionHandler = async (req: Request, res: Response): Promise<vo
 
 // ************* POST /chat/message - Send a message and get LLM response ************
 const chatMessageHandler = async (req: Request, res: Response): Promise<void> => {
-  const {
-    supabase,
-    body: { sessionId },
-  } = req;
-  
-  // 1. Parse and validate req.body
-  if (!sessionId) {
+  const { supabase } = req;
+
+  // 1. Parse and validate req.body with Zod
+  const parseResult = ChatMessageRequestSchema.safeParse(req.body);
+
+  if (!parseResult.success) {
+    logger.warn('Invalid chat message request body:');
+    logger.debug(parseResult.error.issues);
     res.status(400).json({
-      error: 'sessionId is required',
+      error: 'Invalid request body',
+      details: parseResult.error.issues,
     });
     return;
   }
 
-  /*
-  TODO add zod validation for ALL of req.body
-  Here is the ChatResponse shape:
-  {
-    messages: Message[];
-    data: ResponseData | null;
-    trip: Trip;
-    debug: Message[];
-  }
-  And here is the Message shape:
-  {
-    type: "human" | "ai";
-    content: string;
-  }
-  */
-  const messages = req.body.messages;
-  const message = messages[messages.length - 1];
+  const { sessionId, messages, trip } = parseResult.data;
+  const humanChatMessage = messages[messages.length - 1].content;
 
   // 2. Save user message to database
-  const {data: humanChatData} = await saveChatMessage({
+  const { data: humanChatData } = await saveChatMessage({
     supabase,
     sessionId,
     role: 'user',
-    content: { text: message },
+    content: { text: humanChatMessage },
   });
-  logger.debug("Human chat request saved to database:")
-  logger.debug(humanChatData)
-  
+  logger.debug('Human chat request saved to database:');
+  logger.debug(humanChatData);
+
   // 3. Make request to agentAPI
   const chatRequest: ChatRequest = {
-    messages: [{ type: 'human', content: message }],
-    trip: req.body.trip,
+    messages,
+    trip: trip as ChatRequest['trip'],
   };
 
   const response: ChatResponse = await chatAgent.sendChat(chatRequest);
@@ -101,10 +125,10 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
     supabase,
     sessionId,
     role: 'assistant',
-    content: { text: JSON.stringify(response.data) },
+    content: { text: response.messages[response.messages.length - 1].content },
   });
-  logger.debug("AI chat response saved to database:")
-  logger.debug(aiChatData)
+  logger.debug('AI chat response saved to database:');
+  logger.debug(aiChatData);
 
   // 5. Return the assistant response
   res.status(200).json(response);

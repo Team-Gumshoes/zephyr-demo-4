@@ -5,10 +5,10 @@ import logger from '../../utils/logger';
 export class BaseAgentService {
   protected client: AxiosInstance;
 
-  constructor(baseURL: string = config.AGENTS_URL ?? 'http://localhost:8000') {
+  constructor(baseURL: string = config.AGENTS_URL) {
     this.client = axios.create({
       baseURL,
-      timeout: 10_000,
+      timeout: 3_000,
       headers: {
         'Content-Type': 'application/json',
       },

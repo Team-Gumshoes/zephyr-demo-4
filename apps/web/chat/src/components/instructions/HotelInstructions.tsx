@@ -15,7 +15,7 @@ const HotelInstructions = ({ lodgingPreference }: HotelInstructionsProps) => {
   if (!lodgingPreference) return <div>Invalid data</div>;
 
   return (
-    <div className="text-sm">
+    <div className="text-sm max-w-72">
       <div>
         Here are some <b>{HOTEL_PREFS[lodgingPreference]}</b> lodging options you can select for
         your trip plan estimate.

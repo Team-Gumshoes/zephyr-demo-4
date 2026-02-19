@@ -1,5 +1,5 @@
 import { Flight } from '@allorai/shared-types';
-import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
@@ -7,12 +7,13 @@ import clsx from 'clsx';
 export type FlightsReturningFormData = {
   returnFlight?: Flight;
   returnDate?: string;
-  currentStepIndex: number;
 };
 
 type FlightsReturningFormProps = FlightsReturningFormData & {
   returningFlightOptions: Flight[];
   updateFields: (fields: Partial<FlightsReturningFormData>) => void;
+  currentStepIndex: number;
+  isChatLoading: boolean;
 };
 
 const FlightsReturningForm = ({
@@ -21,6 +22,7 @@ const FlightsReturningForm = ({
   currentStepIndex,
   returningFlightOptions,
   updateFields,
+  isChatLoading,
 }: FlightsReturningFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Returning;
   let flightReturningId = returnFlight?.id;
@@ -37,7 +39,7 @@ const FlightsReturningForm = ({
                 name="returningFlight"
                 value={flight.id}
                 checked={flightReturningId === flight.id}
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 onChange={(e) =>
                   updateFields({
                     returnFlight: flight,
