@@ -7,51 +7,44 @@ import { useSearchParams } from 'react-router-dom';
 import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
 import useMultiStepChat from '../hooks/useMultiStepChat';
-import { ChatStep, createChatSteps } from '../utils/createChatSteps';
+import { ChatStep, createChatSteps } from './lib/createChatSteps';
 import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripRequest';
 import { stepHandlers } from './handlers/steps';
 import {
   createEmptyTrip,
   Flight,
   Hotel,
-  SAMPLE_DEPARTING_FLIGHTS,
-  SAMPLE_HOTELS,
-  SAMPLE_RETURNING_FLIGHTS,
-  SAMPLE_ACTIVITIES,
+  // SAMPLE_ACTIVITIES,
   StartingPrefs,
   TripData,
   Activity,
+  Message,
 } from '@allorai/shared-types';
 
 // #3358ae dark
 // #99abd7 light
 // #97dbd9 teal
 
-const initialTripData: TripData & { currentStepIndex: number } = {
+const initialTripData: TripData = {
   ...createEmptyTrip(),
-  currentStepIndex: 0,
 };
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
   const startingPrefs: StartingPrefs | null = parseStartingPrefs(searchParams);
-  console.log('-------Starting Preferences--------');
-  console.log(startingPrefs);
 
   const [tripData, setTripData] = useState<TripData>({
     ...initialTripData,
     ...(startingPrefs || fallbackStartingPrefs),
   });
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  console.log('-------Trip Data--------');
-  console.log({ tripData });
   // TODO Consider putting all this state in Zustand
-  const [departingFlightOptions, setDepartingFlightOptions] =
-    useState<Flight[]>(SAMPLE_DEPARTING_FLIGHTS);
-  const [returningFlightOptions, setReturningFlightOptions] =
-    useState<Flight[]>(SAMPLE_RETURNING_FLIGHTS); // Change to a
-  const [hotelOptions, setHotelOptions] = useState<Hotel[]>(SAMPLE_HOTELS);
-  const [activityOptions, setActivityOptions] = useState<Activity[]>(SAMPLE_ACTIVITIES);
+  const [departingFlightOptions, setDepartingFlightOptions] = useState<Flight[]>([]);
+  const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
+  const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
+  const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -70,15 +63,25 @@ const ChatPage = () => {
         returningFlightOptions,
         hotelOptions,
         activityOptions,
+        currentStepIndex,
         updateFields,
+        isChatLoading,
       ),
-    [tripData, updateFields, departingFlightOptions, returningFlightOptions, hotelOptions],
+    [
+      tripData,
+      updateFields,
+      departingFlightOptions,
+      returningFlightOptions,
+      hotelOptions,
+      currentStepIndex,
+      isChatLoading,
+    ],
   );
 
-  const { steps, currentStep, currentStepIndex, next, isFirstStep, isLastStep } = useMultiStepChat(
+  const { steps, currentStep, next, isFirstStep, isLastStep } = useMultiStepChat(
     chatSteps,
-    tripData,
-    setTripData,
+    currentStepIndex,
+    setCurrentStepIndex,
   );
 
   const onSubmit = async () => {
@@ -90,6 +93,8 @@ const ChatPage = () => {
 
       const result = await handler({
         tripData,
+        chatMessages,
+        setChatMessages,
         setDepartingFlightOptions,
         setReturningFlightOptions,
         setHotelOptions,
@@ -103,10 +108,14 @@ const ChatPage = () => {
         setChatLoading(false);
         return;
       }
+      console.log('result from handler');
+      console.log(result);
+      console.log(result.shouldAdvance);
 
       if (isLastStep) {
         alert('We will advance to the next page here.');
       } else if (result.shouldAdvance) {
+        console.log('advancing');
         next();
       }
     } catch (error) {

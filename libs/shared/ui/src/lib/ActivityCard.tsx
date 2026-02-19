@@ -3,7 +3,7 @@ import { Pin } from 'lucide-react';
 import { Button } from './Button';
 
 type ActivityCardProps = {
-  title: string;
+  name: string;
   description: string;
   estimatedCost: string;
   distance: string;
@@ -15,7 +15,7 @@ type ActivityCardProps = {
 };
 
 export const ActivityCard = ({
-  title,
+  name: title,
   description,
   estimatedCost,
   distance,

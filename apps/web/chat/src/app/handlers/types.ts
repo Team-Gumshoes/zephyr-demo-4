@@ -1,9 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
+import { Flight, Hotel, TripData, Activity, Message } from '@allorai/shared-types';
 
 // This is what the handler might need to be passed to it to get its job done
 export interface StepHandlerContext {
   tripData: TripData;
+  chatMessages: Message[];
+  setChatMessages: Dispatch<SetStateAction<Message[]>>;
   setDepartingFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;

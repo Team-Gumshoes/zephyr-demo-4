@@ -23,7 +23,7 @@ export const ViewDetails = ({ activity }: ViewDetailsProps) => {
             <div key={i} className="h-[147px] w-[218px] overflow-hidden rounded-xl">
               <img
                 src={image}
-                alt={`${activity.title} ${i + 1}`}
+                alt={`${activity.name} ${i + 1}`}
                 className="h-full w-full object-cover"
               />
             </div>

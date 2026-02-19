@@ -6,8 +6,11 @@ import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
 export const flightDepartingStepHandler: StepHandler = async ({
   tripData,
   setReturningFlightOptions,
+  chatMessages,
+  setChatMessages
 }) => {
   try {
+    // 1. Validate user selections
     if (!tripData.departureFlight) {
       return {
         success: false,
@@ -15,12 +18,12 @@ export const flightDepartingStepHandler: StepHandler = async ({
       };
     }
 
-    const newMessage: Message = {
+    const humanMessage: Message = {
       type: 'human',
-      content: 'Please find return flights for the trip',
+      content: 'Given the trip data provided, please find return flights for the trip',
     };
     const request: ChatRequest = {
-      messages: [newMessage],
+      messages: [...chatMessages, humanMessage],
       data: null,
       trip: tripData,
     };
@@ -32,23 +35,23 @@ export const flightDepartingStepHandler: StepHandler = async ({
     const parsedResponseData = FlightResponseDataSchema.safeParse(response.data);
 
     if (!parsedResponseData.success) {
-      console.error('Invalid flight response data:', parsedResponseData.error.issues);
+      console.error('Invalid flight response data for returning flights:', parsedResponseData.error.issues);
       return {
         success: false,
         error: 'Received invalid flight data from server',
       };
     }
-
-    if (parsedResponseData.data.options) {
-      setReturningFlightOptions(parsedResponseData.data.options);
-      return { success: true, shouldAdvance: true };
-    } else {
+    if (!parsedResponseData.data.options) {
       console.error("Missing 'options' from response in request for returning flights");
       return {
         success: false,
         error: 'Response from api-gateway did not contain the needed data',
       };
     }
+
+    setChatMessages([...request.messages, response.messages[response.messages.length - 1]]); // adding on ai response message
+    setReturningFlightOptions(parsedResponseData.data.options);
+    return { success: true, shouldAdvance: true };
   } catch (error) {
     return {
       success: false,

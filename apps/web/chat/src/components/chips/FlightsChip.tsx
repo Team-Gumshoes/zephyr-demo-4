@@ -14,35 +14,6 @@
 import { Flight, FlightSegment } from '@allorai/shared-types';
 import { formatTime } from '../../utils/formatData';
 
-function SegmentRow({ segment }: { segment: FlightSegment }) {
-  return (
-    <div className="flex items-center gap-4">
-      {/* Flight Time and Airline */}
-      <div className="flex flex-col min-w-[160px]">
-        <span className="font-medium text-[#050315] text-base leading-6">
-          {formatTime(segment.departure.time)} - {formatTime(segment.arrival.time)}
-        </span>
-        <span className="font-normal text-[#050315] text-base leading-6">{segment.airline}</span>
-      </div>
-
-      {/* Flight Path Visual */}
-      <div className="flex items-center gap-1">
-        <div className="size-2 rounded-full bg-[#F5A623]" />
-        <div className="w-16 h-0.5 bg-[#F5A623]" />
-        <div className="size-2 rounded-full bg-[#F5A623]" />
-      </div>
-
-      {/* Flight Length and Airports */}
-      <div className="flex flex-col">
-        <span className="font-medium text-[#050315] text-base leading-6">{segment.duration}</span>
-        <span className="font-normal text-[#050315] text-base leading-6">
-          {segment.departure.airport} - {segment.arrival.airport}
-        </span>
-      </div>
-    </div>
-  );
-}
-
 const FlightChip = ({ flight }: { flight: Flight }) => {
   const leg = flight.legs[0];
   if (!leg) return null;
@@ -90,5 +61,34 @@ const FlightChip = ({ flight }: { flight: Flight }) => {
     </div>
   );
 };
+
+function SegmentRow({ segment }: { segment: FlightSegment }) {
+  return (
+    <div className="flex items-center gap-4">
+      {/* Flight Time and Airline */}
+      <div className="flex flex-col min-w-[160px]">
+        <span className="font-medium text-[#050315] text-base leading-6">
+          {formatTime(segment.departure.time)} - {formatTime(segment.arrival.time)}
+        </span>
+        <span className="font-normal text-[#050315] text-base leading-6">{segment.airline}</span>
+      </div>
+
+      {/* Flight Path Visual */}
+      <div className="flex items-center gap-1">
+        <div className="size-2 rounded-full bg-[#F5A623]" />
+        <div className="w-16 h-0.5 bg-[#F5A623]" />
+        <div className="size-2 rounded-full bg-[#F5A623]" />
+      </div>
+
+      {/* Flight Length and Airports */}
+      <div className="flex flex-col">
+        <span className="font-medium text-[#050315] text-base leading-6">{segment.duration}</span>
+        <span className="font-normal text-[#050315] text-base leading-6">
+          {segment.departure.airport} - {segment.arrival.airport}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default FlightChip;

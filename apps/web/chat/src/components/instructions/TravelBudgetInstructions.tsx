@@ -10,7 +10,7 @@ interface BudgetInstructionsProps {
   preferences?: string;
 }
 
-const BudgetInstructions = ({
+const TravelBudgetInstructions = ({
   origin,
   destination,
   departureDate,
@@ -27,7 +27,7 @@ const BudgetInstructions = ({
     : budgetFormatted;
 
   return (
-    <div className="text-sm">
+    <div className="text-sm max-w-72">
       <div>
         Sure thing. I am happy to help you plan a trip from <strong>{origin}</strong> to{' '}
         <strong>{destination}</strong> departing on{' '}
@@ -49,4 +49,4 @@ const BudgetInstructions = ({
   );
 };
 
-export default BudgetInstructions;
+export default TravelBudgetInstructions;

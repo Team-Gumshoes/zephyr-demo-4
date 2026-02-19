@@ -1,23 +1,25 @@
 import clsx from 'clsx';
-import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { BudgetPref } from '@allorai/shared-types';
 
-export type BudgetFormData = {
+export type TravelBudgetFormData = {
   flightPreference?: BudgetPref;
   lodgingPreference?: BudgetPref;
+};
+
+export type TravelBudgetFormProps = TravelBudgetFormData & {
+  updateFields: (fields: Partial<TravelBudgetFormData>) => void;
+  isChatLoading: boolean;
   currentStepIndex: number;
 };
 
-export type BudgetFormProps = BudgetFormData & {
-  updateFields: (fields: Partial<BudgetFormData>) => void;
-};
-
-const BudgetForm = ({
+const TravelBudgetForm = ({
   flightPreference,
   lodgingPreference,
   updateFields,
   currentStepIndex,
-}: BudgetFormProps) => {
+  isChatLoading,
+}: TravelBudgetFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Budget;
 
   const flightOptions: { value: BudgetPref; label: string }[] = [
@@ -46,7 +48,7 @@ const BudgetForm = ({
               className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 type="radio"
                 name="flightPreference"
                 value={option.value}
@@ -71,7 +73,7 @@ const BudgetForm = ({
               className={clsx('flex gap-2 items-center', isActive && 'cursor-pointer')}
             >
               <input
-                disabled={!isActive}
+                disabled={!isActive || isChatLoading}
                 type="radio"
                 name="lodgingPreference"
                 value={option.value}
@@ -92,6 +94,6 @@ const BudgetForm = ({
   );
 };
 
-BudgetForm.displayName = 'BudgetForm';
+TravelBudgetForm.displayName = 'BudgetForm';
 
-export default BudgetForm;
+export default TravelBudgetForm;

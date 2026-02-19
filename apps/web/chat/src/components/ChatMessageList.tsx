@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Plane, User } from 'lucide-react';
 import { ReactNode } from 'react';
-import { type ChatStep, type ChatStepName } from '../utils/createChatSteps';
+import { type ChatStep, type ChatStepName } from '../app/lib/createChatSteps';
 
 function ChatMessageList({
   steps,
@@ -34,7 +34,7 @@ function InstructionsCard({ instructions }: { instructions?: ReactNode | string 
   return instructions ? (
     <div className="flex py-2 mr-14 text-left items-end gap-2">
       <Plane size={30} className="mx-1 bg-[#3358ae] text-white rounded-full p-1 shrink-0" />
-      <div className="p-6 text-left whitespace-normal bg-[#3358ae] text-white max-w-96 rounded-t-xl rounded-r-xl">
+      <div className="p-6 text-left whitespace-normal bg-[#3358ae] text-white rounded-t-xl rounded-r-xl">
         {instructions}
       </div>
     </div>
@@ -51,17 +51,11 @@ function FormCard({
   step: ChatStepName;
 }) {
   return (
-    <div
-      className={clsx(
-        'form-container flex items-end gap-2',
-        step === 'Summary' || step === 'Activities' ? 'justify-center my-5' : 'justify-end',
-      )}
-    >
+    <div className={clsx('flex items-end gap-2 justify-end')}>
       <div
         className={clsx(
           'ml-14 text-black self-center rounded-t-xl rounded-l-xl justify-end break-words w-auto max-w-1/2',
-          current && step !== 'Summary' ? 'bg-[#97dbd9]' : 'bg-[#99abd7]',
-          step === 'Activities' && 'bg-transparent',
+          current ? 'bg-[#97dbd9]' : 'bg-[#99abd7]',
         )}
       >
         <div className="p-6 text-left whitespace-normal">{form}</div>
