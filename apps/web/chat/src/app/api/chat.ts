@@ -34,7 +34,8 @@ export async function sendChatMessage(data: ChatRequest): Promise<ChatResponse> 
           ...data.messages,
           {
             type: 'ai',
-            content: 'a sample response when API failed',
+            content:
+              "I wasn't able to get real data. It might have taken too long. I'm returning some sample data for the request instead.",
           },
         ],
         data: responseDataForStep(data),

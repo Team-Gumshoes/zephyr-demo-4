@@ -1,13 +1,14 @@
-import { type ChatRequest, type ChatResponse, type Message } from '@allorai/shared-types';
+import { type ChatResponse } from '@allorai/shared-types';
 import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
+import { createChatRequest } from '../helpers/chatRequest';
 
 export const flightDepartingStepHandler: StepHandler = async ({
   tripData,
   setReturningFlightOptions,
   chatMessages,
-  setChatMessages
+  setChatMessages,
 }) => {
   try {
     // 1. Validate user selections
@@ -18,24 +19,17 @@ export const flightDepartingStepHandler: StepHandler = async ({
       };
     }
 
-    const humanMessage: Message = {
-      type: 'human',
-      content: 'Given the trip data provided, please find return flights for the trip',
-    };
-    const request: ChatRequest = {
-      messages: [...chatMessages, humanMessage],
-      data: null,
-      trip: tripData,
-    };
+    const request = createChatRequest('returningFlights', tripData, chatMessages);
 
     const response: ChatResponse = await sendChatMessage(request);
-    console.log('response received in flightDepartingStepHandler:');
-    console.log(response);
 
     const parsedResponseData = FlightResponseDataSchema.safeParse(response.data);
 
     if (!parsedResponseData.success) {
-      console.error('Invalid flight response data for returning flights:', parsedResponseData.error.issues);
+      console.error(
+        'Invalid flight response data for returning flights:',
+        parsedResponseData.error.issues,
+      );
       return {
         success: false,
         error: 'Received invalid flight data from server',

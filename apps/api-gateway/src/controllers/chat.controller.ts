@@ -108,12 +108,14 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
   });
   logger.debug('Human chat request saved to database:');
   logger.debug(humanChatData);
-
   // 3. Make request to agentAPI
   const chatRequest: ChatRequest = {
     messages,
     trip: trip as ChatRequest['trip'],
   };
+
+  logger.debug('+++++++++ REQUEST IN CHAT CONTROLLER +++++++++');
+  logger.debug(chatRequest);
 
   const response: ChatResponse = await chatAgent.sendChat(chatRequest);
 
