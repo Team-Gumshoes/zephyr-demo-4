@@ -1,8 +1,8 @@
 import { Hotel } from '@allorai/shared-types';
-import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { calculateNights, formatDate } from '../../utils/formatData';
 import HotelChip from '../chips/HotelChip';
 import clsx from 'clsx';
+import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 
 export type HotelsFormData = {
   hotelId?: string;

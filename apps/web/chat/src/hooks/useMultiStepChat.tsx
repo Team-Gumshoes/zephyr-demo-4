@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { type ChatStep } from '../app/lib/createChatSteps';
+import { ChatStep } from '../app/chatSteps/helpers/createChatSteps';
 
 const useMultiStepChat = (
   steps: ChatStep[],
