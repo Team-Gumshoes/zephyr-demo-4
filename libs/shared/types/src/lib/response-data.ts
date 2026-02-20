@@ -1,9 +1,10 @@
 import type { ArithmeticResult } from './arithmetic';
 import type { Flight } from './flights';
 import type { Hotel } from './hotels';
-import type { RestaurantResults } from './restaurants';
-import type { SelfieSpots } from './selfie-spots';
+import type { Eatery } from './eateries';
+import type { SelfieSpot } from './selfie-spots';
 import type { Activity } from './activities';
+import { NaturalAttraction } from './natural-attractions';
 
 export interface ArithmeticResponseData {
   type: 'arithmetic';
@@ -23,22 +24,22 @@ export interface HotelResponseData {
   options?: Hotel[];
 }
 
-export interface RestaurantResponseData {
+export interface EateryResponseData {
   type: 'restaurant';
   summary?: string;
-  options?: RestaurantResults[];
+  options?: Eatery[];
 }
 
 export interface SelfieResponseData {
   type: 'selfie';
   summary?: string;
-  options?: SelfieSpots[];
+  options?: SelfieSpot[];
 }
 
-export interface SightseeingResponseData {
+export interface NaturalAttractionResponseData {
   type: 'sightseeing';
   summary?: string;
-  options?: Activity[];
+  options?: NaturalAttraction[];
 }
 
 export interface ActivitiesResponseData {
@@ -51,7 +52,7 @@ export type ResponseData =
   | ArithmeticResponseData
   | FlightResponseData
   | HotelResponseData
-  | RestaurantResponseData
+  | EateryResponseData
   | ActivitiesResponseData
   | SelfieResponseData
-  | SightseeingResponseData;
+  | NaturalAttractionResponseData;

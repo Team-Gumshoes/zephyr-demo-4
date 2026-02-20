@@ -1,0 +1,53 @@
+import { type ChatRequest, type Message, type TripData } from '@allorai/shared-types';
+
+export type ChatRequestType =
+  | 'departingFlights'
+  | 'returningFlights'
+  | 'hotels'
+  | 'activities'
+  | 'summary'
+  | 'naturalAttractions'
+  | 'selfieSpots'
+  | 'travelTips'
+  | 'eateries';
+
+const getContentForType = (type: ChatRequestType, tripData: TripData): string => {
+  const destination = tripData.destination ?? 'the destination';
+  switch (type) {
+    case 'departingFlights':
+      return `Given the trip data provided, please find outbound flights to ${destination}.`;
+    case 'returningFlights':
+      return `Given the trip data provided, please find return flights from ${destination}.`;
+    case 'hotels':
+      return `Given the trip data provided, please find hotels in ${destination}.`;
+    case 'activities':
+      return `Given the trip data provided, please find activities in ${destination}.`;
+    case 'summary':
+      return `Given the trip data provided, give me a text summary of the trip to ${destination}.`;
+    case 'naturalAttractions':
+      return `Given the trip data provided, please find natural attractions in ${destination}.`;
+    case 'selfieSpots':
+      return `Given the trip data provided, please find popular selfie spots in ${destination}.`;
+    case 'travelTips':
+      return `Given the trip data provided, please provide travel tips for ${destination}.`;
+    case 'eateries':
+      return `Given the trip data provided, please find eateries and restaurants in ${destination}.`;
+  }
+};
+
+export const createChatRequest = (
+  type: ChatRequestType,
+  tripData: TripData,
+  chatMessages: Message[],
+): ChatRequest => {
+  const humanMessage: Message = {
+    type: 'human',
+    content: getContentForType(type, tripData),
+  };
+
+  return {
+    messages: [...chatMessages, humanMessage],
+    data: null,
+    trip: tripData,
+  };
+};

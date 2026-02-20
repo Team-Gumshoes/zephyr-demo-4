@@ -1,13 +1,14 @@
-import { type ChatRequest, type ChatResponse, type Message } from '@allorai/shared-types';
+import { type ChatResponse } from '@allorai/shared-types';
 import { sendChatMessage } from '../../api/chat';
 import { HotelResponseDataSchema } from '../schemas/hotelResponseSchema';
 import { StepHandler } from '../types';
+import { createChatRequest } from '../helpers/chatRequest';
 
 export const flightReturningStepHandler: StepHandler = async ({
   tripData,
   setHotelOptions,
   chatMessages,
-  setChatMessages
+  setChatMessages,
 }) => {
   try {
     // 1. Validate user selections
@@ -18,19 +19,9 @@ export const flightReturningStepHandler: StepHandler = async ({
       };
     }
 
-    const humanMessage: Message = {
-      type: 'human',
-      content: 'Given the trip data provided, please find hotels for the trip',
-    };
-    const request: ChatRequest = {
-      messages: [...chatMessages, humanMessage],
-      data: null,
-      trip: tripData,
-    };
+    const request = createChatRequest('hotels', tripData, chatMessages);
 
     const response: ChatResponse = await sendChatMessage(request);
-    console.log('response received in flightReturningStepHandler:');
-    console.log(response);
 
     const parsedResponseData = HotelResponseDataSchema.safeParse(response.data);
 

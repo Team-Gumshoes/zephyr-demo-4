@@ -1,11 +1,12 @@
-import { type ChatRequest, type ChatResponse, type Message } from '@allorai/shared-types';
+import { type ChatResponse } from '@allorai/shared-types';
 import { sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
+import { createChatRequest } from '../helpers/chatRequest';
 
 export const hotelStepHandler: StepHandler = async ({
   tripData,
   chatMessages,
-  setChatMessages
+  setChatMessages,
 }) => {
   try {
     // 1. Validate user selections
@@ -16,19 +17,9 @@ export const hotelStepHandler: StepHandler = async ({
       };
     }
 
-    const humanMessage: Message = {
-      type: 'human',
-      content: 'Given the trip data provided, give me a text summary of the trip',
-    };
-    const request: ChatRequest = {
-      messages: [...chatMessages, humanMessage],
-      data: null,
-      trip: tripData,
-    };
+    const request = createChatRequest('summary', tripData, chatMessages);
 
     const response: ChatResponse = await sendChatMessage(request);
-    console.log('response received in hotelStepHandler:');
-    console.log(response);
 
     // Summary data only, nothing to parse
 

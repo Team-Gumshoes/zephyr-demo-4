@@ -3,10 +3,13 @@ import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
-import { ActivityFilterType, Activity, Flight, Hotel } from '@allorai/shared-types';
+import { Activity, Flight, Hotel } from '@allorai/shared-types';
 import { calculateNights } from '../../utils/formatData';
 import { Dialogue } from '@allorai/shared-ui';
 import { ViewDetails } from '../modals/ViewDetails';
+
+export const ActivityFilterTypes = ['Nature', 'Food', 'Activities', 'Selfie Spots'] as const;
+export type ActivityFilterType = (typeof ActivityFilterTypes)[number];
 
 export type ActivityFormData = {
   departureDate?: string;
@@ -48,9 +51,9 @@ const ActivitiesForm = ({
   const [activities, setActivities] = useState<Activity[]>(activityOptions);
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
-  const toggleFilter = (filter: ActivityFilterType) => {
-    setSelectedFilter((prev) => (prev === filter ? null : filter));
-  };
+  // const toggleFilter = (filter: ActivityFilterType) => {
+  //   setSelectedFilter((prev) => (prev === filter ? null : filter));
+  // };
 
   const togglePin = (activityId: string) => {
     setActivities((prev) =>
@@ -74,28 +77,30 @@ const ActivitiesForm = ({
     ];
   }, [activities, departureDate, returnDate, departureFlight, returnFlight, hotel]);
 
-  const filteredActivities = useMemo(() => {
-    const filtered = selectedFilter
-      ? activities.filter((activity) => activity.category === selectedFilter)
-      : activities;
-    // return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
-    return filtered;
-  }, [activities, selectedFilter]);
+  // const filteredActivities = useMemo(() => {
+  //   const filtered = selectedFilter
+  //     ? activities.filter((activity) => activity.category === selectedFilter)
+  //     : activities;
+  //   // return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
+  //   return filtered;
+  // }, [activities, selectedFilter]);
 
-  const pinnedCountByFilter = useMemo(() => {
-    const counts: Record<ActivityFilterType, number> = {
-      Nature: 0,
-      Food: 0,
-      Activities: 0,
-      'Selfie Spots': 0,
-    };
-    for (const activity of activities) {
-      if (activity.pinned) counts[activity.category]++;
-    }
-    return counts;
-  }, [activities]);
+  // const pinnedCountByFilter = useMemo(() => {
+  //   const counts: Record<ActivityFilterType, number> = {
+  //     Nature: 0,
+  //     Food: 0,
+  //     Activities: 0,
+  //     'Selfie Spots': 0,
+  //   };
+  //   for (const activity of activities) {
+  //     if (activity.pinned) counts[activity.category]++;
+  //   }
+  //   return counts;
+  // }, [activities]);
 
   const filters: ActivityFilterType[] = ['Nature', 'Food', 'Activities', 'Selfie Spots'];
+
+  console.log(setSelectedFilter);
 
   return (
     <div className="activities-form flex w-full gap-5 border-t-2 border-black pt-6">
@@ -112,13 +117,14 @@ const ActivitiesForm = ({
             {filters.map((filter) => {
               const Icon = FILTER_ICONS[filter];
               const isSelected = selectedFilter === filter;
-              const pinnedCount = pinnedCountByFilter[filter];
+              const pinnedCount = 0; // pinnedCountByFilter[filter];
 
               return (
                 <button
                   type="button"
                   key={filter}
-                  onClick={() => toggleFilter(filter)}
+                  onClick={() => {}}
+                  // onClick={() => toggleFilter(filter)}
                   className={clsx(
                     'flex min-h-[32px] items-center gap-2 rounded-lg px-2.5 py-[5.5px] transition-colors',
                     isSelected ? 'bg-[#fbfbfe]' : 'hover:bg-[#75cfcc]/80',
@@ -144,7 +150,7 @@ const ActivitiesForm = ({
 
         {/* AI Results - Activity Cards */}
         <div className="flex flex-col items-end gap-4">
-          {filteredActivities.map((activity) => (
+          {activities.map((activity) => (
             <ActivityCard
               key={activity.id}
               name={activity.name}

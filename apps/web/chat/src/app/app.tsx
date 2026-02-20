@@ -19,6 +19,10 @@ import {
   TripData,
   Activity,
   Message,
+  NaturalAttraction,
+  Eatery,
+  SelfieSpot,
+  TravelTip,
 } from '@allorai/shared-types';
 
 // #3358ae dark
@@ -44,6 +48,10 @@ const ChatPage = () => {
   const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
   const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
+  const [natureOptions, setNatureOptions] = useState<NaturalAttraction[]>([]);
+  const [eateryOptions, setEateryOptions] = useState<Eatery[]>([]);
+  const [selfieSpotOptions, setSelfieSpotOptions] = useState<SelfieSpot[]>([]);
+  const [travelTips, setTravelTips] = useState<TravelTip[]>([]);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -99,6 +107,10 @@ const ChatPage = () => {
         setReturningFlightOptions,
         setHotelOptions,
         setActivityOptions,
+        setNatureOptions,
+        setEateryOptions,
+        setSelfieSpotOptions,
+        setTravelTips,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
       });
@@ -134,6 +146,11 @@ const ChatPage = () => {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
 
+  console.log(natureOptions);
+  console.log(travelTips);
+  console.log(eateryOptions);
+  console.log(selfieSpotOptions);
+  console.log(tripData);
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>

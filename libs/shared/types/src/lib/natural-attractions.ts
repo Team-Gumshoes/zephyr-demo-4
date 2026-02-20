@@ -1,4 +1,4 @@
-export interface SelfieSpot {
+export interface NaturalAttraction {
   id: string;
   name: string;
   location: string;
