@@ -1,16 +1,16 @@
 import { ReactNode } from 'react';
-import TravelBudgetForm from '../../components/forms/TravelBudgetForm';
-import FlightsDepartingForm from '../../components/forms/FlightsDepartingForm';
-import TravelBudgetInstructions from '../../components/instructions/TravelBudgetInstructions';
-import FlightDepartingInstructions from '../../components/instructions/FlightDepartingInstructions';
-import FlightReturnInstructions from '../../components/instructions/FlightReturnInstructions';
-import FlightsReturningForm from '../../components/forms/FlightsReturningForm';
-import HotelInstructions from '../../components/instructions/HotelInstructions';
-import HotelsForm from '../../components/forms/HotelsForm';
-import SummaryInstructions from '../../components/instructions/SummaryInstructions';
-import ActivityBudgetInstructions from '../../components/instructions/ActivityBudgetInstructions';
-import ActivityBudgetForm from '../../components/forms/ActivityBudgetForm';
-import ActivitiesForm from '../../components/forms/ActivitiesForm';
+import TravelBudgetForm from '../../../components/forms/TravelBudgetForm';
+import FlightsDepartingForm from '../../../components/forms/FlightsDepartingForm';
+import TravelBudgetInstructions from '../../../components/instructions/TravelBudgetInstructions';
+import FlightDepartingInstructions from '../../../components/instructions/FlightDepartingInstructions';
+import FlightReturnInstructions from '../../../components/instructions/FlightReturnInstructions';
+import FlightsReturningForm from '../../../components/forms/FlightsReturningForm';
+import HotelInstructions from '../../../components/instructions/HotelInstructions';
+import HotelsForm from '../../../components/forms/HotelsForm';
+import SummaryInstructions from '../../../components/instructions/SummaryInstructions';
+import ActivityBudgetInstructions from '../../../components/instructions/ActivityBudgetInstructions';
+import ActivityBudgetForm from '../../../components/forms/ActivityBudgetForm';
+import ActivitiesForm from '../../../components/forms/ActivitiesForm';
 import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
 
 export enum ChatStepSequence {

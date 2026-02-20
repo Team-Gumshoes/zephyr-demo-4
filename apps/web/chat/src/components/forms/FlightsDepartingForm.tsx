@@ -1,8 +1,8 @@
 import { Flight } from '@allorai/shared-types';
-import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { formatDate } from '../../utils/formatData';
 import FlightChip from '../chips/FlightsChip';
 import clsx from 'clsx';
+import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 
 export type FlightsDepartingFormData = {
   departureFlight?: Flight;

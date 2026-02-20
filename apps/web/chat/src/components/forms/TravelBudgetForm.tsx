@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { ChatStepSequence } from '../../app/lib/createChatSteps';
 import { BudgetPref } from '@allorai/shared-types';
+import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 
 export type TravelBudgetFormData = {
   flightPreference?: BudgetPref;

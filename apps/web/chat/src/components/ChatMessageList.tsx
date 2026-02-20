@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Plane, User } from 'lucide-react';
 import { ReactNode } from 'react';
-import { type ChatStep, type ChatStepName } from '../app/lib/createChatSteps';
+import { ChatStep, ChatStepName } from '../app/chatSteps/helpers/createChatSteps';
 
 function ChatMessageList({
   steps,

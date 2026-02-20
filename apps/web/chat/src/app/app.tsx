@@ -7,9 +7,8 @@ import { useSearchParams } from 'react-router-dom';
 import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
 import useMultiStepChat from '../hooks/useMultiStepChat';
-import { ChatStep, createChatSteps } from './lib/createChatSteps';
 import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripRequest';
-import { stepHandlers } from './handlers/steps';
+import { stepHandlers } from './chatSteps/handlers';
 import {
   createEmptyTrip,
   Flight,
@@ -24,6 +23,7 @@ import {
   SelfieSpot,
   TravelTip,
 } from '@allorai/shared-types';
+import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
 
 // #3358ae dark
 // #99abd7 light
