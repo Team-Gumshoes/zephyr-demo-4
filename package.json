@@ -2,7 +2,9 @@
   "name": "@allorai/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve api-gateway"
+  },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.14.5",

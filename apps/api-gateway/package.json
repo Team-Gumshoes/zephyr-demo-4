@@ -2,6 +2,9 @@
   "name": "@allorai/api-gateway",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "start": "nx serve api-gateway"
+  },
   "nx": {
     "targets": {
       "build": {
