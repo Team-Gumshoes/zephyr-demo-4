@@ -23,11 +23,7 @@ const createApp = () => {
       version: '1.0.0',
       description: 'Gateway for multi-agent travel orchestration',
       endpoints: {
-        health: '/api/health',
-        flights: '/api/flights',
-        hotels: '/api/hotels',
-        transport: '/api/transport',
-        coordinate: '/api/coordinate',
+        chat: '/api/chat',
       },
     });
   });
@@ -36,7 +32,7 @@ const createApp = () => {
   app.get('/health', (req: Request, res: Response) => {
     res.json({
       status: 'healthy',
-      service: 'api-gateway2',
+      service: 'api-gateway',
       timestamp: new Date().toISOString(),
     });
   });
