@@ -146,6 +146,7 @@ const ChatPage = () => {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
 
+  console.log(tripData)
   console.log(natureOptions);
   console.log(travelTips);
   console.log(eateryOptions);

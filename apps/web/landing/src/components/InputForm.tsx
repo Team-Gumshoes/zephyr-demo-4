@@ -76,7 +76,7 @@ export function InputForm() {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [departureDate, setDepartureDate] = useState('');
-  const [arrivalDate, setArrivalDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
   const [specialPreferences, setSpecialPreferences] = useState('');
 
   const [budgetOptions, setBudgetOptions] = useState<CheckboxOption[]>([
@@ -116,7 +116,7 @@ export function InputForm() {
     params.set('fromCity', fromCity);
     params.set('toCity', toCity);
     params.set('departureDate', departureDate);
-    params.set('arrivalDate', arrivalDate);
+    params.set('returnDate', returnDate);
     params.set(
       'budgetIncludes',
       budgetOptions
@@ -189,8 +189,8 @@ export function InputForm() {
           <CalendarIcon />
           <input
             type="date"
-            value={arrivalDate}
-            onChange={(e) => setArrivalDate(e.target.value)}
+            value={returnDate}
+            onChange={(e) => setReturnDate(e.target.value)}
             placeholder="MM/DD/YYYY"
             className="flex-1 h-10 bg-white rounded-lg px-3 text-xs font-medium text-[#555] tracking-[0.5px]"
           />

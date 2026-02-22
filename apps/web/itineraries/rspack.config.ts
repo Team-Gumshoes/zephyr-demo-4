@@ -42,11 +42,12 @@ const config: Configuration = {
       // svgr: false
     }),
     new NxModuleFederationPlugin({ config: mfConfig }, { dts: false }),
-    new NxModuleFederationDevServerPlugin({ config: mfConfig }),
+    // Only use dev server plugin in development (enables lazy compilation)
+    ...(process.env['NODE_ENV'] === 'development'
+      ? [new NxModuleFederationDevServerPlugin({ config: mfConfig })]
+      : []),
   ],
 };
 
 // Toggle Zephyr plugin via environment variable
-export default process.env['USE_ZEPHYR'] === 'true'
-  ? withZephyr()(config)
-  : config;
+export default process.env['USE_ZEPHYR'] === 'true' ? withZephyr()(config) : config;

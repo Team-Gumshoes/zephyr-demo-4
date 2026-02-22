@@ -1,3 +1,5 @@
+
+// TODO This doesn't work right because it shifts to one day earlier than the string
 export const formatDate = (dateString: string | undefined | null): string | undefined => {
   if (!dateString) return undefined;
   const date = new Date(dateString);
