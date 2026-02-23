@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL =  process.env.NX_PUBLIC_API_BASE_URL
+const API_BASE_URL =
+  process.env.ZE_PUBLIC_API_BASE_URL ||
+  process.env.NX_PUBLIC_API_BASE_URL ||
+  'https://alloraiapi-gateway-production.up.railway.app';
 
 export const apiClient = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -10,19 +13,17 @@ export const apiClient = axios.create({
   withCredentials: true,
 });
 
-if (process.env.NX_PUBLIC_TEST_SLOW_API === "true") {
-  apiClient.interceptors.request.use(req => {
-    return new Promise(resolve => {
+if (process.env.NX_PUBLIC_TEST_SLOW_API === 'true') {
+  apiClient.interceptors.request.use((req) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(req)
-      }, 1500)
-    })
-  })
+        resolve(req);
+      }, 1500);
+    });
+  });
 }
 
-
 // TODO come back to auth strategy later - will use Supabase
-
 
 // // Request interceptor for adding auth tokens
 // apiClient.interceptors.request.use(

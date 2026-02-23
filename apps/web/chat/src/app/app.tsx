@@ -152,6 +152,8 @@ const ChatPage = () => {
     console.log(eateryOptions);
     console.log(selfieSpotOptions);
   }
+
+  console.log(process.env.NX_PUBLIC_API_BASE_URL || process.env.ZE_PUBLIC_API_BASE_URL || "https://alloraiapi-gateway-production.up.railway.app")
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>
