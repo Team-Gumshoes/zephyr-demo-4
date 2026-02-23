@@ -9,7 +9,7 @@ type HotelChipProps = {
 
 const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
   const nights = calculateNights(departureDate, returnDate);
-  const totalCost = nights != null ? hotel.price * nights : undefined;
+  const totalCost = hotel?.price && nights && nights !== null ? hotel.price * nights : undefined;
 
   return (
     <div className="bg-[rgba(251,251,254,0.75)] border border-black flex gap-[30px] items-center p-6 rounded-[20px] w-full">
@@ -18,7 +18,7 @@ const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
         <span className="font-semibold text-black text-base leading-6">
           ${totalCost != null ? totalCost.toLocaleString() : '—'}
         </span>
-        <span className="font-normal text-black text-base leading-6">${hotel.price} /night</span>
+        <span className="font-normal text-black text-base leading-6">${hotel?.price} /night</span>
       </div>
 
       {/* Hotel Name and Location */}

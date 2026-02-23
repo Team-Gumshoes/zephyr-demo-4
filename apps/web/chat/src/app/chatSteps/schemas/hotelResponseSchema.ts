@@ -4,8 +4,13 @@ const HotelSchema = z.object({
   id: z.string(),
   name: z.string(),
   location: z.string(),
-  num_of_stars: z.number(),
-  price: z.number(),
+  rating: z.number().optional(),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
+  description: z.string(),
+  website: z.string(),
+  num_of_stars: z.number().optional(),
+  price: z.number().optional(),
 });
 
 export const HotelResponseDataSchema = z.object({

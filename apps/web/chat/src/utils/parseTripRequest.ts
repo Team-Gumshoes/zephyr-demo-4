@@ -1,8 +1,8 @@
 import { StartingPrefs } from '@allorai/shared-types';
 
 export const fallbackStartingPrefs: StartingPrefs = {
-  origin: 'New York',
-  destination: 'Paris',
+  origin: 'New York - JFK',
+  destination: 'Paris - CDG',
   departureDate: 'March 15, 2026',
   returnDate: 'March 22, 2026',
   budgetIncludes: ['flights', 'lodging', 'dining'],

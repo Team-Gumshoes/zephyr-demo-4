@@ -68,7 +68,10 @@ const ActivitiesForm = ({
       .filter((a) => a.pinned)
       .reduce((sum, a) => sum + parseCost(a.estimatedCost), 0);
     return [
-      { label: 'Flights', amount: (departureFlight?.price ?? 0) + (returnFlight?.price ?? 0) },
+      {
+        label: 'Flights',
+        amount: (Number(departureFlight?.price) ?? 0) + (Number(returnFlight?.price) ?? 0),
+      },
       {
         label: 'Hotels',
         amount: (hotel?.price ?? 0) * (calculateNights(departureDate, returnDate) ?? 1),

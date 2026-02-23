@@ -109,10 +109,36 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
   logger.debug('Human chat request saved to database:');
   logger.debug(humanChatData);
   // 3. Make request to agentAPI
+  // const chatRequest: ChatRequest = {
+  //   messages,
+  //   trip: trip as ChatRequest['trip'],
+  // };
+console.log(trip)
+
   const chatRequest: ChatRequest = {
-    messages,
-    trip: trip as ChatRequest['trip'],
-  };
+  "messages": [
+    {
+      "type": "human",
+      "content": "Given the trip data provided, please find hotels in Paris - CDG."
+    }
+  ],
+  "trip": {
+    "origin": "JFK",
+    "destination": "CDG",
+    "departureFlight": undefined,
+    "returnFlight": undefined,
+    "departureDate": "2026-04-10",
+    "returnDate": "2026-04-15",
+    budget: 3000,
+    budgetIncludes: [],
+    transportation: [],
+    "hotel": undefined,
+    "interests": [],
+    "constraints": [],
+    "destinationCoords": undefined,
+    "hotelCoords": undefined
+  }
+}
 
   logger.debug('+++++++++ REQUEST IN CHAT CONTROLLER +++++++++');
   logger.debug(chatRequest);

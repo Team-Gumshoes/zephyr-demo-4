@@ -8,7 +8,7 @@ export class BaseAgentService {
   constructor(baseURL: string = config.AGENTS_URL) {
     this.client = axios.create({
       baseURL,
-      timeout: 45_000,
+      timeout: 60_000,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -19,10 +19,32 @@ export class BaseAgentService {
   }
 
   private setupInterceptors() {
+    this.client.interceptors.request.use((config) => {
+      logger.debug(
+        {
+          url: config.url,
+          baseURL: config.baseURL,
+          method: config.method,
+          headers: config.headers,
+        },
+        'Outgoing request to agent',
+      );
+      return config;
+    });
+
     this.client.interceptors.response.use(
       (response) => response,
       (error) => {
-        logger.warn('Agent API Error:', error.message); // TODO error handling and logging here possibly redundant ?
+        logger.error(
+          {
+            message: error.message,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            responseData: error.response?.data,
+            responseHeaders: error.response?.headers,
+          },
+          'Agent API Error - Full details',
+        );
         throw error;
       },
     );

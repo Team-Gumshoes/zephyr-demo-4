@@ -29,8 +29,8 @@ const SummaryInstructions = ({
   const departureCost = departureFlight?.price ?? 0;
   const returnCost = returnFlight?.price ?? 0;
   const nights = calculateNights(departureDate, returnDate);
-  const hotelCost = hotel && nights != null ? hotel.price * nights : 0;
-  const totalCost = departureCost + returnCost + hotelCost;
+  const hotelCost = hotel && nights && hotel?.price && nights !== null ? hotel.price * nights : 0;
+  const totalCost = Number(departureCost) + Number(returnCost) + hotelCost;
 
   return (
     <div className="summary-card bg-[#99abd7] flex flex-col gap-4 rounded-[20px] w-full">

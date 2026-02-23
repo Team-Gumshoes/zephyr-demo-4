@@ -32,7 +32,6 @@ export interface TripPrefs extends StartingPrefs {
   lodgingPreference?: BudgetPref;
   diningPreference?: BudgetPref;
   activityPreference?: BudgetPref;
-  currentStepIndex: number;
   budget?: number;
   interests: string[];
   constraints: string[];
@@ -42,22 +41,24 @@ export interface TripData extends TripPrefs {
   departureFlight?: Flight;
   returnFlight?: Flight;
   hotel?: Hotel;
+  destinationCoords?: { latitude: number; longitude: number };
+  hotelCoords?: { latitude: number; longitude: number };
 }
 
 // TODO AgentApiTrip is here for reference only (Delete later)
-export interface AgentApiTrip {
-  origin: string | null;
-  destination: string | null;
-  departureDate: string | null;
-  returnDate: string | null;
-  budget: number | null;
-  interests: string[];
-  constraints: string[];
+// export interface AgentApiTrip {
+//   origin: string | null;
+//   destination: string | null;
+//   departureDate: string | null;
+//   returnDate: string | null;
+//   budget: number | null;
+//   interests: string[];
+//   constraints: string[];
 
-  departureFlight: string | null;
-  returnFlight: string | null;
-  hotel: string | null;
-}
+//   departureFlight: string | null;
+//   returnFlight: string | null;
+//   hotel: string | null;
+// }
 
 export function createEmptyTrip(): TripData {
   return {
@@ -74,6 +75,5 @@ export function createEmptyTrip(): TripData {
     preferences: '',
     budgetIncludes: [],
     transportation: [],
-    currentStepIndex: 0,
   };
 }

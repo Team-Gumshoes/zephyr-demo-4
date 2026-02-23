@@ -13,7 +13,6 @@ import {
   createEmptyTrip,
   Flight,
   Hotel,
-  // SAMPLE_ACTIVITIES,
   StartingPrefs,
   TripData,
   Activity,
@@ -120,9 +119,9 @@ const ChatPage = () => {
         setChatLoading(false);
         return;
       }
-      console.log('result from handler');
-      console.log(result);
-      console.log(result.shouldAdvance);
+      // console.log('result from handler');
+      // console.log(result);
+      // console.log(result.shouldAdvance);
 
       if (isLastStep) {
         alert('We will advance to the next page here.');
@@ -146,12 +145,13 @@ const ChatPage = () => {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
 
-  console.log(tripData)
-  console.log(natureOptions);
-  console.log(travelTips);
-  console.log(eateryOptions);
-  console.log(selfieSpotOptions);
-  console.log(tripData);
+  if (false) {
+    console.log("tripData", tripData)
+    console.log(natureOptions);
+    console.log(travelTips);
+    console.log(eateryOptions);
+    console.log(selfieSpotOptions);
+  }
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>

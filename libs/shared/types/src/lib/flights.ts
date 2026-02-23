@@ -19,18 +19,24 @@ export interface FlightLeg {
   segments: FlightSegment[];
 }
 
+export interface AirportInfo {
+  name: string;
+  iata_code: string;
+  latitude_deg: number;
+  longitude_deg: number;
+}
+
 export interface Flight {
   id: string;
-  price: number;
+  price: string;
   currency: string;
   legs: FlightLeg[];
-  date?: string;
 }
 
 export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
   {
     id: '1',
-    price: 342,
+    price: '342',
     currency: 'USD',
     legs: [
       {
@@ -49,7 +55,7 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
   },
   {
     id: '2',
-    price: 275,
+    price: '275',
     currency: 'USD',
     legs: [
       {
@@ -74,7 +80,7 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
   },
   {
     id: '3',
-    price: 410,
+    price: '410',
     currency: 'USD',
     legs: [
       {
@@ -102,7 +108,7 @@ export const SAMPLE_DEPARTING_FLIGHTS_RESPONSE: FlightResponseData = {
 export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   {
     id: '4',
-    price: 318,
+    price: '318',
     currency: 'USD',
     legs: [
       {
@@ -121,7 +127,7 @@ export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   },
   {
     id: '5',
-    price: 249,
+    price: '249',
     currency: 'USD',
     legs: [
       {
@@ -146,7 +152,7 @@ export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   },
   {
     id: '6',
-    price: 389,
+    price: '389',
     currency: 'USD',
     legs: [
       {
