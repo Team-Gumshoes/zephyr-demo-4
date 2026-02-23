@@ -1,6 +1,9 @@
 import { apiClient } from '../lib/api-client';
 import {
   SAMPLE_ACTIVITIES_RESPONSE,
+  SAMPLE_RESTAURANTS_RESPONSE,
+  SAMPLE_NATURE_RESPONSE,
+  SAMPLE_SELFIE_SPOTS_RESPONSE,
   SAMPLE_DEPARTING_FLIGHTS_RESPONSE,
   SAMPLE_HOTELS_RESPONSE,
   SAMPLE_RETURNING_FLIGHTS_RESPONSE,
@@ -55,8 +58,14 @@ const responseDataForStep = ({ messages }: ChatRequest): ResponseData => {
     return SAMPLE_RETURNING_FLIGHTS_RESPONSE;
   } else if (humanMessage.content.match(/hotel/i)) {
     return SAMPLE_HOTELS_RESPONSE;
+  } else if (humanMessage.content.match(/natural attractions/i)) {
+    return SAMPLE_NATURE_RESPONSE;
+  } else if (humanMessage.content.match(/eateries/i)) {
+    return SAMPLE_RESTAURANTS_RESPONSE;
   } else if (humanMessage.content.match(/activities/i)) {
     return SAMPLE_ACTIVITIES_RESPONSE;
+  } else if (humanMessage.content.match(/selfie spot/i)) {
+    return SAMPLE_SELFIE_SPOTS_RESPONSE;
   }
   return SAMPLE_DEPARTING_FLIGHTS_RESPONSE; // Fallback if no matches
 };

@@ -17,4 +17,5 @@ export const stepHandlers: Record<ChatStepName, StepHandler> = {
   Summary: async () => ({ success: true, shouldAdvance: true }),
   ActivityBudget: activityBudgetStepHandler,
   Activities: placeholder,
+  Itinerary: placeholder,
 };

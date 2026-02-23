@@ -25,19 +25,19 @@ export interface HotelResponseData {
 }
 
 export interface EateryResponseData {
-  type: 'restaurant';
+  type: 'eateries';
   summary?: string;
   options?: Eatery[];
 }
 
 export interface SelfieResponseData {
-  type: 'selfie';
+  type: 'selfieSpots';
   summary?: string;
   options?: SelfieSpot[];
 }
 
 export interface NaturalAttractionResponseData {
-  type: 'sightseeing';
+  type: 'naturalAttractions';
   summary?: string;
   options?: NaturalAttraction[];
 }

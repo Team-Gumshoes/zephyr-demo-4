@@ -10,9 +10,6 @@ import { createChatRequest } from '../helpers/chatRequest';
 export const activityBudgetStepHandler: StepHandler = async ({
   tripData,
   setActivityOptions,
-  setNatureOptions,
-  setEateryOptions,
-  setSelfieSpotOptions,
   setTravelTips,
   chatMessages,
   setChatMessages,
@@ -25,73 +22,86 @@ export const activityBudgetStepHandler: StepHandler = async ({
       };
     }
 
-    // Create all requests
     const activitiesRequest = createChatRequest('activities', tripData, chatMessages);
-    const selfieSpotRequest = createChatRequest('selfieSpots', tripData, chatMessages);
     const naturalAttractionsRequest = createChatRequest(
       'naturalAttractions',
       tripData,
       chatMessages,
     );
     const eateriesRequest = createChatRequest('eateries', tripData, chatMessages);
+    const selfieSpotRequest = createChatRequest('selfieSpots', tripData, chatMessages);
     const travelTipsRequest = createChatRequest('travelTips', tripData, chatMessages);
 
     // Make requests sequentially
-    const activitiesResponse = await sendChatMessage(activitiesRequest);
-    const selfieSpotResponse = await sendChatMessage(selfieSpotRequest);
-    const naturalAttractionsResponse = await sendChatMessage(naturalAttractionsRequest);
-    const eateriesResponse = await sendChatMessage(eateriesRequest);
-    const travelTipsResponse = await sendChatMessage(travelTipsRequest);
+    // const activitiesResponse = await sendChatMessage(activitiesRequest);
+    // const selfieSpotResponse = await sendChatMessage(selfieSpotRequest);
+    // const naturalAttractionsResponse = await sendChatMessage(naturalAttractionsRequest);
+    // const eateriesResponse = await sendChatMessage(eateriesRequest);
+    // const travelTipsResponse = await sendChatMessage(travelTipsRequest);
 
-    // Parse activities response
-    const activityResponseData = ActivityResponseDataSchema.safeParse(activitiesResponse.data);
-    if (!activityResponseData.success) {
-      console.error('Invalid activity response data:', activityResponseData.error.issues);
-    } else if (activityResponseData.data.options) {
-      setActivityOptions(activityResponseData.data.options);
-    }
-
-    // Parse selfie spots response
-    const selfieSpotResponseData = SelfieSpotResponseDataSchema.safeParse(selfieSpotResponse.data);
-    if (!selfieSpotResponseData.success) {
-      console.error('Invalid selfie spot response data:', selfieSpotResponseData.error.issues);
-    } else if (selfieSpotResponseData.data.options) {
-      setSelfieSpotOptions(selfieSpotResponseData.data.options);
-    }
-
-    // Parse natural attractions response
-    const naturalAttractionResponseData = NaturalAttractionResponseDataSchema.safeParse(
-      naturalAttractionsResponse.data,
-    );
-    if (!naturalAttractionResponseData.success) {
-      console.error(
-        'Invalid natural attraction response data:',
-        naturalAttractionResponseData.error.issues,
-      );
-    } else if (naturalAttractionResponseData.data.options) {
-      setNatureOptions(naturalAttractionResponseData.data.options);
-    }
-
-    // Parse eateries response
-    const eateryResponseData = EateryResponseDataSchema.safeParse(eateriesResponse.data);
-    if (!eateryResponseData.success) {
-      console.error('Invalid eatery response data:', eateryResponseData.error.issues);
-    } else if (eateryResponseData.data.options) {
-      setEateryOptions(eateryResponseData.data.options);
-    }
-
-    // Parse travel tips response
-    const travelTipResponseData = TravelTipResponseDataSchema.safeParse(travelTipsResponse.data);
-    if (!travelTipResponseData.success) {
-      console.error('Invalid travel tip response data:', travelTipResponseData.error.issues);
-    } else if (travelTipResponseData.data.options) {
-      setTravelTips(travelTipResponseData.data.options);
-    }
-
-    setChatMessages([
-      ...activitiesRequest.messages,
-      activitiesResponse.messages[activitiesResponse.messages.length - 1],
+    // Fire all requests in parallel; append to activityOptions as each resolves
+    const [activitiesResponse] = await Promise.allSettled([
+      sendChatMessage(activitiesRequest).then((response) => {
+        const parsed = ActivityResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid activity response data:', parsed.error.issues);
+        } else if (parsed.data.options) {
+          const options = parsed.data.options.map((o) => ({
+            ...o,
+            category: 'Activities' as const,
+          }));
+          setActivityOptions((prev) => [...prev, ...options]);
+        }
+        return response;
+      }),
+      sendChatMessage(naturalAttractionsRequest).then((response) => {
+        const parsed = NaturalAttractionResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid natural attraction response data:', parsed.error.issues);
+          console.log(parsed);
+        } else if (parsed.data.options) {
+          const options = parsed.data.options.map((o) => ({ ...o, category: 'Nature' as const }));
+          setActivityOptions((prev) => [...prev, ...options]);
+        }
+      }),
+      sendChatMessage(eateriesRequest).then((response) => {
+        const parsed = EateryResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid eatery response data:', parsed.error.issues);
+        } else if (parsed.data.options) {
+          const options = parsed.data.options.map((o) => ({ ...o, category: 'Food' as const }));
+          setActivityOptions((prev) => [...prev, ...options]);
+        }
+      }),
+      sendChatMessage(selfieSpotRequest).then((response) => {
+        const parsed = SelfieSpotResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid selfie spot response data:', parsed.error.issues);
+        } else if (parsed.data.options) {
+          const options = parsed.data.options.map((o) => ({
+            ...o,
+            category: 'Selfie Spots' as const,
+          }));
+          setActivityOptions((prev) => [...prev, ...options]);
+        }
+      }),
+      sendChatMessage(travelTipsRequest).then((response) => {
+        const parsed = TravelTipResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid travel tip response data:', parsed.error.issues);
+        } else if (parsed.data.options) {
+          setTravelTips(parsed.data.options);
+        }
+      }),
     ]);
+
+    if (activitiesResponse.status === 'fulfilled' && activitiesResponse.value) {
+      const response = activitiesResponse.value;
+      setChatMessages([
+        ...activitiesRequest.messages,
+        response.messages[response.messages.length - 1],
+      ]);
+    }
 
     return { success: true, shouldAdvance: true };
   } catch (error) {

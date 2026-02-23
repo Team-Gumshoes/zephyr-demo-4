@@ -3,13 +3,12 @@ import { z } from 'zod';
 const ActivitySchema = z.object({
   id: z.string(),
   name: z.string(),
-  title: z.string().default('Default Title'),
-  estimatedCost: z.string().default('Default Estimated Cost'),
-  distance: z.string().default('Default Distance'),
+  description: z.string().default(''),
+  estimatedCost: z.string().default(''),
+  distance: z.string().default(''),
+  category: z.enum(['Nature', 'Food', 'Activities', 'Selfie Spots']),
   imageUrl: z.string().array().optional(),
   pinned: z.boolean().optional(),
-  location: z.string().optional(),
-  description: z.string(),
 });
 
 export const ActivityResponseDataSchema = z.object({

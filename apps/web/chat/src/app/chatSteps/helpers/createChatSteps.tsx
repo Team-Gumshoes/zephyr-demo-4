@@ -11,6 +11,7 @@ import SummaryInstructions from '../../../components/instructions/SummaryInstruc
 import ActivityBudgetInstructions from '../../../components/instructions/ActivityBudgetInstructions';
 import ActivityBudgetForm from '../../../components/forms/ActivityBudgetForm';
 import ActivitiesForm from '../../../components/forms/ActivitiesForm';
+import ItineraryForm from '../../../components/forms/ItineraryForm';
 import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
 
 export enum ChatStepSequence {
@@ -21,6 +22,7 @@ export enum ChatStepSequence {
   Summary,
   ActivityBudget,
   Activities,
+  Itinerary,
 }
 
 export type ChatStepName = keyof typeof ChatStepSequence;
@@ -40,6 +42,7 @@ const createChatSteps = (
   currentStepIndex: number,
   updateFields: (fields: Partial<TripData>) => void,
   isChatLoading: boolean,
+  togglePin: (activityId: string) => void,
 ): ChatStep[] => [
   {
     stepName: 'Budget',
@@ -118,8 +121,13 @@ const createChatSteps = (
         activityOptions={activityOptions}
         updateFields={updateFields}
         isChatLoading={isChatLoading}
+        togglePin={togglePin}
       />
     ),
+  },
+  {
+    stepName: 'Itinerary',
+    form: <ItineraryForm {...tripData} activityOptions={activityOptions} />,
   },
 ];
 

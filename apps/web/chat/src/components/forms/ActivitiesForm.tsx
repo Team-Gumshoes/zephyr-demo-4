@@ -24,6 +24,7 @@ type ActivityFormProps = ActivityFormData & {
   updateFields: (fields: Partial<ActivityFormData>) => void;
   isChatLoading: boolean;
   currentStepIndex: number;
+  togglePin: (activityId: string) => void;
 };
 
 const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
@@ -37,7 +38,7 @@ const parseCost = (cost: string): number => Number(cost.replace(/[^0-9.]/g, ''))
 
 const ActivitiesForm = ({
   activityOptions,
-  currentStepIndex,
+  // currentStepIndex,
   departureDate,
   returnDate,
   departureFlight,
@@ -45,26 +46,14 @@ const ActivitiesForm = ({
   hotel,
   updateFields,
   isChatLoading,
+  togglePin,
 }: ActivityFormProps) => {
   //   const isActive = currentStepIndex === ChatStepSequence.Activities;
   const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
-  const [activities, setActivities] = useState<Activity[]>(activityOptions);
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
-  // const toggleFilter = (filter: ActivityFilterType) => {
-  //   setSelectedFilter((prev) => (prev === filter ? null : filter));
-  // };
-
-  const togglePin = (activityId: string) => {
-    setActivities((prev) =>
-      prev.map((activity) =>
-        activity.id === activityId ? { ...activity, pinned: !activity.pinned } : activity,
-      ),
-    );
-  };
-
   const budgetItems = useMemo(() => {
-    const attractionsTotal = activities
+    const attractionsTotal = activityOptions
       .filter((a) => a.pinned)
       .reduce((sum, a) => sum + parseCost(a.estimatedCost), 0);
     return [
@@ -78,35 +67,33 @@ const ActivitiesForm = ({
       },
       { label: 'Attractions', amount: attractionsTotal },
     ];
-  }, [activities, departureDate, returnDate, departureFlight, returnFlight, hotel]);
+  }, [activityOptions, departureDate, returnDate, departureFlight, returnFlight, hotel]);
 
-  // const filteredActivities = useMemo(() => {
-  //   const filtered = selectedFilter
-  //     ? activities.filter((activity) => activity.category === selectedFilter)
-  //     : activities;
-  //   // return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
-  //   return filtered;
-  // }, [activities, selectedFilter]);
+  const filteredActivities = useMemo(() => {
+    const filtered = selectedFilter
+      ? activityOptions.filter((activity) => activity.category === selectedFilter)
+      : activityOptions;
+    // return [...filtered].sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
+    return filtered;
+  }, [activityOptions, selectedFilter]);
 
-  // const pinnedCountByFilter = useMemo(() => {
-  //   const counts: Record<ActivityFilterType, number> = {
-  //     Nature: 0,
-  //     Food: 0,
-  //     Activities: 0,
-  //     'Selfie Spots': 0,
-  //   };
-  //   for (const activity of activities) {
-  //     if (activity.pinned) counts[activity.category]++;
-  //   }
-  //   return counts;
-  // }, [activities]);
+  const pinnedCountByFilter = useMemo(() => {
+    const counts: Record<ActivityFilterType, number> = {
+      Nature: 0,
+      Food: 0,
+      Activities: 0,
+      'Selfie Spots': 0,
+    };
+    for (const activity of activityOptions) {
+      if (activity.pinned) counts[activity.category]++;
+    }
+    return counts;
+  }, [activityOptions]);
 
   const filters: ActivityFilterType[] = ['Nature', 'Food', 'Activities', 'Selfie Spots'];
 
-  console.log(setSelectedFilter);
-
   return (
-    <div className="activities-form flex w-full gap-5 border-t-2 border-black pt-6">
+    <div className="flex w-full gap-5 border-t-2 border-black pt-6">
       {/* Left Section */}
       <div className="flex w-[506px] shrink-0 flex-col gap-4">
         {/* Attractions and Filters */}
@@ -120,14 +107,13 @@ const ActivitiesForm = ({
             {filters.map((filter) => {
               const Icon = FILTER_ICONS[filter];
               const isSelected = selectedFilter === filter;
-              const pinnedCount = 0; // pinnedCountByFilter[filter];
+              const pinnedCount = pinnedCountByFilter[filter];
 
               return (
                 <button
                   type="button"
                   key={filter}
-                  onClick={() => {}}
-                  // onClick={() => toggleFilter(filter)}
+                  onClick={() => setSelectedFilter(filter)}
                   className={clsx(
                     'flex min-h-[32px] items-center gap-2 rounded-lg px-2.5 py-[5.5px] transition-colors',
                     isSelected ? 'bg-[#fbfbfe]' : 'hover:bg-[#75cfcc]/80',
@@ -153,7 +139,7 @@ const ActivitiesForm = ({
 
         {/* AI Results - Activity Cards */}
         <div className="flex flex-col items-end gap-4">
-          {activities.map((activity) => (
+          {filteredActivities.map((activity) => (
             <ActivityCard
               key={activity.id}
               name={activity.name}
