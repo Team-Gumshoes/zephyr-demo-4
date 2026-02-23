@@ -17,9 +17,9 @@ import {
   TripData,
   Activity,
   Message,
-  NaturalAttraction,
-  Eatery,
-  SelfieSpot,
+  // NaturalAttraction,
+  // Eatery,
+  // SelfieSpot,
   TravelTip,
 } from '@allorai/shared-types';
 import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
@@ -47,9 +47,9 @@ const ChatPage = () => {
   const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
   const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
-  const [natureOptions, setNatureOptions] = useState<NaturalAttraction[]>([]);
-  const [eateryOptions, setEateryOptions] = useState<Eatery[]>([]);
-  const [selfieSpotOptions, setSelfieSpotOptions] = useState<SelfieSpot[]>([]);
+  // const [natureOptions, setNatureOptions] = useState<NaturalAttraction[]>([]);
+  // const [eateryOptions, setEateryOptions] = useState<Eatery[]>([]);
+  // const [selfieSpotOptions, setSelfieSpotOptions] = useState<SelfieSpot[]>([]);
   const [travelTips, setTravelTips] = useState<TravelTip[]>([]);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [isChatLoading, setChatLoading] = useState(false);
@@ -60,6 +60,12 @@ const ChatPage = () => {
     setTripData((prev) => {
       return { ...prev, ...fields };
     });
+  }, []);
+
+  const togglePin = useCallback((activityId: string) => {
+    setActivityOptions((prev) =>
+      prev.map((a) => (a.id === activityId ? { ...a, pinned: !a.pinned } : a)),
+    );
   }, []);
 
   const chatSteps: ChatStep[] = useMemo(
@@ -73,6 +79,7 @@ const ChatPage = () => {
         currentStepIndex,
         updateFields,
         isChatLoading,
+        togglePin,
       ),
     [
       tripData,
@@ -80,8 +87,10 @@ const ChatPage = () => {
       departingFlightOptions,
       returningFlightOptions,
       hotelOptions,
+      activityOptions,
       currentStepIndex,
       isChatLoading,
+      togglePin,
     ],
   );
 
@@ -106,9 +115,9 @@ const ChatPage = () => {
         setReturningFlightOptions,
         setHotelOptions,
         setActivityOptions,
-        setNatureOptions,
-        setEateryOptions,
-        setSelfieSpotOptions,
+        // setNatureOptions,
+        // setEateryOptions,
+        // setSelfieSpotOptions,
         setTravelTips,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
@@ -146,14 +155,15 @@ const ChatPage = () => {
   }
 
   if (false) {
-    console.log("tripData", tripData)
-    console.log(natureOptions);
+    console.log('tripData', tripData);
     console.log(travelTips);
-    console.log(eateryOptions);
-    console.log(selfieSpotOptions);
   }
 
-  console.log(process.env.NX_PUBLIC_API_BASE_URL || process.env.ZE_PUBLIC_API_BASE_URL || "https://alloraiapi-gateway-production.up.railway.app")
+  console.log(
+    process.env.NX_PUBLIC_API_BASE_URL ||
+      process.env.ZE_PUBLIC_API_BASE_URL ||
+      'https://alloraiapi-gateway-production.up.railway.app',
+  );
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>
