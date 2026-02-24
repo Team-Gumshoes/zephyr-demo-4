@@ -7,7 +7,6 @@ const useMultiStepChat = (
   setCurrentStepIndex: Dispatch<SetStateAction<number>>,
 ) => {
   function next() {
-    console.log('Advancing 2');
     setCurrentStepIndex((prevIdx) => (prevIdx === steps.length - 1 ? prevIdx : prevIdx + 1));
   }
 

@@ -36,7 +36,6 @@ export type ChatStep = {
 const createChatSteps = (
   tripData: TripData,
   flightOptions: Flight[],
-  // returningFlightOptions: Flight[],
   hotelOptions: Hotel[],
   activityOptions: Activity[],
   currentStepIndex: number,

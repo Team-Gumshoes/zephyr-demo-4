@@ -48,7 +48,6 @@ const ActivitiesForm = ({
   isChatLoading,
   togglePin,
 }: ActivityFormProps) => {
-  //   const isActive = currentStepIndex === ChatStepSequence.Activities;
   const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 

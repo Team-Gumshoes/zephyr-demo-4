@@ -41,7 +41,6 @@ const ChatPage = () => {
 
   // TODO Consider putting all this state in Zustand
   const [flightOptions, setFlightOptions] = useState<Flight[]>([]);
-  // const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
   const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
   const [travelTips, setTravelTips] = useState<TravelTip[]>([]);
@@ -104,7 +103,6 @@ const ChatPage = () => {
         chatMessages,
         setChatMessages,
         setFlightOptions,
-        // setReturningFlightOptions,
         setHotelOptions,
         setActivityOptions,
         setTravelTips,
@@ -121,7 +119,6 @@ const ChatPage = () => {
       if (isLastStep) {
         alert('We will advance to the next page here.');
       } else if (result.shouldAdvance) {
-        console.log('advancing');
         next();
       }
     } catch (error) {
