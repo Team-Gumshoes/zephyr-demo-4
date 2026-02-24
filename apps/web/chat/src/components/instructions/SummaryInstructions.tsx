@@ -40,7 +40,7 @@ const SummaryInstructions = ({
           <h3 className="font-bold text-xl text-black tracking-[-1px] leading-[28.8px]">
             Departing ({departureDate})
           </h3>
-          <FlightChip flight={departureFlight} />
+          <FlightChip flight={departureFlight} direction='outbound' />
         </div>
       )}
 
@@ -50,7 +50,7 @@ const SummaryInstructions = ({
           <h3 className="font-bold text-xl text-black tracking-[-1px] leading-[28.8px]">
             Return ({returnDate})
           </h3>
-          <FlightChip flight={returnFlight} />
+          <FlightChip flight={returnFlight} direction='return' />
         </div>
       )}
 

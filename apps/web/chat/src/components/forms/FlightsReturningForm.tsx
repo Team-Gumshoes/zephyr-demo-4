@@ -54,7 +54,7 @@ const FlightsReturningForm = ({
                   !isActive && flightReturningId !== flight.id && 'hidden',
                 )}
               >
-                <FlightChip flight={flight} />
+                <FlightChip flight={flight} direction='return' />
               </div>
             </label>
           ))}

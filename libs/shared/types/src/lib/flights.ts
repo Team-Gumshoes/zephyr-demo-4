@@ -33,7 +33,7 @@ export interface Flight {
   legs: FlightLeg[];
 }
 
-export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
+export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
   {
     id: '1',
     price: '342',
@@ -47,6 +47,18 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
             duration: '5h 30m',
             departure: { airport: 'JFK', time: '2025-07-15T08:00:00' },
             arrival: { airport: 'LAX', time: '2025-07-15T11:30:00' },
+            airline: 'SkyBridge Airlines',
+          },
+        ],
+      },
+      {
+        direction: 'return',
+        legDuration: '5h 20m',
+        segments: [
+          {
+            duration: '5h 20m',
+            departure: { airport: 'LAX', time: '2025-07-22T09:00:00' },
+            arrival: { airport: 'JFK', time: '2025-07-22T17:20:00' },
             airline: 'SkyBridge Airlines',
           },
         ],
@@ -76,60 +88,6 @@ export const SAMPLE_DEPARTING_FLIGHTS: Flight[] = [
           },
         ],
       },
-    ],
-  },
-  {
-    id: '3',
-    price: '410',
-    currency: 'USD',
-    legs: [
-      {
-        direction: 'outbound',
-        legDuration: '5h 15m',
-        segments: [
-          {
-            duration: '5h 15m',
-            departure: { airport: 'JFK', time: '2025-07-15T14:00:00' },
-            arrival: { airport: 'LAX', time: '2025-07-15T17:15:00' },
-            airline: 'Crimson Pacific',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-export const SAMPLE_DEPARTING_FLIGHTS_RESPONSE: FlightResponseData = {
-  type: 'flight',
-  summary: 'departing flight summary here',
-  options: SAMPLE_DEPARTING_FLIGHTS,
-};
-
-export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
-  {
-    id: '4',
-    price: '318',
-    currency: 'USD',
-    legs: [
-      {
-        direction: 'return',
-        legDuration: '5h 20m',
-        segments: [
-          {
-            duration: '5h 20m',
-            departure: { airport: 'LAX', time: '2025-07-22T09:00:00' },
-            arrival: { airport: 'JFK', time: '2025-07-22T17:20:00' },
-            airline: 'SkyBridge Airlines',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: '5',
-    price: '249',
-    currency: 'USD',
-    legs: [
       {
         direction: 'return',
         legDuration: '7h 50m',
@@ -151,10 +109,22 @@ export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
     ],
   },
   {
-    id: '6',
-    price: '389',
+    id: '3',
+    price: '410',
     currency: 'USD',
     legs: [
+      {
+        direction: 'outbound',
+        legDuration: '5h 15m',
+        segments: [
+          {
+            duration: '5h 15m',
+            departure: { airport: 'JFK', time: '2025-07-15T14:00:00' },
+            arrival: { airport: 'LAX', time: '2025-07-15T17:15:00' },
+            airline: 'Crimson Pacific',
+          },
+        ],
+      },
       {
         direction: 'return',
         legDuration: '5h 10m',
@@ -171,8 +141,8 @@ export const SAMPLE_RETURNING_FLIGHTS: Flight[] = [
   },
 ];
 
-export const SAMPLE_RETURNING_FLIGHTS_RESPONSE: FlightResponseData = {
+export const SAMPLE_FLIGHTS_RESPONSE: FlightResponseData = {
   type: 'flight',
-  summary: 'returning flight summary here',
-  options: SAMPLE_RETURNING_FLIGHTS,
+  summary: 'departing flight summary here',
+  options: SAMPLE_FLIGHT_OPTIONS,
 };

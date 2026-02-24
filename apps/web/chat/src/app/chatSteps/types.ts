@@ -6,8 +6,8 @@ export interface StepHandlerContext {
   tripData: TripData;
   chatMessages: Message[];
   setChatMessages: Dispatch<SetStateAction<Message[]>>;
-  setDepartingFlightOptions: Dispatch<SetStateAction<Flight[]>>;
-  setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
+  setFlightOptions: Dispatch<SetStateAction<Flight[]>>;
+  // setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;
   setActivityOptions: Dispatch<SetStateAction<Activity[]>>;
   // setNatureOptions: Dispatch<SetStateAction<NaturalAttraction[]>>;

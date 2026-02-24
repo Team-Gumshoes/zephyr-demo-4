@@ -55,7 +55,7 @@ const FlightsDepartingForm = ({
                   !isActive && flightDepartingId !== flight.id && 'hidden',
                 )}
               >
-                <FlightChip flight={flight} />
+                <FlightChip flight={flight} direction='outbound' />
               </div>
             </label>
           ))}

@@ -35,8 +35,8 @@ export type ChatStep = {
 
 const createChatSteps = (
   tripData: TripData,
-  departingFlightOptions: Flight[],
-  returningFlightOptions: Flight[],
+  flightOptions: Flight[],
+  // returningFlightOptions: Flight[],
   hotelOptions: Hotel[],
   activityOptions: Activity[],
   currentStepIndex: number,
@@ -63,7 +63,7 @@ const createChatSteps = (
       <FlightsDepartingForm
         {...tripData}
         currentStepIndex={currentStepIndex}
-        departingFlightOptions={departingFlightOptions}
+        departingFlightOptions={flightOptions}
         updateFields={updateFields}
         isChatLoading={isChatLoading}
       />
@@ -76,7 +76,7 @@ const createChatSteps = (
       <FlightsReturningForm
         {...tripData}
         currentStepIndex={currentStepIndex}
-        returningFlightOptions={returningFlightOptions}
+        returningFlightOptions={flightOptions}
         updateFields={updateFields}
         isChatLoading={isChatLoading}
       />
