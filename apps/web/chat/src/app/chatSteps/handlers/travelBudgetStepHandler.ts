@@ -3,10 +3,11 @@ import { FlightResponseDataSchema } from '../schemas/flightResponseSchema';
 import { createChatSession, sendChatMessage } from '../../api/chat';
 import { StepHandler } from '../types';
 import { createChatRequest } from '../helpers/chatRequest';
+import { uniqueOptions } from '../../../utils/utils';
 
 export const travelBudgetStepHandler: StepHandler = async ({
   tripData,
-  setDepartingFlightOptions,
+  setFlightOptions,
   chatMessages,
   setChatMessages,
 }) => {
@@ -48,10 +49,9 @@ export const travelBudgetStepHandler: StepHandler = async ({
       };
     }
 
+
     setChatMessages([...request.messages, response.messages[response.messages.length - 1]]); // TODO adding on ai response message, maybe ust pass response messages.. test this
-    console.log('setting departing flight options');
-    console.log(parsedResponseData.data.options);
-    setDepartingFlightOptions(parsedResponseData.data.options);
+    setFlightOptions(uniqueOptions(parsedResponseData.data.options));
     return { success: true, shouldAdvance: true };
   } catch (error) {
     return {

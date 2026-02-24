@@ -17,9 +17,6 @@ import {
   TripData,
   Activity,
   Message,
-  // NaturalAttraction,
-  // Eatery,
-  // SelfieSpot,
   TravelTip,
 } from '@allorai/shared-types';
 import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
@@ -43,13 +40,10 @@ const ChatPage = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   // TODO Consider putting all this state in Zustand
-  const [departingFlightOptions, setDepartingFlightOptions] = useState<Flight[]>([]);
-  const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
+  const [flightOptions, setFlightOptions] = useState<Flight[]>([]);
+  // const [returningFlightOptions, setReturningFlightOptions] = useState<Flight[]>([]);
   const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
   const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
-  // const [natureOptions, setNatureOptions] = useState<NaturalAttraction[]>([]);
-  // const [eateryOptions, setEateryOptions] = useState<Eatery[]>([]);
-  // const [selfieSpotOptions, setSelfieSpotOptions] = useState<SelfieSpot[]>([]);
   const [travelTips, setTravelTips] = useState<TravelTip[]>([]);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [isChatLoading, setChatLoading] = useState(false);
@@ -72,8 +66,7 @@ const ChatPage = () => {
     () =>
       createChatSteps(
         tripData,
-        departingFlightOptions,
-        returningFlightOptions,
+        flightOptions,
         hotelOptions,
         activityOptions,
         currentStepIndex,
@@ -84,8 +77,7 @@ const ChatPage = () => {
     [
       tripData,
       updateFields,
-      departingFlightOptions,
-      returningFlightOptions,
+      flightOptions,
       hotelOptions,
       activityOptions,
       currentStepIndex,
@@ -111,13 +103,10 @@ const ChatPage = () => {
         tripData,
         chatMessages,
         setChatMessages,
-        setDepartingFlightOptions,
-        setReturningFlightOptions,
+        setFlightOptions,
+        // setReturningFlightOptions,
         setHotelOptions,
         setActivityOptions,
-        // setNatureOptions,
-        // setEateryOptions,
-        // setSelfieSpotOptions,
         setTravelTips,
         updateFields, // <-- might not need this ?
         next, // <-- might not need this ?
@@ -128,9 +117,6 @@ const ChatPage = () => {
         setChatLoading(false);
         return;
       }
-      // console.log('result from handler');
-      // console.log(result);
-      // console.log(result.shouldAdvance);
 
       if (isLastStep) {
         alert('We will advance to the next page here.');
@@ -158,12 +144,7 @@ const ChatPage = () => {
     console.log('tripData', tripData);
     console.log(travelTips);
   }
-
-  console.log(
-    process.env.NX_PUBLIC_API_BASE_URL ||
-      process.env.ZE_PUBLIC_API_BASE_URL ||
-      'https://alloraiapi-gateway-production.up.railway.app',
-  );
+  
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>

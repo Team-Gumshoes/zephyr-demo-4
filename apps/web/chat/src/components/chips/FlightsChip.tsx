@@ -14,8 +14,8 @@
 import { Flight, FlightSegment } from '@allorai/shared-types';
 import { formatTime } from '../../utils/formatData';
 
-const FlightChip = ({ flight }: { flight: Flight }) => {
-  const leg = flight.legs[0];
+const FlightChip = ({ flight, direction }: { flight: Flight, direction: 'outbound' | 'return' }) => {
+  const leg = flight.legs.find(leg => leg.direction === direction);
   if (!leg) return null;
 
   const { segments } = leg;
@@ -23,6 +23,7 @@ const FlightChip = ({ flight }: { flight: Flight }) => {
 
   return (
     <div className="bg-[rgba(251,251,254,0.75)] border border-black flex items-center justify-between p-6 rounded-[20px] w-full">
+      {flight.id}
       {/* Cost */}
       <div className="font-semibold text-[#050315] text-base whitespace-nowrap mr-4">
         ${flight.price.toLocaleString()} {flight.currency}

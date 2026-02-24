@@ -8,7 +8,7 @@ export function App() {
     <PageBackground>
       <div className="flex flex-col">
         <Hero
-          title="Plan Trips Smarter"
+          title="Plan Trips Smart"
           subtitle="Use AI to craft your travel plans with ease"
         />
         <div className="px-8 md:mx-auto py-12">

@@ -77,14 +77,14 @@ const ItineraryForm = ({
 
         <div className="flex flex-col gap-4">
           {departureFlight ? (
-            <FlightChip flight={departureFlight} />
+            <FlightChip flight={departureFlight} direction='outbound'/>
           ) : (
             <div className="flex items-center justify-center rounded-[20px] border border-black bg-[rgba(251,251,254,0.75)] p-6 text-sm text-black/40">
               No departing flight selected
             </div>
           )}
           {returnFlight ? (
-            <FlightChip flight={returnFlight} />
+            <FlightChip flight={returnFlight} direction='return' />
           ) : (
             <div className="flex items-center justify-center rounded-[20px] border border-black bg-[rgba(251,251,254,0.75)] p-6 text-sm text-black/40">
               No returning flight selected
