@@ -18,6 +18,8 @@ export const SAMPLE_RESTAURANTS: Eatery[] = [
     website: 'https://www.allorai.app',
     category: 'Food',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/bbq1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/bbq1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/bbq2.jpg',
@@ -35,6 +37,8 @@ export const SAMPLE_RESTAURANTS: Eatery[] = [
     website: 'https://www.allorai.app',
     category: 'Food',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/burger1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/burger1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/burger2.jpg',
@@ -52,6 +56,8 @@ export const SAMPLE_RESTAURANTS: Eatery[] = [
     website: 'https://www.allorai.app',
     category: 'Food',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/ramen1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/ramen1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/ramen2.jpg',
@@ -69,6 +75,8 @@ export const SAMPLE_RESTAURANTS: Eatery[] = [
     website: 'https://www.allorai.app',
     category: 'Food',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/taiyaki1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/taiyaki1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/food/taiyaki2.jpg',

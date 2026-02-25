@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
@@ -21,9 +20,6 @@ export type ActivityFormData = {
 
 type ActivityFormProps = ActivityFormData & {
   activityOptions: Activity[];
-  updateFields: (fields: Partial<ActivityFormData>) => void;
-  isChatLoading: boolean;
-  currentStepIndex: number;
   togglePin: (activityId: string) => void;
   onReviewAndSave: () => void;
   onModifyDetails: () => void;
@@ -38,14 +34,11 @@ const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
 
 const ActivitiesForm = ({
   activityOptions,
-  currentStepIndex,
   departureDate,
   returnDate,
   departureFlight,
   returnFlight,
   hotel,
-  updateFields,
-  isChatLoading,
   togglePin,
   onReviewAndSave,
   onModifyDetails,
@@ -55,7 +48,7 @@ const ActivitiesForm = ({
   const [visibleCount, setVisibleCount] = useState(4);
 
   const CARDS_PER_PAGE = 4;
-  const isPinLocked = currentStepIndex > ChatStepSequence.Activities;
+  const isPinLocked = false;
 
   const budgetItems = useMemo(() => {
     const attractionsTotal = activityOptions
@@ -98,7 +91,7 @@ const ActivitiesForm = ({
   const filters: ActivityFilterType[] = ['Nature', 'Food', 'Activities', 'Selfie Spots'];
 
   return (
-    <div className="flex w-full gap-5 border-t-2 border-black pt-6">
+    <div className="flex w-full gap-5  pt-6 justify-center">
       {/* Left Section */}
       <div className="flex w-[506px] shrink-0 flex-col gap-4">
         {/* Attractions and Filters */}

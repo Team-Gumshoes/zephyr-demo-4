@@ -18,6 +18,8 @@ export const SAMPLE_NATURAL_ATTRACTIONS: NaturalAttraction[] = [
     website: 'https://www.allorai.app',
     category: 'Nature',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/national_park1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/national_park1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/national_park2.jpg',
@@ -35,6 +37,8 @@ export const SAMPLE_NATURAL_ATTRACTIONS: NaturalAttraction[] = [
     website: 'https://www.allorai.app',
     category: 'Nature',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/mountains1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/mountains1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/mountains2.jpg',
@@ -52,6 +56,8 @@ export const SAMPLE_NATURAL_ATTRACTIONS: NaturalAttraction[] = [
     website: 'https://www.allorai.app',
     category: 'Nature',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/lake1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/lake1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/lake2.jpg',
@@ -69,6 +75,8 @@ export const SAMPLE_NATURAL_ATTRACTIONS: NaturalAttraction[] = [
     website: 'https://www.allorai.app',
     category: 'Nature',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/beach1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/beach1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/nature/beach2.jpg',

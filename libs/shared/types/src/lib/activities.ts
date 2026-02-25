@@ -23,13 +23,15 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     id: 'activities-1',
     name: 'Hollywood Bowl Concert',
     description:
-      'Catch a live performance at this legendary outdoor amphitheater nestled in the Hollywood Hills. Bring a picnic and enjoy world-class music under the stars, from classical orchestras to contemporary headliners.',
+      'You can catch a live performance at this legendary outdoor amphitheater nestled in the Hollywood Hills. Bring a picnic and enjoy world-class music under the stars, from classical orchestras to contemporary headliners.',
     estimatedCost: '60',
     distance: '6mi',
     category: 'Activities',
     location: 'Hollywood',
     website: 'https://www.allorai.app',
     pinned: false,
+    imageUrl:
+      'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert2.jpg',
@@ -47,6 +49,8 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     location: 'Hollywood',
     website: 'https://www.allorai.app',
     pinned: false,
+    imageUrl:
+      'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum2.jpg',
@@ -64,6 +68,8 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     location: 'Hollywood',
     website: 'https://www.allorai.app',
     pinned: false,
+    imageUrl:
+      'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park2.jpg',
@@ -81,6 +87,8 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     location: 'Hollywood',
     website: 'https://www.allorai.app',
     pinned: false,
+    imageUrl:
+      'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling2.jpg',

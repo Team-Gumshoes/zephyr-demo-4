@@ -1,17 +1,3 @@
-// Current shape of Trip on agents api
-// export interface Trip {
-//   origin: string | null;
-//   destination: string | null;
-//   departureFlight: string | null;
-//   returnFlight: string | null;
-//   departureDate: string | null;
-//   returnDate: string | null;
-//   budget: number | null;
-//   hotel: string | null;
-//   interests: string[];
-//   constraints: string[];
-// }
-
 import { Flight } from './flights';
 import { Hotel } from './hotels';
 
@@ -27,6 +13,8 @@ export interface StartingPrefs {
   budgetIncludes: string[];
   transportation: string[];
 }
+
+// TripPrefs are additional preferences gathered through the chat process
 export interface TripPrefs extends StartingPrefs {
   flightPreference?: BudgetPref;
   lodgingPreference?: BudgetPref;
@@ -44,21 +32,6 @@ export interface TripData extends TripPrefs {
   destinationCoords?: { latitude: number; longitude: number };
   hotelCoords?: { latitude: number; longitude: number };
 }
-
-// TODO AgentApiTrip is here for reference only (Delete later)
-// export interface AgentApiTrip {
-//   origin: string | null;
-//   destination: string | null;
-//   departureDate: string | null;
-//   returnDate: string | null;
-//   budget: number | null;
-//   interests: string[];
-//   constraints: string[];
-
-//   departureFlight: string | null;
-//   returnFlight: string | null;
-//   hotel: string | null;
-// }
 
 export function createEmptyTrip(): TripData {
   return {

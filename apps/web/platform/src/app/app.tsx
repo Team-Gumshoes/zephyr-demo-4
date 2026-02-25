@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/landing" replace />} />
           <Route path="landing" element={<LandingPage />} />
-          <Route path="chat" element={<ChatPage />} />
+          <Route path="chat/*" element={<ChatPage />} />
           <Route path="itineraries" element={<ItinerariesPage />} />
           <Route path="explore" element={<ExplorePage />} />
           <Route path="login" element={<LoginPage />} />

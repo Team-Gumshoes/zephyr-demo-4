@@ -18,6 +18,8 @@ export const SAMPLE_SELIFE_SPOTS: SelfieSpot[] = [
     website: 'https://www.allorai.app',
     category: 'Selfie Spots',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/dog_statue1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/dog_statue1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/dog_statue2.jpg',
@@ -35,6 +37,8 @@ export const SAMPLE_SELIFE_SPOTS: SelfieSpot[] = [
     website: 'https://www.allorai.app',
     category: 'Selfie Spots',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/lights1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/lights1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/lights2.jpg',
@@ -52,6 +56,8 @@ export const SAMPLE_SELIFE_SPOTS: SelfieSpot[] = [
     website: 'https://www.allorai.app',
     category: 'Selfie Spots',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/mural1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/mural1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/mural2.jpg',
@@ -69,6 +75,8 @@ export const SAMPLE_SELIFE_SPOTS: SelfieSpot[] = [
     website: 'https://www.allorai.app',
     category: 'Selfie Spots',
     pinned: false,
+    imageUrl:
+    'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/observatory1.jpg',
     imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/observatory1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/selfie-spots/observatory2.jpg',

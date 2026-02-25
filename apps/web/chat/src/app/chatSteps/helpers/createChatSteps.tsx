@@ -10,9 +10,7 @@ import HotelsForm from '../../../components/forms/HotelsForm';
 import SummaryInstructions from '../../../components/instructions/SummaryInstructions';
 import ActivityBudgetInstructions from '../../../components/instructions/ActivityBudgetInstructions';
 import ActivityBudgetForm from '../../../components/forms/ActivityBudgetForm';
-import ActivitiesForm from '../../../components/forms/ActivitiesForm';
-import ItineraryForm from '../../../components/forms/ItineraryForm';
-import { Flight, Hotel, TripData, Activity } from '@allorai/shared-types';
+import { Flight, Hotel, TripData } from '@allorai/shared-types';
 
 export enum ChatStepSequence {
   Budget,
@@ -21,8 +19,6 @@ export enum ChatStepSequence {
   Hotels,
   Summary,
   ActivityBudget,
-  Activities,
-  Itinerary,
 }
 
 export type ChatStepName = keyof typeof ChatStepSequence;
@@ -37,13 +33,9 @@ const createChatSteps = (
   tripData: TripData,
   flightOptions: Flight[],
   hotelOptions: Hotel[],
-  activityOptions: Activity[],
   currentStepIndex: number,
   updateFields: (fields: Partial<TripData>) => void,
   isChatLoading: boolean,
-  togglePin: (activityId: string) => void,
-  onReviewAndSave: () => void,
-  onModifyDetails: () => void,
 ): ChatStep[] => [
   {
     stepName: 'Budget',
@@ -112,25 +104,6 @@ const createChatSteps = (
         isChatLoading={isChatLoading}
       />
     ),
-  },
-  {
-    stepName: 'Activities',
-    form: (
-      <ActivitiesForm
-        {...tripData}
-        currentStepIndex={currentStepIndex}
-        activityOptions={activityOptions}
-        updateFields={updateFields}
-        isChatLoading={isChatLoading}
-        togglePin={togglePin}
-        onReviewAndSave={onReviewAndSave}
-        onModifyDetails={onModifyDetails}
-      />
-    ),
-  },
-  {
-    stepName: 'Itinerary',
-    form: <ItineraryForm {...tripData} activityOptions={activityOptions} />,
   },
 ];
 

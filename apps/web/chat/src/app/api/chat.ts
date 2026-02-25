@@ -25,10 +25,25 @@ export async function createChatSession(): Promise<CreateSessionResponse> {
 
 export async function sendChatMessage(data: ChatRequest): Promise<ChatResponse> {
   try {
+        if (process.env.NX_PUBLIC_USE_SAMPLE_DATA === 'all') {
+      return {
+        messages: [
+          ...data.messages,
+          {
+            type: 'ai',
+            content:
+              "I'm returning some hard-coded sample data for the request to save time in development.",
+          },
+        ],
+        data: responseDataForStep(data),
+        trip: data.trip,
+        debug: [],
+      };
+        }
     const response = await apiClient.post<ChatResponse>('/chat/message', data);
     return response.data;
   } catch (error) {
-    if (process.env.NX_PUBLIC_USE_SAMPLE_DATA_ON_CHAT_ERROR === 'true') {
+    if (process.env.NX_PUBLIC_USE_SAMPLE_DATA === 'on-error') {
       console.error('Unsuccessful call to api-gateway. Returning SAMPLE data instead:');
       console.error(error);
       return {
