@@ -7,6 +7,8 @@ import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 export type FlightsDepartingFormData = {
   departureFlight?: Flight;
   departureDate?: string;
+  destinationCoords?: { latitude: number; longitude: number };
+  hotelCoords?: { latitude: number; longitude: number };
 };
 
 type FlightsDepartingFormProps = FlightsDepartingFormData & {
@@ -29,7 +31,6 @@ const FlightsDepartingForm = ({
 
   return (
     <div className="w-full">
-
       <h2 className="text-xl font-bold mb-6">Departing Flights - {formatDate(departureDate)}</h2>
       <div className="w-full space-y-3 text-sm">
         <div className="flex flex-col gap-3">
@@ -44,6 +45,15 @@ const FlightsDepartingForm = ({
                 onChange={(e) => {
                   updateFields({
                     departureFlight: flight,
+                    destinationCoords: {
+                      latitude: flight.destinationAirport.latitude_deg,
+                      longitude: flight.destinationAirport.longitude_deg,
+                    },
+                    hotelCoords: {
+                      // set these as a fallback if hotel doesn't have coordinates provided
+                      latitude: flight.destinationAirport.latitude_deg,
+                      longitude: flight.destinationAirport.longitude_deg,
+                    },
                   });
                 }}
                 className="sr-only peer"
@@ -55,7 +65,7 @@ const FlightsDepartingForm = ({
                   !isActive && flightDepartingId !== flight.id && 'hidden',
                 )}
               >
-                <FlightChip flight={flight} direction='outbound' />
+                <FlightChip flight={flight} direction="outbound" />
               </div>
             </label>
           ))}

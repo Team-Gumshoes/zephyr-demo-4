@@ -25,8 +25,7 @@ const AirportInfoSchema = z
     iata_code: z.string(),
     latitude_deg: z.number(),
     longitude_deg: z.number(),
-  })
-  .optional();
+  });
 
 const FlightSchema = z.object({
   id: z.string(),

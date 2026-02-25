@@ -141,7 +141,7 @@ const ChatPage = () => {
     console.log('tripData', tripData);
     console.log(travelTips);
   }
-  
+  // console.log(tripData)
   return (
     <div className="max-w-7xl mx-auto">
       <div className={clsx('flex justify-between h-full flex-col')}>

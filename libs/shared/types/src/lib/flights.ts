@@ -31,6 +31,7 @@ export interface Flight {
   price: string;
   currency: string;
   legs: FlightLeg[];
+  destinationAirport: AirportInfo;
 }
 
 export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
@@ -64,6 +65,12 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
         ],
       },
     ],
+    destinationAirport: {
+      name: 'Los Angeles International Airport',
+      iata_code: 'LAX',
+      latitude_deg: 33.9425,
+      longitude_deg: -118.4081,
+    },
   },
   {
     id: '2',
@@ -107,6 +114,12 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
         ],
       },
     ],
+    destinationAirport: {
+      name: 'Los Angeles International Airport',
+      iata_code: 'LAX',
+      latitude_deg: 33.9425,
+      longitude_deg: -118.4081,
+    },
   },
   {
     id: '3',
@@ -138,6 +151,12 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
         ],
       },
     ],
+    destinationAirport: {
+      name: 'Los Angeles International Airport',
+      iata_code: 'LAX',
+      latitude_deg: 33.9425,
+      longitude_deg: -118.4081,
+    },
   },
 ];
 

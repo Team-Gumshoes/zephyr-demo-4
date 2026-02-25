@@ -9,6 +9,7 @@ export type HotelsFormData = {
   hotel?: Hotel;
   departureDate?: string;
   returnDate?: string;
+  hotelCoords?: { latitude: number; longitude: number };
 };
 
 type HotelsFormProps = HotelsFormData & {
@@ -46,7 +47,17 @@ const HotelsForm = ({
                 disabled={!isActive || isChatLoading}
                 value={hotel.id}
                 checked={hotelId === hotel.id}
-                onChange={(e) => updateFields({ hotelId: e.target.value, hotel: hotel })}
+                onChange={(e) => {
+                  updateFields({
+                    hotelId: e.target.value,
+                    hotel: hotel,
+                  });
+                  if (hotel.latitude && hotel.longitude) {
+                    updateFields({
+                      hotelCoords: { latitude: hotel.latitude, longitude: hotel.longitude },
+                    });
+                  }
+                }}
                 className="sr-only peer"
               />
               <div
