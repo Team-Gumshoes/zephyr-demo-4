@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-// import { ChatStepSequence } from '../../utils/createChatSteps';
+import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
@@ -25,6 +25,8 @@ type ActivityFormProps = ActivityFormData & {
   isChatLoading: boolean;
   currentStepIndex: number;
   togglePin: (activityId: string) => void;
+  onReviewAndSave: () => void;
+  onModifyDetails: () => void;
 };
 
 const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
@@ -34,11 +36,9 @@ const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
   'Selfie Spots': Camera,
 };
 
-const parseCost = (cost: string): number => Number(cost.replace(/[^0-9.]/g, '')) || 0;
-
 const ActivitiesForm = ({
   activityOptions,
-  // currentStepIndex,
+  currentStepIndex,
   departureDate,
   returnDate,
   departureFlight,
@@ -47,14 +47,20 @@ const ActivitiesForm = ({
   updateFields,
   isChatLoading,
   togglePin,
+  onReviewAndSave,
+  onModifyDetails,
 }: ActivityFormProps) => {
   const [selectedFilter, setSelectedFilter] = useState<ActivityFilterType | null>('Nature');
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [visibleCount, setVisibleCount] = useState(4);
+
+  const CARDS_PER_PAGE = 4;
+  const isPinLocked = currentStepIndex > ChatStepSequence.Activities;
 
   const budgetItems = useMemo(() => {
     const attractionsTotal = activityOptions
       .filter((a) => a.pinned)
-      .reduce((sum, a) => sum + parseCost(a.estimatedCost), 0);
+      .reduce((sum, a) => sum + (Number(a.estimatedCost) || 0), 0);
     return [
       {
         label: 'Flights',
@@ -112,7 +118,10 @@ const ActivitiesForm = ({
                 <button
                   type="button"
                   key={filter}
-                  onClick={() => setSelectedFilter(filter)}
+                  onClick={() => {
+                    setSelectedFilter(filter);
+                    setVisibleCount(CARDS_PER_PAGE);
+                  }}
                   className={clsx(
                     'flex min-h-[32px] items-center gap-2 rounded-lg px-2.5 py-[5.5px] transition-colors',
                     isSelected ? 'bg-[#fbfbfe]' : 'hover:bg-[#75cfcc]/80',
@@ -138,30 +147,34 @@ const ActivitiesForm = ({
 
         {/* AI Results - Activity Cards */}
         <div className="flex flex-col items-end gap-4">
-          {filteredActivities.map((activity) => (
+          {filteredActivities.slice(0, visibleCount).map((activity) => (
             <ActivityCard
               key={activity.id}
               name={activity.name}
               description={activity.description}
+              location={activity.location}
               estimatedCost={activity.estimatedCost}
               distance={activity.distance}
-              imageUrl={activity.imageUrl?.[0]}
+              imageUrl={activity.imageUrl}
               pinned={activity.pinned}
               onPin={() => togglePin(activity.id)}
+              pinDisabled={isPinLocked}
               onViewDetails={() => setSelectedActivity(activity)}
               className="w-[505px]"
             />
           ))}
 
           {/* Load More Button */}
-          <Button
-            variant="primary"
-            size="large"
-            onClick={() => console.log('Load more')}
-            className="h-10 w-full"
-          >
-            Load More
-          </Button>
+          {visibleCount < filteredActivities.length && (
+            <Button
+              variant="primary"
+              size="large"
+              onClick={() => setVisibleCount((prev) => prev + CARDS_PER_PAGE)}
+              className="h-10 w-full"
+            >
+              Load More
+            </Button>
+          )}
         </div>
       </div>
 
@@ -176,7 +189,7 @@ const ActivitiesForm = ({
             <Button
               variant="primary"
               size="large"
-              onClick={() => console.log('Save plan')}
+              onClick={onReviewAndSave}
               className="h-10 w-full"
             >
               Review & Save
@@ -184,7 +197,7 @@ const ActivitiesForm = ({
             <Button
               variant="outline"
               size="large"
-              onClick={() => console.log('New plan')}
+              onClick={onModifyDetails}
               className="h-10 w-full"
             >
               New Trip

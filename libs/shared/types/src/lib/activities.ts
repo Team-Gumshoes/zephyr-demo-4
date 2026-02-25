@@ -6,11 +6,14 @@ export type ActivityFilterType = (typeof ActivityFilterTypes)[number];
 export type Activity = {
   id: string;
   name: string;
+  location: string;
   description: string;
-  estimatedCost: string;
-  distance: string;
+  website: string;
   category: ActivityFilterType;
-  imageUrl?: string[];
+  estimatedCost?: string;
+  distance?: string;
+  imageUrl?: string;
+  imageUrls?: string[];
   pinned?: boolean;
 };
 
@@ -21,11 +24,13 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     name: 'Hollywood Bowl Concert',
     description:
       'Catch a live performance at this legendary outdoor amphitheater nestled in the Hollywood Hills. Bring a picnic and enjoy world-class music under the stars, from classical orchestras to contemporary headliners.',
-    estimatedCost: '$60',
+    estimatedCost: '60',
     distance: '6mi',
     category: 'Activities',
+    location: 'Hollywood',
+    website: 'https://www.allorai.app',
     pinned: false,
-    imageUrl: [
+    imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert2.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/concert3.jpg',
@@ -36,11 +41,13 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     name: 'The Broad Museum',
     description:
       'A contemporary art museum housing nearly 2,000 works including pieces by Warhol, Basquiat, and Kusama. The striking honeycomb architecture is an attraction in itself. General admission is free with advance reservation.',
-    estimatedCost: '$0',
+    estimatedCost: '0',
     distance: '1.5mi',
     category: 'Activities',
+    location: 'Hollywood',
+    website: 'https://www.allorai.app',
     pinned: false,
-    imageUrl: [
+    imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum2.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/museum3.jpg',
@@ -51,11 +58,13 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     name: 'Pacific Park at Santa Monica Pier',
     description:
       'Ride the iconic solar-powered Ferris wheel, brave the roller coaster over the ocean, and play classic carnival games on the pier. The amusement park lights up spectacularly at night with views stretching down the coastline.',
-    estimatedCost: '$35',
+    estimatedCost: '35',
     distance: '15mi',
     category: 'Activities',
+    location: 'Hollywood',
+    website: 'https://www.allorai.app',
     pinned: false,
-    imageUrl: [
+    imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park2.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/amusement_park3.jpg',
@@ -66,11 +75,13 @@ export const SAMPLE_ACTIVITIES: Activity[] = [
     name: 'Highland Park Bowl',
     description:
       'Bowl in style at this beautifully restored 1927 bowling alley featuring original hand-painted murals, craft cocktails, and wood-fired Italian food. A unique night out that blends vintage LA charm with modern entertainment.',
-    estimatedCost: '$25',
+    estimatedCost: '25',
     distance: '7mi',
     category: 'Activities',
+    location: 'Hollywood',
+    website: 'https://www.allorai.app',
     pinned: false,
-    imageUrl: [
+    imageUrls: [
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling1.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling2.jpg',
       'https://qgqmmzslzlhhledqpmzw.supabase.co/storage/v1/object/public/activity-images/activities/bowling3.jpg',

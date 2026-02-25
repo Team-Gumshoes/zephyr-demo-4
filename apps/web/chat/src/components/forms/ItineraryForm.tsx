@@ -36,7 +36,7 @@ const calcFlightTotal = (departureFlight?: Flight, returnFlight?: Flight): numbe
 const calcActivitiesTotal = (activities: Activity[]): number => {
   return activities
     .filter((a) => a.pinned)
-    .reduce((sum, a) => sum + (Number(a.estimatedCost.replace(/[^0-9.]/g, '')) || 0), 0);
+    .reduce((sum, a) => sum + (Number(a.estimatedCost) || 0), 0);
 };
 
 const ItineraryForm = ({
@@ -77,14 +77,14 @@ const ItineraryForm = ({
 
         <div className="flex flex-col gap-4">
           {departureFlight ? (
-            <FlightChip flight={departureFlight} direction='outbound'/>
+            <FlightChip flight={departureFlight} direction="outbound" />
           ) : (
             <div className="flex items-center justify-center rounded-[20px] border border-black bg-[rgba(251,251,254,0.75)] p-6 text-sm text-black/40">
               No departing flight selected
             </div>
           )}
           {returnFlight ? (
-            <FlightChip flight={returnFlight} direction='return' />
+            <FlightChip flight={returnFlight} direction="return" />
           ) : (
             <div className="flex items-center justify-center rounded-[20px] border border-black bg-[rgba(251,251,254,0.75)] p-6 text-sm text-black/40">
               No returning flight selected
@@ -139,7 +139,8 @@ const ItineraryForm = ({
                   description={activity.description}
                   estimatedCost={activity.estimatedCost}
                   distance={activity.distance}
-                  imageUrl={activity.imageUrl?.[0]}
+                  location={activity.location}
+                  imageUrl={activity.imageUrl}
                   pinned={activity.pinned}
                   onViewDetails={() => setSelectedActivity(activity)}
                   className="w-full"
