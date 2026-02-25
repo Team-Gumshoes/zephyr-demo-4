@@ -5,10 +5,13 @@ import { Button } from './Button';
 type ActivityCardProps = {
   name: string;
   description: string;
-  estimatedCost: string;
-  distance: string;
+  location: string;
+  // website: string;
+  estimatedCost?: string;
+  distance?: string;
   imageUrl?: string;
   pinned?: boolean;
+  pinDisabled?: boolean;
   onPin?: () => void;
   onViewDetails?: () => void;
   className?: string;
@@ -17,10 +20,12 @@ type ActivityCardProps = {
 export const ActivityCard = ({
   name: title,
   description,
+  location,
   estimatedCost,
   distance,
   imageUrl,
   pinned = false,
+  pinDisabled = false,
   onPin,
   onViewDetails,
   className = '',
@@ -41,8 +46,9 @@ export const ActivityCard = ({
               {title}
             </h3>
             <div className="flex gap-6 text-xs font-semibold leading-4 tracking-wide text-black">
-              <span>Est. Cost: {estimatedCost}</span>
-              <span>Distance from Lodge: {distance}</span>
+              <span>Location: {location}</span>
+              {/* <span>Est. Cost: {estimatedCost}</span> */}
+              {/* <span>Distance from Lodge: {distance}</span> */}
             </div>
           </div>
 
@@ -66,8 +72,10 @@ export const ActivityCard = ({
           <button
             type="button"
             onClick={onPin}
+            disabled={pinDisabled}
             className={clsx(
-              'cursor-pointer p-0 border-none bg-transparent',
+              'p-0 border-none bg-transparent',
+              pinDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer',
               pinned ? 'text-[#002E9A]' : 'text-black',
             )}
           >

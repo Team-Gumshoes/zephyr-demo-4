@@ -46,10 +46,7 @@ export const activityBudgetStepHandler: StepHandler = async ({
         if (!parsed.success) {
           console.error('Invalid activity response data:', parsed.error.issues);
         } else if (parsed.data.options) {
-          const options = parsed.data.options.map((o) => ({
-            ...o,
-            category: 'Activities' as const,
-          }));
+          const options = parsed.data.options;
           setActivityOptions((prev) => [...prev, ...options]);
         }
         return response;
@@ -60,7 +57,7 @@ export const activityBudgetStepHandler: StepHandler = async ({
           console.error('Invalid natural attraction response data:', parsed.error.issues);
           console.log(parsed);
         } else if (parsed.data.options) {
-          const options = parsed.data.options.map((o) => ({ ...o, category: 'Nature' as const }));
+          const options = parsed.data.options;
           setActivityOptions((prev) => [...prev, ...options]);
         }
       }),
@@ -69,7 +66,7 @@ export const activityBudgetStepHandler: StepHandler = async ({
         if (!parsed.success) {
           console.error('Invalid eatery response data:', parsed.error.issues);
         } else if (parsed.data.options) {
-          const options = parsed.data.options.map((o) => ({ ...o, category: 'Food' as const }));
+          const options = parsed.data.options;
           setActivityOptions((prev) => [...prev, ...options]);
         }
       }),
@@ -78,10 +75,7 @@ export const activityBudgetStepHandler: StepHandler = async ({
         if (!parsed.success) {
           console.error('Invalid selfie spot response data:', parsed.error.issues);
         } else if (parsed.data.options) {
-          const options = parsed.data.options.map((o) => ({
-            ...o,
-            category: 'Selfie Spots' as const,
-          }));
+          const options = parsed.data.options;
           setActivityOptions((prev) => [...prev, ...options]);
         }
       }),

@@ -2,7 +2,7 @@
 import { Button, Dialogue, ActivityCard, BudgetOverview } from '@allorai/shared-ui';
 import { ModifyDetails } from '../components/modals/ModifyDetails';
 import clsx from 'clsx';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
@@ -19,7 +19,7 @@ import {
   Message,
   TravelTip,
 } from '@allorai/shared-types';
-import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
+import { ChatStep, ChatStepSequence, createChatSteps } from './chatSteps/helpers/createChatSteps';
 
 // #3358ae dark
 // #99abd7 light
@@ -61,6 +61,9 @@ const ChatPage = () => {
     );
   }, []);
 
+  const onSubmitRef = useRef<() => void>(() => {});
+  const stableOnSubmit = useCallback(() => onSubmitRef.current(), []);
+
   const chatSteps: ChatStep[] = useMemo(
     () =>
       createChatSteps(
@@ -72,6 +75,8 @@ const ChatPage = () => {
         updateFields,
         isChatLoading,
         togglePin,
+        stableOnSubmit,
+        () => setIsDialogOpen(true),
       ),
     [
       tripData,
@@ -82,6 +87,7 @@ const ChatPage = () => {
       currentStepIndex,
       isChatLoading,
       togglePin,
+      stableOnSubmit,
     ],
   );
 
@@ -133,6 +139,8 @@ const ChatPage = () => {
     }
   };
 
+  onSubmitRef.current = onSubmit;
+
   if (!startingPrefs) {
     return <div>Something went wrong. Query string not parsed.</div>;
   }
@@ -149,22 +157,20 @@ const ChatPage = () => {
         <div className="flex justify-end gap-2">
           <div className={`flex flex-col items-end mr-14 mb-6 justify-end`}>
             <div className="flex gap-2">
-              {!isFirstStep && !isLastStep && (
-                <>
-                  <Button onClick={() => setIsDialogOpen(true)} variant="secondary">
-                    Modify Details
-                  </Button>
-                  <Dialogue
-                    isOpen={isDialogOpen}
-                    onClose={() => setIsDialogOpen(false)}
-                    title="How would you like to modify your trip details?"
-                    className="max-w-md"
-                  >
-                    <ModifyDetails />
-                  </Dialogue>
-                </>
+              {!isFirstStep && currentStepIndex < ChatStepSequence.Activities && (
+                <Button onClick={() => setIsDialogOpen(true)} variant="secondary">
+                  Modify Details
+                </Button>
               )}
-              {!isLastStep && (
+              <Dialogue
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                title="How would you like to modify your trip details?"
+                className="max-w-md"
+              >
+                <ModifyDetails />
+              </Dialogue>
+              {currentStepIndex < ChatStepSequence.Activities && (
                 <Button onClick={onSubmit}>
                   {isChatLoading ? (
                     <ChatTypingIndicator content="Thinking" color="white" />

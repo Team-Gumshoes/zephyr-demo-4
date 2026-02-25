@@ -42,6 +42,8 @@ const createChatSteps = (
   updateFields: (fields: Partial<TripData>) => void,
   isChatLoading: boolean,
   togglePin: (activityId: string) => void,
+  onReviewAndSave: () => void,
+  onModifyDetails: () => void,
 ): ChatStep[] => [
   {
     stepName: 'Budget',
@@ -121,6 +123,8 @@ const createChatSteps = (
         updateFields={updateFields}
         isChatLoading={isChatLoading}
         togglePin={togglePin}
+        onReviewAndSave={onReviewAndSave}
+        onModifyDetails={onModifyDetails}
       />
     ),
   },
