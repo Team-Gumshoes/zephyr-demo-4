@@ -12,7 +12,7 @@ const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
   const totalCost = hotel?.price && nights && nights !== null ? hotel.price * nights : undefined;
 
   return (
-    <div className="bg-[rgba(251,251,254,0.75)] border border-black flex gap-[30px] items-center p-6 rounded-[20px] w-full">
+    <div className="bg-[rgba(251,251,254,0.75)] border border-black flex gap-[30px] items-center p-6 rounded-2xl">
       {/* Hotel Price */}
       <div className="flex flex-col items-start min-w-[105px]">
         <span className="font-semibold text-black text-base leading-6">
@@ -22,13 +22,13 @@ const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
       </div>
 
       {/* Hotel Name and Location */}
-      <div className="flex flex-col items-start flex-1">
+      <div className="flex flex-col items-start max-w-[350px]">
         <span className="font-semibold text-black text-base leading-6">{hotel.name}</span>
         <span className="font-normal text-black text-base leading-6">{hotel.location}</span>
       </div>
 
       {/* Ratings */}
-      <div className="flex flex-col items-start shrink-0">
+      <div className="flex flex-col items-start">
         <span className="font-semibold text-black text-base leading-6">
           {hotel.num_of_stars} Stars
         </span>

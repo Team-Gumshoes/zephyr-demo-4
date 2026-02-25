@@ -1,5 +1,6 @@
 import { Activity } from './activities';
 import { EateryResponseData } from './response-data';
+
 export interface Eatery extends Activity {
   // Any additional fields if necessary
   cuisine?: string;

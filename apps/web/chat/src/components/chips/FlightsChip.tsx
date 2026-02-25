@@ -1,16 +1,3 @@
-// OLD export type Flight = {
-//   id: string;
-//   cost: string;
-//   airlineLogo?: string;
-//   airline: string;
-//   departureTime: string;
-//   arrivalTime: string;
-//   duration: string;
-//   departureAirport: string;
-//   arrivalAirport: string;
-//   date?: string;
-// };
-
 import { Flight, FlightSegment } from '@allorai/shared-types';
 import { formatTime } from '../../utils/formatData';
 
@@ -23,7 +10,6 @@ const FlightChip = ({ flight, direction }: { flight: Flight, direction: 'outboun
 
   return (
     <div className="bg-[rgba(251,251,254,0.75)] border border-black flex items-center justify-between p-6 rounded-[20px] w-full">
-      {flight.id}
       {/* Cost */}
       <div className="font-semibold text-[#050315] text-base whitespace-nowrap mr-4">
         ${flight.price.toLocaleString()} {flight.currency}
