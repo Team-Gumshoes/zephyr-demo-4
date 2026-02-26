@@ -34,9 +34,13 @@ const ChatPage = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  // Seed the store with URL params once on mount
+  const isProduction = process.env['NODE_ENV'] === 'production';
+
   useEffect(() => {
-    updateTripData(startingPrefs || fallbackStartingPrefs);
+    const prefs = startingPrefs ?? (isProduction ? null : fallbackStartingPrefs);
+    if (prefs) {
+      updateTripData(prefs);
+    }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const chatSteps: ChatStep[] = useMemo(
@@ -96,8 +100,18 @@ const ChatPage = () => {
     }
   };
 
-  if (!startingPrefs) {
-    return <div>Something went wrong. Query string not parsed.</div>;
+  if (!startingPrefs && isProduction) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">Something went wrong</h2>
+          <p className="text-gray-500 mb-6">
+            We weren&apos;t able to load your trip details. Please go back and try again.
+          </p>
+          <Button onClick={() => window.history.back()}>Start Over</Button>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -16,6 +16,8 @@ export type ItineraryFormData = {
 
 type ItineraryFormProps = ItineraryFormData & {
   activityOptions: Activity[];
+  onSaveTrip: () => void;
+  onNewTrip: () => void;
 };
 
 const calcFlightTotal = (departureFlight?: Flight, returnFlight?: Flight): number => {
@@ -46,6 +48,8 @@ const ItineraryForm = ({
   returnFlight,
   hotel,
   activityOptions,
+  onSaveTrip,
+  onNewTrip,
 }: ItineraryFormProps) => {
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
@@ -58,7 +62,7 @@ const ItineraryForm = ({
   const activitiesTotal = calcActivitiesTotal(activityOptions);
 
   return (
-    <div className="flex w-full flex-col gap-7 border-t-2 border-black pt-6">
+    <div className="flex w-full flex-col gap-7 pt-6">
       {/* Page Title */}
       <h1 className="font-['Montserrat',sans-serif] text-[48px] font-semibold leading-[48px] tracking-[-1.5px] text-black">
         Review Trip
@@ -160,7 +164,7 @@ const ItineraryForm = ({
         <Button
           variant="primary"
           size="large"
-          onClick={() => console.log('Save plan')}
+          onClick={onSaveTrip}
           className="h-10 w-full"
         >
           Save Trip
@@ -168,7 +172,7 @@ const ItineraryForm = ({
         <Button
           variant="outline"
           size="large"
-          onClick={() => console.log('New plan')}
+          onClick={onNewTrip}
           className="h-10 w-full"
         >
           New Trip
