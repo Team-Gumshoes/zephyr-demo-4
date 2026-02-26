@@ -3,4 +3,5 @@ export interface TravelTip {
   transportTips: string;
   whenToVisitTips: string;
   safetyTips: string;
+  rawContent?: string;
 }

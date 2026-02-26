@@ -4,13 +4,14 @@ import { useTripStore } from '../store/useTripStore';
 
 const ActivitiesPage = () => {
   const navigate = useNavigate();
-  const { activityOptions, tripData, togglePin } = useTripStore();
+  const { activityOptions, travelTips, tripData, togglePin } = useTripStore();
 
   return (
     <div className="max-w-7xl mx-auto">
       <ActivitiesForm
         {...tripData}
         activityOptions={activityOptions}
+        travelTips={travelTips}
         togglePin={togglePin}
         onReviewAndSave={() => navigate('/chat/itineraries')}
         onModifyDetails={() => navigate('/landing')}

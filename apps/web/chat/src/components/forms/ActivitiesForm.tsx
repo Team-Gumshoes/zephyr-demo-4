@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
-import { Activity, Flight, Hotel } from '@allorai/shared-types';
+import { Activity, Flight, Hotel, TravelTip } from '@allorai/shared-types';
 import { calculateNights } from '../../utils/formatData';
 import { Dialogue } from '@allorai/shared-ui';
 import { ViewDetails } from '../modals/ViewDetails';
@@ -20,6 +20,7 @@ export type ActivityFormData = {
 
 type ActivityFormProps = ActivityFormData & {
   activityOptions: Activity[];
+  travelTips: TravelTip[];
   togglePin: (activityId: string) => void;
   onReviewAndSave: () => void;
   onModifyDetails: () => void;
@@ -34,6 +35,7 @@ const FILTER_ICONS: Record<ActivityFilterType, React.ElementType> = {
 
 const ActivitiesForm = ({
   activityOptions,
+  travelTips,
   departureDate,
   returnDate,
   departureFlight,
@@ -199,38 +201,47 @@ const ActivitiesForm = ({
         </div>
 
         {/* Travel Tips Card */}
-        <div className="flex flex-col gap-3.5 rounded-[10px] border-2 border-black bg-[#fbfbfe] p-4 shadow-md">
-          {/* Header */}
-          <div className="flex items-center gap-2">
-            <div className="flex size-[30px] items-center justify-center rounded-[10px] bg-[#75cfcc] px-1.5 py-0.5">
-              <Lightbulb size={18} className="text-black" />
+        {travelTips.length > 0 && (
+          <div className="flex flex-col gap-3.5 rounded-[10px] border-2 border-black bg-[#fbfbfe] p-4 shadow-md">
+            {/* Header */}
+            <div className="flex items-center gap-2">
+              <div className="flex size-[30px] items-center justify-center rounded-[10px] bg-[#75cfcc] px-1.5 py-0.5">
+                <Lightbulb size={18} className="text-black" />
+              </div>
+              <h3 className="flex-1 text-base font-semibold leading-6 text-black">Travel Tips</h3>
             </div>
-            <h3 className="flex-1 text-base font-semibold leading-6 text-black">Travel Tips</h3>
-          </div>
 
-          {/* Content */}
-          <div className="text-xs leading-4 tracking-wide text-black">
-            <p className="mb-3">
-              <span className="font-semibold">Transportation:</span> The Little Tokyo/Arts District
-              Station (A and E Lines) is the most convenient way to arrive, dropping you off
-              directly in the heart of the neighborhood. If you must drive, the parking structures
-              at Japanese Village Plaza and Weller Court are reliable, though they can be expensive
-              without validation.
-            </p>
-            <p className="mb-3">
-              <span className="font-semibold">When to Visit:</span> Weekends are bustling and offer
-              a lively atmosphere, but if you want to avoid hour-long waits for ramen and udon, aim
-              for a weekday lunch. August is particularly special due to the Nisei Week Japanese
-              Festival, which features parades, martial arts, and cultural exhibits.
-            </p>
-            <p>
-              <span className="font-semibold">Safety and Proximity:</span> Little Tokyo is adjacent
-              to Skid Row. While the main shopping and dining areas are generally safe and
-              well-trafficked, be mindful of your surroundings, especially if walking south or east
-              after dark.
-            </p>
+            {/* Content */}
+            <div className="text-xs leading-4 tracking-wide text-black">
+              {travelTips[0].transportTips ||
+              travelTips[0].whenToVisitTips ||
+              travelTips[0].safetyTips ? (
+                <>
+                  {travelTips[0].transportTips && (
+                    <p className="mb-3">
+                      <span className="font-semibold">Transportation:</span>{' '}
+                      {travelTips[0].transportTips}
+                    </p>
+                  )}
+                  {travelTips[0].whenToVisitTips && (
+                    <p className="mb-3">
+                      <span className="font-semibold">When to Visit:</span>{' '}
+                      {travelTips[0].whenToVisitTips}
+                    </p>
+                  )}
+                  {travelTips[0].safetyTips && (
+                    <p>
+                      <span className="font-semibold">Safety and Proximity:</span>{' '}
+                      {travelTips[0].safetyTips}
+                    </p>
+                  )}
+                </>
+              ) : travelTips[0].rawContent ? (
+                <p>{travelTips[0].rawContent}</p>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {selectedActivity && (
         <Dialogue
