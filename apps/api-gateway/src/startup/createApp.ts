@@ -5,6 +5,7 @@ import { errorHandler } from '../middleware/error.middleware';
 import { loggerMiddleware } from '../middleware/logger.middleware';
 import chatRouter from '../routes/chat.routes';
 import { requireSupabase } from '../middleware/supabase.middleware';
+import tipsRouter from '../routes/tips.routes';
 
 const createApp = () => {
   const app: Express = express(); // Express 'app' instance
@@ -24,6 +25,7 @@ const createApp = () => {
       description: 'Gateway for multi-agent travel orchestration',
       endpoints: {
         chat: '/api/chat',
+        tips: '/api/tips',
       },
     });
   });
@@ -38,6 +40,7 @@ const createApp = () => {
   });
 
   app.use(chatRouter);
+  app.use(tipsRouter);
   // Add additional routers here as needed
 
   // Error handling middleware (must be last)

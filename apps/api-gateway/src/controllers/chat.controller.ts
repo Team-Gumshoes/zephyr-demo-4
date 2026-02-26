@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
 import { chatAgent } from '../services/agents/chat-agent.service';
-import { saveChatMessage, createChatSession } from '../services/chat.service';
+import { saveChatMessage, createChatSession } from '../services/db/chat.service';
 import type { ChatRequest, ChatResponse } from '@allorai/shared-types';
 import logger from '../utils/logger';
 

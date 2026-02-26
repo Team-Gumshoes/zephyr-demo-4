@@ -5,7 +5,7 @@ import {
   Flight,
   Hotel,
   Activity,
-  TravelTip,
+  TravelTips,
 } from '@allorai/shared-types';
 
 interface TripStore {
@@ -13,13 +13,13 @@ interface TripStore {
   flightOptions: Flight[];
   hotelOptions: Hotel[];
   activityOptions: Activity[];
-  travelTips: TravelTip[];
+  travelTips: TravelTips[];
 
   updateTripData: (fields: Partial<TripData>) => void;
   setFlightOptions: (updater: Flight[] | ((prev: Flight[]) => Flight[])) => void;
   setHotelOptions: (updater: Hotel[] | ((prev: Hotel[]) => Hotel[])) => void;
   setActivityOptions: (updater: Activity[] | ((prev: Activity[]) => Activity[])) => void;
-  setTravelTips: (updater: TravelTip[] | ((prev: TravelTip[]) => TravelTip[])) => void;
+  setTravelTips: (updater: TravelTips[] | ((prev: TravelTips[]) => TravelTips[])) => void;
   togglePin: (activityId: string) => void;
 }
 

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import ItineraryForm from '../components/forms/ItineraryForm';
-import { useTripStore } from '../store/useTripStore';
+import { useTripStore } from '../../store/useTripStore';
+import ItineraryForm from '../../components/forms/ItineraryForm';
 
 const ItinerariesPage = () => {
   const navigate = useNavigate();

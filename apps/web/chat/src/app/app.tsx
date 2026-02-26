@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import ChatPage from './ChatPage';
-import ActivitiesPage from './ActivitiesPage';
-import ItinerariesPage from './ItinerariesPage';
+import ChatPage from './pages/ChatPage';
+import ActivitiesPage from './pages/ActivitiesPage';
+import ItinerariesPage from './pages/ItinerariesPage';
 
 // #3358ae dark
 // #99abd7 light

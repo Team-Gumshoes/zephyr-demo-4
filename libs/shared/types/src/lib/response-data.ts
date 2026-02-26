@@ -5,6 +5,7 @@ import type { Eatery } from './eateries';
 import type { SelfieSpot } from './selfie-spots';
 import type { Activity } from './activities';
 import { NaturalAttraction } from './natural-attractions';
+import { TravelTips } from './travel-tips';
 
 export interface ArithmeticResponseData {
   type: 'arithmetic';
@@ -48,6 +49,11 @@ export interface ActivitiesResponseData {
   options?: Activity[];
 }
 
+export interface TipsResponseData {
+  type: "tips";
+  options?: TravelTips[];
+}
+
 export type ResponseData =
   | ArithmeticResponseData
   | FlightResponseData
@@ -55,4 +61,5 @@ export type ResponseData =
   | EateryResponseData
   | ActivitiesResponseData
   | SelfieResponseData
+  | TipsResponseData
   | NaturalAttractionResponseData;

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import ActivitiesForm from '../components/forms/ActivitiesForm';
-import { useTripStore } from '../store/useTripStore';
+import { useTripStore } from '../../store/useTripStore';
+import ActivitiesForm from '../../components/forms/ActivitiesForm';
 
 const ActivitiesPage = () => {
   const navigate = useNavigate();

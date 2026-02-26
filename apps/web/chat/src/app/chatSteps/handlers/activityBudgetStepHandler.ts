@@ -5,6 +5,8 @@ import { SelfieSpotResponseDataSchema } from '../schemas/selfieSpotResponseSchem
 import { NaturalAttractionResponseDataSchema } from '../schemas/naturalAttractionResponseSchema';
 import { EateryResponseDataSchema } from '../schemas/eateryResponseSchema';
 import { createChatRequest } from '../helpers/chatRequest';
+import { sendTipsRequestMessage } from '../../api/tips';
+import { TravelTipResponseDataSchema } from '../schemas/travelTipResponseSchema';
 
 export const activityBudgetStepHandler: StepHandler = async ({
   tripData,
@@ -81,19 +83,13 @@ export const activityBudgetStepHandler: StepHandler = async ({
           setActivityOptions((prev) => [...prev, ...options]);
         }
       }),
-      sendChatMessage(travelTipsRequest).then((response) => {
-        // The agent returns travel tips as plain text in the AI message, not as structured data
-        const aiMessage = response.messages?.find((m) => m.type === 'ai');
-        if (aiMessage?.content) {
-          setTravelTips([
-            {
-              id: 'travel-tips',
-              transportTips: '',
-              whenToVisitTips: '',
-              safetyTips: '',
-              rawContent: aiMessage.content,
-            },
-          ]);
+      sendTipsRequestMessage(travelTipsRequest).then((response) => {
+        const parsed = TravelTipResponseDataSchema.safeParse(response.data);
+        if (!parsed.success) {
+          console.error('Invalid travel tips response data:', parsed.error.issues);
+        } else if (parsed.data.options) {
+          const options = parsed.data.options;
+          setTravelTips((prev) => [...prev, ...options]);
         }
       }),
     ]);

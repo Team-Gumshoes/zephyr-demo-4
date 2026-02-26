@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Flight, Hotel, TripData, Activity, Message, TravelTip } from '@allorai/shared-types';
+import { Flight, Hotel, TripData, Activity, Message, TravelTips } from '@allorai/shared-types';
 
 // This is what the handler might need to be passed to it to get its job done
 export interface StepHandlerContext {
@@ -9,7 +9,7 @@ export interface StepHandlerContext {
   setFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;
   setActivityOptions: Dispatch<SetStateAction<Activity[]>>;
-  setTravelTips: Dispatch<SetStateAction<TravelTip[]>>;
+  setTravelTips: Dispatch<SetStateAction<TravelTips[]>>;
 }
 
 // This is the shape of the coming back from the handler to app.tsx

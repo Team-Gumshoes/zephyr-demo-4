@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { BudgetOverview, ActivityCard, Button } from '@allorai/shared-ui';
 import { Lightbulb, Trees, UtensilsCrossed, Ticket, Camera } from 'lucide-react';
-import { Activity, Flight, Hotel, TravelTip } from '@allorai/shared-types';
+import { Activity, Flight, Hotel, TravelTips } from '@allorai/shared-types';
 import { calculateNights } from '../../utils/formatData';
 import { Dialogue } from '@allorai/shared-ui';
 import { ViewDetails } from '../modals/ViewDetails';
@@ -20,7 +20,7 @@ export type ActivityFormData = {
 
 type ActivityFormProps = ActivityFormData & {
   activityOptions: Activity[];
-  travelTips: TravelTip[];
+  travelTips: TravelTips[];
   togglePin: (activityId: string) => void;
   onReviewAndSave: () => void;
   onModifyDetails: () => void;
@@ -213,9 +213,9 @@ const ActivitiesForm = ({
 
             {/* Content */}
             <div className="text-xs leading-4 tracking-wide text-black">
-              {travelTips[0].transportTips ||
-              travelTips[0].whenToVisitTips ||
-              travelTips[0].safetyTips ? (
+              {(travelTips[0].transportTips ||
+                travelTips[0].whenToVisitTips ||
+                travelTips[0].safetyTips) && (
                 <>
                   {travelTips[0].transportTips && (
                     <p className="mb-3">
@@ -236,9 +236,7 @@ const ActivitiesForm = ({
                     </p>
                   )}
                 </>
-              ) : travelTips[0].rawContent ? (
-                <p>{travelTips[0].rawContent}</p>
-              ) : null}
+              )}
             </div>
           </div>
         )}

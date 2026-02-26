@@ -8,7 +8,6 @@ const TravelTipSchema = z.object({
 });
 
 export const TravelTipResponseDataSchema = z.object({
-  type: z.literal('travelTips'),
-  summary: z.string().optional(),
+  type: z.literal('tips'),
   options: z.array(TravelTipSchema).optional(),
 });

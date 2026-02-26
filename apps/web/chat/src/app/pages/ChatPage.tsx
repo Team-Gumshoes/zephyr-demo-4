@@ -1,16 +1,16 @@
 import { Button, Dialogue } from '@allorai/shared-ui';
-import { ModifyDetails } from '../components/modals/ModifyDetails';
+import { ModifyDetails } from '../../components/modals/ModifyDetails';
 import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import ChatMessageList from '../components/ChatMessageList';
-import ChatTypingIndicator from '../components/ChatTypingIndicator';
-import useMultiStepChat from '../hooks/useMultiStepChat';
-import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripRequest';
-import { stepHandlers } from './chatSteps/handlers';
+import ChatMessageList from '../../components/ChatMessageList';
+import ChatTypingIndicator from '../../components/ChatTypingIndicator';
+import useMultiStepChat from '../../hooks/useMultiStepChat';
+import parseStartingPrefs, { fallbackStartingPrefs } from '../../utils/parseTripRequest';
+import { stepHandlers } from '../chatSteps/handlers';
 import { StartingPrefs, Message } from '@allorai/shared-types';
-import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
-import { useTripStore } from '../store/useTripStore';
+import { ChatStep, createChatSteps } from '../chatSteps/helpers/createChatSteps';
+import { useTripStore } from '../../store/useTripStore';
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
