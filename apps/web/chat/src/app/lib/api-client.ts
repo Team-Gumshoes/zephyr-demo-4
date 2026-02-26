@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NX_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+const isProduction = process.env['NODE_ENV'] === 'production';
+
+const API_BASE_URL = isProduction
+  ? process.env.NX_PUBLIC_API_BASE_URL_PRODUCTION
+  : process.env.NX_PUBLIC_API_BASE_URL_DEVELOPMENT || 'http://localhost:3001';
 
 export const apiClient = axios.create({
   baseURL: `${API_BASE_URL}/api`,

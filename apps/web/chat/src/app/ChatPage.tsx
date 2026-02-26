@@ -1,60 +1,47 @@
 import { Button, Dialogue } from '@allorai/shared-ui';
 import { ModifyDetails } from '../components/modals/ModifyDetails';
 import clsx from 'clsx';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import ChatMessageList from '../components/ChatMessageList';
 import ChatTypingIndicator from '../components/ChatTypingIndicator';
 import useMultiStepChat from '../hooks/useMultiStepChat';
 import parseStartingPrefs, { fallbackStartingPrefs } from '../utils/parseTripRequest';
 import { stepHandlers } from './chatSteps/handlers';
-import {
-  createEmptyTrip,
-  Flight,
-  Hotel,
-  StartingPrefs,
-  TripData,
-  Activity,
-  Message,
-  TravelTip,
-} from '@allorai/shared-types';
+import { StartingPrefs, Message } from '@allorai/shared-types';
 import { ChatStep, createChatSteps } from './chatSteps/helpers/createChatSteps';
-
-// #3358ae dark
-// #99abd7 light
-// #97dbd9 teal
-
-const initialTripData: TripData = {
-  ...createEmptyTrip(),
-};
+import { useTripStore } from '../store/useTripStore';
 
 const ChatPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const startingPrefs: StartingPrefs | null = parseStartingPrefs(searchParams);
 
-  const [tripData, setTripData] = useState<TripData>({
-    ...initialTripData,
-    ...(startingPrefs || fallbackStartingPrefs),
-  });
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const {
+    tripData,
+    flightOptions,
+    hotelOptions,
+    updateTripData,
+    setFlightOptions,
+    setHotelOptions,
+    setActivityOptions,
+    setTravelTips,
+  } = useTripStore();
 
-  // TODO Consider putting all this state in Zustand
-  const [flightOptions, setFlightOptions] = useState<Flight[]>([]);
-  const [hotelOptions, setHotelOptions] = useState<Hotel[]>([]);
-  const [activityOptions, setActivityOptions] = useState<Activity[]>([]);
-  const [travelTips, setTravelTips] = useState<TravelTip[]>([]);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [isChatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [pendingActivitiesNav, setPendingActivitiesNav] = useState(false);
 
-  const updateFields = useCallback((fields: Partial<TripData>) => {
-    setTripData((prev) => {
-      return { ...prev, ...fields };
-    });
-  }, []);
+  const isProduction = process.env['NODE_ENV'] === 'production';
+
+  useEffect(() => {
+    const prefs = startingPrefs ?? (isProduction ? null : fallbackStartingPrefs);
+    if (prefs) {
+      updateTripData(prefs);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const chatSteps: ChatStep[] = useMemo(
     () =>
@@ -63,10 +50,10 @@ const ChatPage = () => {
         flightOptions,
         hotelOptions,
         currentStepIndex,
-        updateFields,
+        updateTripData,
         isChatLoading,
       ),
-    [tripData, updateFields, flightOptions, hotelOptions, currentStepIndex, isChatLoading],
+    [tripData, updateTripData, flightOptions, hotelOptions, currentStepIndex, isChatLoading],
   );
 
   const { steps, currentStep, next, isFirstStep, isLastStep } = useMultiStepChat(
@@ -74,17 +61,6 @@ const ChatPage = () => {
     currentStepIndex,
     setCurrentStepIndex,
   );
-
-  // Navigate to activities page after state has been updated with the fetched activity data.
-  // Using useEffect ensures activityOptions and travelTips are the committed (non-stale) values.
-  useEffect(() => {
-    if (pendingActivitiesNav && !isChatLoading) {
-      navigate('activities', {
-        state: { activityOptions, travelTips, tripData },
-      });
-      setPendingActivitiesNav(false);
-    }
-  }, [pendingActivitiesNav, isChatLoading, activityOptions, travelTips, tripData, navigate]);
 
   const onSubmit = async () => {
     setChatLoading(true);
@@ -101,24 +77,20 @@ const ChatPage = () => {
         setHotelOptions,
         setActivityOptions,
         setTravelTips,
-        updateFields, // <-- might not need this ?
-        next, // <-- might not need this ?
       });
 
       if (!result.success) {
         setError(result.error || 'An error occurred');
-        setChatLoading(false);
         return;
       }
 
       if (isLastStep) {
-        setPendingActivitiesNav(true);
+        navigate('activities');
       } else if (result.shouldAdvance) {
         next();
       }
-    } catch (error) {
-      // Unlikely to be catching here as things stand. Maybe in the future we will re-throw inside our handlers (?)
-      console.error('Step handler error:', error);
+    } catch (err) {
+      console.error('Step handler error:', err);
       setError('An unexpected error occurred');
     } finally {
       setChatLoading(false);
@@ -128,13 +100,18 @@ const ChatPage = () => {
     }
   };
 
-  if (!startingPrefs) {
-    return <div>Something went wrong. Query string not parsed.</div>;
-  }
-
-  if (false) {
-    console.log('tripData', tripData);
-    console.log(travelTips);
+  if (!startingPrefs && isProduction) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">Something went wrong</h2>
+          <p className="text-gray-500 mb-6">
+            We weren&apos;t able to load your trip details. Please go back and try again.
+          </p>
+          <Button onClick={() => window.history.back()}>Start Over</Button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -169,8 +146,8 @@ const ChatPage = () => {
           </div>
         </div>
       </div>
-      ;
     </div>
   );
 };
+
 export default ChatPage;

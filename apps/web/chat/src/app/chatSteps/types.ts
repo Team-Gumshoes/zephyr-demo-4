@@ -7,15 +7,9 @@ export interface StepHandlerContext {
   chatMessages: Message[];
   setChatMessages: Dispatch<SetStateAction<Message[]>>;
   setFlightOptions: Dispatch<SetStateAction<Flight[]>>;
-  // setReturningFlightOptions: Dispatch<SetStateAction<Flight[]>>;
   setHotelOptions: Dispatch<SetStateAction<Hotel[]>>;
   setActivityOptions: Dispatch<SetStateAction<Activity[]>>;
-  // setNatureOptions: Dispatch<SetStateAction<NaturalAttraction[]>>;
-  // setEateryOptions: Dispatch<SetStateAction<Eatery[]>>;
-  // setSelfieSpotOptions: Dispatch<SetStateAction<SelfieSpot[]>>;
   setTravelTips: Dispatch<SetStateAction<TravelTip[]>>;
-  updateFields: (fields: Partial<TripData>) => void; // not totally clear if we need this
-  next: () => void; // not totally clear if we need this
 }
 
 // This is the shape of the coming back from the handler to app.tsx

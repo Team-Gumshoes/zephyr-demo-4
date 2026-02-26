@@ -2,8 +2,6 @@ import { StepHandler } from '../types';
 
 export const flightDepartingStepHandler: StepHandler = async ({
   tripData,
-  chatMessages,
-  setChatMessages,
 }) => {
   try {
     // 1. Validate user selections

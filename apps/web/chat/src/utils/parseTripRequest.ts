@@ -26,8 +26,7 @@ export default function parseStartingPrefs(searchParams: URLSearchParams): Start
     budgetIncludes.length < 1 ||
     transportation.length < 1
   ) {
-    return fallbackStartingPrefs; // TODO <-- This is temporary only for development, should return null
-    // return null;
+    return null;
   }
 
   return {
