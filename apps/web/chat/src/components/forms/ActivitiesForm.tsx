@@ -97,7 +97,7 @@ const ActivitiesForm = ({
         {/* Attractions and Filters */}
         <div className="flex flex-col gap-4">
           <h2 className="text-[22px] font-medium leading-7 text-black">
-            Experiences Based on Your Preferences
+            Experiences Based on Your Preferences!!
           </h2>
 
           {/* Filter Tabs */}
