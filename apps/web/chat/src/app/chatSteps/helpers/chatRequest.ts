@@ -13,11 +13,12 @@ export type ChatRequestType =
 
 const getContentForType = (type: ChatRequestType, tripData: TripData): string => {
   const destination = tripData.destination ?? 'the destination';
+  const origin = tripData.origin ?? 'the origin';
   switch (type) {
     case 'departingFlights':
-      return `Given the trip data provided, please find outbound flights to ${destination}.`;
+      return `Given the trip data provided, please find flight options from ${origin} to ${destination}.`;
     case 'returningFlights':
-      return `Given the trip data provided, please find return flights from ${destination}.`;
+      return `Given the trip data provided, please find flight options from ${origin} to ${destination}.`;
     case 'hotels':
       return `Given the trip data provided, please find hotels in ${destination}.`;
     case 'activities':
