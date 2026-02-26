@@ -9,7 +9,7 @@ import { deleteChatSession } from '../api/chat';
 const navigation = [
   { name: 'Chat', href: '/chat' },
   { name: 'Itineraries', href: '/itineraries' },
-  { name: 'Explore', href: '/explore' },
+  // { name: 'Explore', href: '/explore' },
   { name: 'Login', href: '/login' },
 ];
 

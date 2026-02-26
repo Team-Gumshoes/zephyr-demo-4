@@ -34,7 +34,7 @@ const ChatPage = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  const isProduction = process.env['NODE_ENV'] === 'production';
+  const isProduction = false;
 
   useEffect(() => {
     const prefs = startingPrefs ?? (isProduction ? null : fallbackStartingPrefs);
