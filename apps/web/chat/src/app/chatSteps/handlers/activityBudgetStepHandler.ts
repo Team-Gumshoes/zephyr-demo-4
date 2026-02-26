@@ -4,7 +4,6 @@ import { ActivityResponseDataSchema } from '../schemas/activitiesResponseSchema'
 import { SelfieSpotResponseDataSchema } from '../schemas/selfieSpotResponseSchema';
 import { NaturalAttractionResponseDataSchema } from '../schemas/naturalAttractionResponseSchema';
 import { EateryResponseDataSchema } from '../schemas/eateryResponseSchema';
-import { TravelTipResponseDataSchema } from '../schemas/travelTipResponseSchema';
 import { createChatRequest } from '../helpers/chatRequest';
 
 export const activityBudgetStepHandler: StepHandler = async ({
@@ -21,6 +20,9 @@ export const activityBudgetStepHandler: StepHandler = async ({
         error: 'Please select both dining and activity preferences',
       };
     }
+
+    // Clear old activities before fetching new ones
+    setActivityOptions([]);
 
     const activitiesRequest = createChatRequest('activities', tripData, chatMessages);
     const naturalAttractionsRequest = createChatRequest(
@@ -80,11 +82,18 @@ export const activityBudgetStepHandler: StepHandler = async ({
         }
       }),
       sendChatMessage(travelTipsRequest).then((response) => {
-        const parsed = TravelTipResponseDataSchema.safeParse(response.data);
-        if (!parsed.success) {
-          console.error('Invalid travel tip response data:', parsed.error.issues);
-        } else if (parsed.data.options) {
-          setTravelTips(parsed.data.options);
+        // The agent returns travel tips as plain text in the AI message, not as structured data
+        const aiMessage = response.messages?.find((m) => m.type === 'ai');
+        if (aiMessage?.content) {
+          setTravelTips([
+            {
+              id: 'travel-tips',
+              transportTips: '',
+              whenToVisitTips: '',
+              safetyTips: '',
+              rawContent: aiMessage.content,
+            },
+          ]);
         }
       }),
     ]);
