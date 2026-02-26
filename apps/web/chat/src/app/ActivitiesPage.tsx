@@ -1,20 +1,10 @@
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ActivitiesForm from '../components/forms/ActivitiesForm';
-import { Activity, TripData } from '@allorai/shared-types';
+import { useTripStore } from '../store/useTripStore';
 
 const ActivitiesPage = () => {
-  const { state } = useLocation();
   const navigate = useNavigate();
-
-  const [activityOptions, setActivityOptions] = useState<Activity[]>(state?.activityOptions ?? []);
-
-  const tripData: TripData = state?.tripData ?? {};
-
-  const togglePin = (activityId: string) =>
-    setActivityOptions((prev) =>
-      prev.map((a) => (a.id === activityId ? { ...a, pinned: !a.pinned } : a)),
-    );
+  const { activityOptions, tripData, togglePin } = useTripStore();
 
   return (
     <div className="max-w-7xl mx-auto">
