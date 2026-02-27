@@ -27,7 +27,7 @@ const FlightsDepartingForm = ({
   isChatLoading,
 }: FlightsDepartingFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Departing;
-  let flightDepartingId = departureFlight?.id;
+  const flightDepartingId = departureFlight?.id;
 
   return (
     <div className="w-full">
@@ -43,17 +43,14 @@ const FlightsDepartingForm = ({
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
                 onChange={() => {
-                  const latitude = flight.destinationCity?.latitude ?? flight.destinationAirport.latitude_deg;
-                  const longitude = flight.destinationCity?.longitude ?? flight.destinationAirport.longitude_deg;
+                  const latitude =
+                    flight.destinationCity?.latitude ?? flight.destinationAirport.latitude_deg;
+                  const longitude =
+                    flight.destinationCity?.longitude ?? flight.destinationAirport.longitude_deg;
 
                   updateFields({
                     departureFlight: flight,
                     destinationCoords: {
-                      latitude,
-                      longitude,
-                    },
-                    hotelCoords: {
-                      // set these as a fallback if hotel doesn't have coordinates provided
                       latitude,
                       longitude,
                     },
