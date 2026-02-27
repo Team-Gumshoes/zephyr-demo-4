@@ -8,13 +8,7 @@ interface CheckboxOption {
 
 function CalendarIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="41"
-      height="41"
-      viewBox="0 0 41 41"
-      fill="none"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41" fill="none">
       <path
         d="M29.0417 23.9167C29.4947 23.9167 29.9293 23.7367 30.2496 23.4163C30.57 23.0959 30.75 22.6614 30.75 22.2083C30.75 21.7553 30.57 21.3207 30.2496 21.0004C29.9293 20.68 29.4947 20.5 29.0417 20.5C28.5886 20.5 28.1541 20.68 27.8337 21.0004C27.5133 21.3207 27.3333 21.7553 27.3333 22.2083C27.3333 22.6614 27.5133 23.0959 27.8337 23.4163C28.1541 23.7367 28.5886 23.9167 29.0417 23.9167ZM29.0417 30.75C29.4947 30.75 29.9293 30.57 30.2496 30.2496C30.57 29.9293 30.75 29.4947 30.75 29.0417C30.75 28.5886 30.57 28.1541 30.2496 27.8337C29.9293 27.5133 29.4947 27.3333 29.0417 27.3333C28.5886 27.3333 28.1541 27.5133 27.8337 27.8337C27.5133 28.1541 27.3333 28.5886 27.3333 29.0417C27.3333 29.4947 27.5133 29.9293 27.8337 30.2496C28.1541 30.57 28.5886 30.75 29.0417 30.75ZM22.2083 22.2083C22.2083 22.6614 22.0283 23.0959 21.708 23.4163C21.3876 23.7367 20.9531 23.9167 20.5 23.9167C20.0469 23.9167 19.6124 23.7367 19.292 23.4163C18.9717 23.0959 18.7917 22.6614 18.7917 22.2083C18.7917 21.7553 18.9717 21.3207 19.292 21.0004C19.6124 20.68 20.0469 20.5 20.5 20.5C20.9531 20.5 21.3876 20.68 21.708 21.0004C22.0283 21.3207 22.2083 21.7553 22.2083 22.2083ZM22.2083 29.0417C22.2083 29.4947 22.0283 29.9293 21.708 30.2496C21.3876 30.57 20.9531 30.75 20.5 30.75C20.0469 30.75 19.6124 30.57 19.292 30.2496C18.9717 29.9293 18.7917 29.4947 18.7917 29.0417C18.7917 28.5886 18.9717 28.1541 19.292 27.8337C19.6124 27.5133 20.0469 27.3333 20.5 27.3333C20.9531 27.3333 21.3876 27.5133 21.708 27.8337C22.0283 28.1541 22.2083 28.5886 22.2083 29.0417ZM11.9583 23.9167C12.4114 23.9167 12.8459 23.7367 13.1663 23.4163C13.4867 23.0959 13.6667 22.6614 13.6667 22.2083C13.6667 21.7553 13.4867 21.3207 13.1663 21.0004C12.8459 20.68 12.4114 20.5 11.9583 20.5C11.5053 20.5 11.0707 20.68 10.7504 21.0004C10.43 21.3207 10.25 21.7553 10.25 22.2083C10.25 22.6614 10.43 23.0959 10.7504 23.4163C11.0707 23.7367 11.5053 23.9167 11.9583 23.9167ZM11.9583 30.75C12.4114 30.75 12.8459 30.57 13.1663 30.2496C13.4867 29.9293 13.6667 29.4947 13.6667 29.0417C13.6667 28.5886 13.4867 28.1541 13.1663 27.8337C12.8459 27.5133 12.4114 27.3333 11.9583 27.3333C11.5053 27.3333 11.0707 27.5133 10.7504 27.8337C10.43 28.1541 10.25 28.5886 10.25 29.0417C10.25 29.4947 10.43 29.9293 10.7504 30.2496C11.0707 30.57 11.5053 30.75 11.9583 30.75Z"
         fill="black"
@@ -64,20 +58,38 @@ function Checkbox({
           </svg>
         )}
       </div>
-      <span className="text-xs font-medium text-black tracking-[0.5px]">
-        {label}
-      </span>
+      <span className="text-xs font-medium text-black tracking-[0.5px]">{label}</span>
     </label>
   );
 }
+
+/**
+ * Converts a Date object to a string in the format "YYYY-MM-DD".
+ * @param {Date} date - The Date object to convert.
+ * @returns {string} - The converted string.
+ */
+const toDateInputValue = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 export function InputForm() {
   const navigate = useNavigate();
   const [fromAirport, setFromAirport] = useState('');
   const [toAirport, setToAirport] = useState('');
   const [toCity, setToCity] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
+
+  const today = toDateInputValue(new Date());
+  const initialTomorrow = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return toDateInputValue(d);
+  })();
+
+  const [departureDate, setDepartureDate] = useState(today);
+  const [returnDate, setReturnDate] = useState(initialTomorrow);
   const [specialPreferences, setSpecialPreferences] = useState('');
 
   const [budgetOptions, setBudgetOptions] = useState<CheckboxOption[]>([
@@ -96,18 +108,36 @@ export function InputForm() {
 
   const toggleBudgetOption = (index: number) => {
     setBudgetOptions((prev) =>
-      prev.map((opt, i) =>
-        i === index ? { ...opt, checked: !opt.checked } : opt,
-      ),
+      prev.map((opt, i) => (i === index ? { ...opt, checked: !opt.checked } : opt)),
     );
   };
 
   const toggleTransportOption = (index: number) => {
     setTransportOptions((prev) =>
-      prev.map((opt, i) =>
-        i === index ? { ...opt, checked: !opt.checked } : opt,
-      ),
+      prev.map((opt, i) => (i === index ? { ...opt, checked: !opt.checked } : opt)),
     );
+  };
+
+  const minReturnDate = (() => {
+    const d = new Date(departureDate + 'T00:00:00');
+    d.setDate(d.getDate() + 1);
+    return toDateInputValue(d);
+  })();
+
+  /**
+   * Handles changes to the departure date input field.
+   * If the new departure date is after the current return date,
+   * updates the return date to be one day after the new departure date.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
+   */
+  const handleDepartureDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDeparture = e.target.value;
+    setDepartureDate(newDeparture);
+    if (returnDate <= newDeparture) {
+      const d = new Date(newDeparture + 'T00:00:00');
+      d.setDate(d.getDate() + 1);
+      setReturnDate(toDateInputValue(d));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -124,14 +154,14 @@ export function InputForm() {
       budgetOptions
         .filter((o) => o.checked)
         .map((o) => o.label)
-        .join(',')
+        .join(','),
     );
     params.set(
       'transportation',
       transportOptions
         .filter((o) => o.checked)
         .map((o) => o.label)
-        .join(',')
+        .join(','),
     );
     if (specialPreferences) {
       params.set('preferences', specialPreferences);
@@ -193,7 +223,8 @@ export function InputForm() {
           <input
             type="date"
             value={departureDate}
-            onChange={(e) => setDepartureDate(e.target.value)}
+            min={today}
+            onChange={handleDepartureDateChange}
             placeholder="MM/DD/YYYY"
             className="flex-1 h-10 bg-white rounded-lg px-3 text-xs font-medium text-[#555] tracking-[0.5px]"
           />
@@ -203,6 +234,7 @@ export function InputForm() {
           <input
             type="date"
             value={returnDate}
+            min={minReturnDate}
             onChange={(e) => setReturnDate(e.target.value)}
             placeholder="MM/DD/YYYY"
             className="flex-1 h-10 bg-white rounded-lg px-3 text-xs font-medium text-[#555] tracking-[0.5px]"
@@ -247,8 +279,8 @@ export function InputForm() {
       {/* Special Preferences */}
       <div className="flex flex-col gap-2 w-full">
         <label className="text-xs font-medium text-black tracking-[0.5px]">
-          Special Preferences or Needs: (Ex: Reward Memberships, Specific
-          Experiences or Activities, or things to avoid)
+          Special Preferences or Needs: (Ex: Reward Memberships, Specific Experiences or Activities,
+          or things to avoid)
         </label>
         <textarea
           value={specialPreferences}
