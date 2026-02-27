@@ -39,7 +39,9 @@ const FlightSchema = z.object({
   legs: z.array(FlightLegSchema),
   date: z.string().optional(),
   destinationAirport: AirportInfoSchema,
-  destinationCity: CityInfoSchema.nullish(),
+  destinationCity: CityInfoSchema.nullish().transform((value) =>
+    value === null ? undefined : value,
+  ),
 });
 
 export const FlightResponseDataSchema = z.object({
