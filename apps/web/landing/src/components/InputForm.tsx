@@ -91,6 +91,14 @@ export function InputForm() {
   const [departureDate, setDepartureDate] = useState(today);
   const [returnDate, setReturnDate] = useState(initialTomorrow);
   const [specialPreferences, setSpecialPreferences] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const errors = {
+    fromAirport: !/^[A-Z]{3}$/.test(fromAirport) ? 'Must be a 3-letter airport code' : '',
+    toAirport: !/^[A-Z]{3}$/.test(toAirport) ? 'Must be a 3-letter airport code' : '',
+    toCity: toCity.trim().length === 0 ? 'Destination city is required' : '',
+  };
+  const hasErrors = Object.values(errors).some(Boolean);
 
   const [budgetOptions, setBudgetOptions] = useState<CheckboxOption[]>([
     { label: 'Flights', checked: true },
@@ -142,6 +150,8 @@ export function InputForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitted(true);
+    if (hasErrors) return;
 
     const params = new URLSearchParams();
     params.set('fromAirport', fromAirport);
@@ -181,38 +191,55 @@ export function InputForm() {
 
       {/* Cities Row */}
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
-        <div className="flex flex-1 items-center gap-4">
-          <label className="text-xs font-medium text-black tracking-[0.5px]">
+        <div className="flex flex-1 items-start gap-4">
+          <label className="text-xs font-medium text-black tracking-[0.5px] pt-2.5">
             From (Airport Code):
           </label>
-          <input
-            type="text"
-            value={fromAirport}
-            onChange={(e) => setFromAirport(e.target.value)}
-            className="flex-1 h-10 bg-white text-black rounded-lg px-3"
-          />
+          <div className="flex-1 flex flex-col">
+            <input
+              type="text"
+              value={fromAirport}
+              maxLength={3}
+              onChange={(e) => setFromAirport(e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase())}
+              className={`h-10 bg-white text-black rounded-lg px-3 ${submitted && errors.fromAirport ? 'border-2 border-red-500' : ''}`}
+            />
+            {submitted && errors.fromAirport && (
+              <p className="text-red-600 text-xs mt-1">{errors.fromAirport}</p>
+            )}
+          </div>
         </div>
-        <div className="flex flex-1 items-center gap-4">
-          <label className="text-xs font-medium text-black tracking-[0.5px]">
+        <div className="flex flex-1 items-start gap-4">
+          <label className="text-xs font-medium text-black tracking-[0.5px] pt-2.5">
             To (Airport Code):
           </label>
-          <input
-            type="text"
-            value={toAirport}
-            onChange={(e) => setToAirport(e.target.value)}
-            className="flex-1 h-10 bg-white text-black rounded-lg px-3"
-          />
+          <div className="flex-1 flex flex-col">
+            <input
+              type="text"
+              value={toAirport}
+              maxLength={3}
+              onChange={(e) => setToAirport(e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase())}
+              className={`h-10 bg-white text-black rounded-lg px-3 ${submitted && errors.toAirport ? 'border-2 border-red-500' : ''}`}
+            />
+            {submitted && errors.toAirport && (
+              <p className="text-red-600 text-xs mt-1">{errors.toAirport}</p>
+            )}
+          </div>
         </div>
-        <div className="flex flex-1 items-center gap-4">
-          <label className="text-xs font-medium text-black tracking-[0.5px]">
+        <div className="flex flex-1 items-start gap-4">
+          <label className="text-xs font-medium text-black tracking-[0.5px] pt-2.5">
             Destination City Name
           </label>
-          <input
-            type="text"
-            value={toCity}
-            onChange={(e) => setToCity(e.target.value)}
-            className="flex-2 h-10 bg-white text-black rounded-lg px-3"
-          />
+          <div className="flex-1 flex flex-col">
+            <input
+              type="text"
+              value={toCity}
+              onChange={(e) => setToCity(e.target.value)}
+              className={`h-10 bg-white text-black rounded-lg px-3 ${submitted && errors.toCity ? 'border-2 border-red-500' : ''}`}
+            />
+            {submitted && errors.toCity && (
+              <p className="text-red-600 text-xs mt-1">{errors.toCity}</p>
+            )}
+          </div>
         </div>
       </div>
 
