@@ -1,8 +1,10 @@
 import { StartingPrefs } from '@allorai/shared-types';
+import { z } from 'zod';
 
 export const fallbackStartingPrefs: StartingPrefs = {
-  origin: 'New York - JFK',
-  destination: 'Paris - CDG',
+  origin: 'JFK',
+  destination: 'CDG',
+  city: 'Paris, France',
   departureDate: 'March 15, 2026',
   returnDate: 'March 22, 2026',
   budgetIncludes: ['flights', 'lodging', 'dining'],
@@ -10,32 +12,47 @@ export const fallbackStartingPrefs: StartingPrefs = {
   preferences: 'family-friendly activities and local cuisine',
 };
 
-export default function parseStartingPrefs(searchParams: URLSearchParams): StartingPrefs | null {
-  const origin = searchParams.get('fromCity');
-  const destination = searchParams.get('toCity');
-  const departureDate = searchParams.get('departureDate');
-  const returnDate = searchParams.get('returnDate');
-  const budgetIncludes = searchParams.get('budgetIncludes')?.split(',').filter(Boolean) || [];
-  const transportation = searchParams.get('transportation')?.split(',').filter(Boolean) || [];
+const startingPrefsSchema = z.object({
+  origin: z.string().trim().min(1),
+  destination: z.string().trim().min(1),
+  city: z.string().trim().min(1),
+  departureDate: z.string().trim().min(1),
+  returnDate: z.string().trim().min(1),
+  budgetIncludes: z.array(z.string().trim().min(1)).min(1),
+  transportation: z.array(z.string().trim().min(1)).min(1),
+  preferences: z.string().trim().min(1).optional(),
+});
 
-  if (
-    !origin ||
-    !destination ||
-    !departureDate ||
-    !returnDate ||
-    budgetIncludes.length < 1 ||
-    transportation.length < 1
-  ) {
+export default function parseStartingPrefs(searchParams: URLSearchParams): StartingPrefs | null {
+  const rawData = {
+    origin: searchParams.get('fromAirport') ?? '',
+    destination: searchParams.get('toAirport') ?? '',
+    city: searchParams.get('toCity') ?? '',
+    departureDate: searchParams.get('departureDate') ?? '',
+    returnDate: searchParams.get('returnDate') ?? '',
+    budgetIncludes:
+      searchParams
+        .get('budgetIncludes')
+        ?.split(',')
+        .map((item) => item.trim())
+        .filter(Boolean) ?? [],
+    transportation:
+      searchParams
+        .get('transportation')
+        ?.split(',')
+        .map((item) => item.trim())
+        .filter(Boolean) ?? [],
+    preferences: searchParams.get('preferences')?.trim() || undefined,
+  };
+
+  console.log(rawData)
+  const parsed = startingPrefsSchema.safeParse(rawData);
+
+  console.log(parsed)
+  if (!parsed.success) {
+    console.error('Invalid starting prefs search params', parsed.error.flatten());
     return null;
   }
 
-  return {
-    origin,
-    destination,
-    departureDate,
-    returnDate,
-    budgetIncludes,
-    transportation,
-    preferences: searchParams.get('preferences') || undefined,
-  };
+  return parsed.data;
 }

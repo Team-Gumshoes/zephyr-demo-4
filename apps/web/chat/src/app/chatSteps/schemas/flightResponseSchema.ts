@@ -19,13 +19,18 @@ const FlightLegSchema = z.object({
   segments: z.array(FlightSegmentSchema),
 });
 
-const AirportInfoSchema = z
-  .object({
-    name: z.string(),
-    iata_code: z.string(),
-    latitude_deg: z.number(),
-    longitude_deg: z.number(),
-  });
+const AirportInfoSchema = z.object({
+  name: z.string(),
+  iata_code: z.string(),
+  latitude_deg: z.number(),
+  longitude_deg: z.number(),
+});
+
+const CityInfoSchema = z.object({
+  name: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
+});
 
 const FlightSchema = z.object({
   id: z.string(),
@@ -34,6 +39,7 @@ const FlightSchema = z.object({
   legs: z.array(FlightLegSchema),
   date: z.string().optional(),
   destinationAirport: AirportInfoSchema,
+  destinationCity: CityInfoSchema.nullish(),
 });
 
 export const FlightResponseDataSchema = z.object({

@@ -73,7 +73,8 @@ function Checkbox({
 
 export function InputForm() {
   const navigate = useNavigate();
-  const [fromCity, setFromCity] = useState('');
+  const [fromAirport, setFromAirport] = useState('');
+  const [toAirport, setToAirport] = useState('');
   const [toCity, setToCity] = useState('');
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
@@ -113,7 +114,8 @@ export function InputForm() {
     e.preventDefault();
 
     const params = new URLSearchParams();
-    params.set('fromCity', fromCity);
+    params.set('fromAirport', fromAirport);
+    params.set('toAirport', toAirport);
     params.set('toCity', toCity);
     params.set('departureDate', departureDate);
     params.set('returnDate', returnDate);
@@ -148,27 +150,38 @@ export function InputForm() {
       </h2>
 
       {/* Cities Row */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-14 w-full">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
         <div className="flex flex-1 items-center gap-4">
           <label className="text-xs font-medium text-black tracking-[0.5px]">
-            From:
+            From (Airport Code):
           </label>
           <input
             type="text"
-            value={fromCity}
-            onChange={(e) => setFromCity(e.target.value)}
+            value={fromAirport}
+            onChange={(e) => setFromAirport(e.target.value)}
             className="flex-1 h-10 bg-white text-black rounded-lg px-3"
           />
         </div>
         <div className="flex flex-1 items-center gap-4">
           <label className="text-xs font-medium text-black tracking-[0.5px]">
-            To:
+            To (Airport Code):
+          </label>
+          <input
+            type="text"
+            value={toAirport}
+            onChange={(e) => setToAirport(e.target.value)}
+            className="flex-1 h-10 bg-white text-black rounded-lg px-3"
+          />
+        </div>
+        <div className="flex flex-1 items-center gap-4">
+          <label className="text-xs font-medium text-black tracking-[0.5px]">
+            Destination City Name
           </label>
           <input
             type="text"
             value={toCity}
             onChange={(e) => setToCity(e.target.value)}
-            className="flex-1 h-10 bg-white text-black rounded-lg px-3"
+            className="flex-2 h-10 bg-white text-black rounded-lg px-3"
           />
         </div>
       </div>

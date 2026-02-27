@@ -7,6 +7,7 @@ export type BudgetPref = 'budget' | 'balanced' | 'premium' | 'none';
 export interface StartingPrefs {
   origin?: string;
   destination?: string;
+  city?: string;
   departureDate?: string;
   returnDate?: string;
   preferences?: string;
@@ -37,6 +38,7 @@ export function createEmptyTrip(): TripData {
   return {
     origin: undefined,
     destination: undefined,
+    city: undefined,
     departureFlight: undefined,
     returnFlight: undefined,
     departureDate: undefined,

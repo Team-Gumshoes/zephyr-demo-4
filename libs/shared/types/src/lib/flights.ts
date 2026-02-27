@@ -26,12 +26,19 @@ export interface AirportInfo {
   longitude_deg: number;
 }
 
+export interface CityInfo {
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface Flight {
   id: string;
   price: string;
   currency: string;
   legs: FlightLeg[];
   destinationAirport: AirportInfo;
+  destinationCity?: CityInfo;
 }
 
 export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
@@ -70,6 +77,11 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
       iata_code: 'LAX',
       latitude_deg: 33.9425,
       longitude_deg: -118.4081,
+    },
+    destinationCity: {
+      name: 'Los Angeles',
+      latitude: 34.0522,
+      longitude: -118.2437,
     },
   },
   {
@@ -120,6 +132,11 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
       latitude_deg: 33.9425,
       longitude_deg: -118.4081,
     },
+    destinationCity: {
+      name: 'Los Angeles',
+      latitude: 34.0522,
+      longitude: -118.2437,
+    },
   },
   {
     id: '3',
@@ -156,6 +173,11 @@ export const SAMPLE_FLIGHT_OPTIONS: Flight[] = [
       iata_code: 'LAX',
       latitude_deg: 33.9425,
       longitude_deg: -118.4081,
+    },
+    destinationCity: {
+      name: 'Los Angeles',
+      latitude: 34.0522,
+      longitude: -118.2437,
     },
   },
 ];

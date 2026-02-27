@@ -42,17 +42,20 @@ const FlightsDepartingForm = ({
                 disabled={!isActive || isChatLoading}
                 value={flight.id}
                 checked={flightDepartingId === flight.id}
-                onChange={(e) => {
+                onChange={() => {
+                  const latitude = flight.destinationCity?.latitude ?? flight.destinationAirport.latitude_deg;
+                  const longitude = flight.destinationCity?.longitude ?? flight.destinationAirport.longitude_deg;
+
                   updateFields({
                     departureFlight: flight,
                     destinationCoords: {
-                      latitude: flight.destinationAirport.latitude_deg,
-                      longitude: flight.destinationAirport.longitude_deg,
+                      latitude,
+                      longitude,
                     },
                     hotelCoords: {
                       // set these as a fallback if hotel doesn't have coordinates provided
-                      latitude: flight.destinationAirport.latitude_deg,
-                      longitude: flight.destinationAirport.longitude_deg,
+                      latitude,
+                      longitude,
                     },
                   });
                 }}
