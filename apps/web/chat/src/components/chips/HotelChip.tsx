@@ -5,7 +5,6 @@ type HotelChipProps = {
   hotel: Hotel;
   departureDate?: string;
   returnDate?: string;
-  minHeight?: number;
 };
 
 const renderStars = (count: number): string => {
@@ -13,15 +12,12 @@ const renderStars = (count: number): string => {
   return '★'.repeat(clamped) + '☆'.repeat(5 - clamped);
 };
 
-const HotelChip = ({ hotel, departureDate, returnDate, minHeight }: HotelChipProps) => {
+const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
   const nights = calculateNights(departureDate, returnDate);
   const totalCost = hotel?.price && nights && nights !== null ? hotel.price * nights : undefined;
 
   return (
-    <div
-      className="bg-[rgba(251,251,254,0.75)] border border-black flex gap-[30px] items-stretch p-6 rounded-2xl"
-      style={minHeight != null ? { minHeight } : undefined}
-    >
+    <div className="bg-[rgba(251,251,254,0.75)] border border-black flex gap-[30px] items-stretch p-6 rounded-2xl">
       {/* Hotel Image */}
       {hotel.imageUrl && (
         <div className="self-stretch w-[80px] shrink-0 overflow-hidden rounded-lg">
