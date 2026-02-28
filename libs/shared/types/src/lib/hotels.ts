@@ -11,6 +11,7 @@ export interface Hotel {
   website: string;
   num_of_stars?: number;
   price?: number;
+  imageUrl?: string;
 }
 
 export const SAMPLE_HOTELS: Hotel[] = [
