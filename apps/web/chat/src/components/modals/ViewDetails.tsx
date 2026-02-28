@@ -52,7 +52,16 @@ export const ViewDetails = ({ activity }: ViewDetailsProps) => {
         </div> */}
         <div className="flex flex-col gap-3">
           <h4 className="text-xl font-semibold">Website</h4>
-          <p className="text-base font-medium leading-6">{activity.website || 'N/A'}</p>
+          {activity.website && (
+            <a
+              href={activity.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-700 underline hover:no-underline"
+            >
+              {activity.website}
+            </a>
+          )}
         </div>
       </div>
     </div>
