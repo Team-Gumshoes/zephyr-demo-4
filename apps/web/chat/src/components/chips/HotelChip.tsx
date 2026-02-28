@@ -46,7 +46,7 @@ const HotelChip = ({ hotel, departureDate, returnDate }: HotelChipProps) => {
             rel="noreferrer"
             className="text-blue-500 hover:text-blue-700 underline hover:no-underline text-base leading-6 break-all"
           >
-            {hotel.website}
+            Hotel Website
           </a>
         )}
       </div>
