@@ -35,7 +35,6 @@ const ChatPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const forceRealUserInputOnLanding = true;
-  // https://t-latest-platform-zephyr-demo-4-team-gumshoes-ze.zephyrcloud.app/chat?fromCity=SFO&toCity=CDG&departureDate=2026-03-25&returnDate=2026-04-04&budgetIncludes=Flights%2CLodging%2CDining%2CActivities&transportation=Rental+Car
 
   useEffect(() => {
     const prefs = startingPrefs ?? (forceRealUserInputOnLanding ? null : fallbackStartingPrefs);

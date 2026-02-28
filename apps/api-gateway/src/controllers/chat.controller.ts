@@ -46,7 +46,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const cookieOptions = {
   httpOnly: true,
   secure: isProduction,
-  sameSite: 'lax' as const, // TODO figure out what went wrong here
+  sameSite: isProduction? 'none' as const : 'lax' as const, // TODO figure out what went wrong here
   path: '/',
 };
 // import { deleteChatSession } from '../services/chat.service';
