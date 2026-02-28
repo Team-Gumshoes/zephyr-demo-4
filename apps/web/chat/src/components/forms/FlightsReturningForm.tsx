@@ -7,6 +7,7 @@ import { ChatStepSequence } from '../../app/chatSteps/helpers/createChatSteps';
 export type FlightsReturningFormData = {
   returnFlight?: Flight;
   returnDate?: string;
+  destinationCoords?: { latitude: number; longitude: number };
 };
 
 type FlightsReturningFormProps = FlightsReturningFormData & {
@@ -25,7 +26,7 @@ const FlightsReturningForm = ({
   isChatLoading,
 }: FlightsReturningFormProps) => {
   const isActive = currentStepIndex === ChatStepSequence.Returning;
-  let flightReturningId = returnFlight?.id;
+  const flightReturningId = returnFlight?.id;
 
   return (
     <div className="w-full">
@@ -40,11 +41,18 @@ const FlightsReturningForm = ({
                 value={flight.id}
                 checked={flightReturningId === flight.id}
                 disabled={!isActive || isChatLoading}
-                onChange={(e) =>
+                onChange={() => {
+                  // Fallsback to airport coords if there is no city coordinates
+                  const latitude =
+                    flight.destinationCity?.latitude ?? flight.destinationAirport.latitude_deg;
+                  const longitude =
+                    flight.destinationCity?.longitude ?? flight.destinationAirport.longitude_deg;
+
                   updateFields({
                     returnFlight: flight,
-                  })
-                }
+                    destinationCoords: { latitude, longitude },
+                  });
+                }}
                 className="sr-only peer"
               />
               <div
@@ -54,7 +62,7 @@ const FlightsReturningForm = ({
                   !isActive && flightReturningId !== flight.id && 'hidden',
                 )}
               >
-                <FlightChip flight={flight} direction='return' />
+                <FlightChip flight={flight} direction="return" />
               </div>
             </label>
           ))}
