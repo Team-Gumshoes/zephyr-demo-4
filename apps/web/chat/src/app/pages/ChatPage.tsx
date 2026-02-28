@@ -34,11 +34,11 @@ const ChatPage = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  const isProduction = false;
+  const forceRealUserInputOnLanding = true;
   // https://t-latest-platform-zephyr-demo-4-team-gumshoes-ze.zephyrcloud.app/chat?fromCity=SFO&toCity=CDG&departureDate=2026-03-25&returnDate=2026-04-04&budgetIncludes=Flights%2CLodging%2CDining%2CActivities&transportation=Rental+Car
 
   useEffect(() => {
-    const prefs = startingPrefs ?? (isProduction ? null : fallbackStartingPrefs);
+    const prefs = startingPrefs ?? (forceRealUserInputOnLanding ? null : fallbackStartingPrefs);
     if (prefs) {
       updateTripData(prefs);
     }
@@ -101,7 +101,7 @@ const ChatPage = () => {
     }
   };
 
-  if (!startingPrefs && isProduction) {
+  if (!startingPrefs && forceRealUserInputOnLanding) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
