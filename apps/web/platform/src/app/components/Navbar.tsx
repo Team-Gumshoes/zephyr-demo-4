@@ -20,6 +20,16 @@ export default function Navbar() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const { user } = useAuth();
 
+  const handleGoogleLogin = async () => {
+    localStorage.setItem('loginRedirectPath', window.location.pathname + window.location.search);
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+  };
+
   return (
     <nav className="bg-white border-b border-black shadow-md text-[#002e9a]">
       <div className="max-w-7xl mx-auto px-4 py-2.5">
@@ -78,10 +88,15 @@ export default function Navbar() {
                   navigate('/login');
                 }}
               >
-                Log Out - {user.email?.substring(0,1)}
+                Log Out - {user.email?.substring(0, 1)}
               </Button>
             ) : (
-              <Link
+              <>
+                <Button variant="secondary" onClick={handleGoogleLogin}>
+                  Log In
+                </Button>
+
+                {/* <Link
                 to="/login"
                 className={clsx(
                   'flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors',
@@ -92,6 +107,8 @@ export default function Navbar() {
               >
                 <span>Log In</span>
               </Link>
+              */}
+              </>
             )}
           </div>
         </div>

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../lib/supabase';
 
-const AuthCallback = () => {
+const AuthCallbackPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,33 +12,32 @@ const AuthCallback = () => {
 
     if (errorParam) {
       console.error('Auth callback error:', errorParam);
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
       return;
     }
 
+    const handlePostAuth = () => {
+      const redirectPath = localStorage.getItem('loginRedirectPath') || '/';
+      localStorage.removeItem('loginRedirectPath');
+      navigate(redirectPath, { replace: true });
+    };
+
     if (code) {
-      // PKCE flow: exchange the code for a session
       supabase.auth.exchangeCodeForSession(window.location.search).then(({ error }) => {
         if (error) {
           console.error('Auth callback error:', error.message);
-          navigate('/login', { replace: true });
+          navigate('/', { replace: true });
         } else {
-          const redirectPath = localStorage.getItem('loginRedirectPath') || '/';
-          localStorage.removeItem('loginRedirectPath');
-          navigate(redirectPath, { replace: true });
+          handlePostAuth();
         }
       });
     } else {
-      // Implicit flow: SDK processes #access_token from the hash automatically
-      // (detectSessionInUrl is true by default). Just wait for SIGNED_IN.
       const {
         data: { subscription },
       } = supabase.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN' && session) {
           subscription.unsubscribe();
-          const redirectPath = localStorage.getItem('loginRedirectPath') || '/';
-          localStorage.removeItem('loginRedirectPath');
-          navigate(redirectPath, { replace: true });
+          handlePostAuth();
         }
       });
       return () => subscription.unsubscribe();
@@ -54,4 +53,4 @@ const AuthCallback = () => {
   );
 };
 
-export default AuthCallback;
+export default AuthCallbackPage;
