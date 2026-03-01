@@ -34,7 +34,7 @@ const ChatPage = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  const forceRealUserInputOnLanding = false;
+  const forceRealUserInputOnLanding = true;
 
   useEffect(() => {
     const prefs = startingPrefs ?? (forceRealUserInputOnLanding ? null : fallbackStartingPrefs);

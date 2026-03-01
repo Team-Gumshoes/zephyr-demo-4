@@ -3,9 +3,9 @@ import ChatPage from './pages/ChatPage';
 import ActivitiesPage from './pages/ActivitiesPage';
 import ItinerariesPage from './pages/ItinerariesPage';
 
-// #3358ae dark
-// #99abd7 light
-// #97dbd9 teal
+// #3358ae - dark (primary)
+// #99abd7 - light (secondary)
+// #97dbd9 - teal (accent)
 
 function App() {
   return (
