@@ -52,7 +52,7 @@ const ItineraryPage = () => {
     const pinnedActivities = activityOptions.filter((a) => a.pinned);
 
     if (!session) {
-      localStorage.setItem('loginRedirectPath', '/itineraries');
+      localStorage.setItem('loginRedirectPath', '/chat/itinerary');
       localStorage.setItem(
         PENDING_SAVE_KEY,
         JSON.stringify({ tripData, activities: pinnedActivities })
