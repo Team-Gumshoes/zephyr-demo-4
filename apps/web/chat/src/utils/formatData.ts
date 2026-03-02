@@ -51,3 +51,39 @@ export const calculateNights = (
   const nights = Math.round(diffMs / (1000 * 60 * 60 * 24));
   return nights > 0 ? nights : undefined;
 };
+
+/**
+ * Format an ISO 8601 duration string into a human-readable format.
+ * If the input string does not match the ISO 8601 duration format, returns unchanged input string.
+ * eg. Input: "PT1H30M" Output: "1 hour and 30 minutes"
+ * eg. Input: "PT2H" Output: "2 hours"
+ *
+ * @param isoDuration - The ISO 8601 duration string to format.
+ * @returns The formatted duration string or an empty string if the input is invalid.
+ */
+export const formatIsoDuration = (isoDuration: string): string => {
+  // Regex to match the ISO 8601 duration format
+  const matches = isoDuration.match(/^PT(?:(\d+)H)?(?:(\d+)M)?$/);
+
+  // If no match, return input
+  if (!matches) return isoDuration;
+
+  const hours = matches[1];
+  const minutes = matches[2];
+
+  const formattedHours = `${hours} ${hours === '1' ? 'hour' : 'hours'}`;
+  const formattedMinutes = `${minutes} ${minutes === '1' ? 'minute' : 'minutes'}`;
+
+  // If 0 hours, return minutes
+  if (hours === '0') {
+    return formattedMinutes;
+  }
+
+  // If 0 minutes, return hours
+  if (minutes === '0') {
+    return formattedHours;
+  }
+
+  // Otherwise, return hours and minutes
+  return `${formattedHours} and ${formattedMinutes}`;
+};

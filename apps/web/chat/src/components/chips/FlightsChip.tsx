@@ -1,8 +1,14 @@
 import { Flight, FlightSegment } from '@allorai/shared-types';
-import { formatTime } from '../../utils/formatData';
+import { formatTime, formatIsoDuration } from '../../utils/formatData';
 
-const FlightChip = ({ flight, direction }: { flight: Flight, direction: 'outbound' | 'return' }) => {
-  const leg = flight.legs.find(leg => leg.direction === direction);
+const FlightChip = ({
+  flight,
+  direction,
+}: {
+  flight: Flight;
+  direction: 'outbound' | 'return';
+}) => {
+  const leg = flight.legs.find((leg) => leg.direction === direction);
   if (!leg) return null;
 
   const { segments } = leg;
@@ -32,7 +38,9 @@ const FlightChip = ({ flight, direction }: { flight: Flight, direction: 'outboun
         {/* Total duration for multi-segment */}
         {isMultiSegment && (
           <div className="flex items-center gap-2 pt-1 border-t border-black/10">
-            <span className="text-xs font-normal text-[#050315]/60">Total: {leg.legDuration}</span>
+            <span className="text-xs font-normal text-[#050315]/60">
+              Total: {formatIsoDuration(leg.legDuration)}
+            </span>
             <span className="text-xs font-normal text-[#050315]/60">
               · {segments.length - 1} stop
               {segments.length - 1 > 1 ? 's' : ''} (
