@@ -41,6 +41,22 @@ export async function sendChatMessage(data: ChatRequest): Promise<ChatResponse> 
       };
     }
     const response = await apiClient.post<ChatResponse>('/chat/message', data);
+  
+    if (response.data.messages[response.data.messages.length - 1].content.match(/something went wrong/gi)) {
+      return {
+        messages: [
+          ...data.messages,
+          {
+            type: 'ai',
+            content:
+              "I wasn't able to get real data. It might have taken too long. I'm returning some sample data for the request instead.",
+          },
+        ],
+        data: responseDataForStep(data),
+        trip: data.trip,
+        debug: [],
+      };
+    }
     return response.data;
   } catch (error) {
     if (process.env.NX_PUBLIC_USE_SAMPLE_DATA === 'on-error') {
