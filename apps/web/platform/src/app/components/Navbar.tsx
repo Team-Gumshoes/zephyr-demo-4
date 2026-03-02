@@ -31,7 +31,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-black shadow-md text-[#002e9a]">
+    <nav className="bg-white border-b border-black shadow-md text-primary fixed z-50 w-full">
       <div className="max-w-7xl mx-auto px-4 py-2.5">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
@@ -54,11 +54,10 @@ export default function Navbar() {
                   try {
                     await deleteChatSession();
                   } catch {
-                    // No active session to clear — continue with reset
-                    console.error('No active session to clear - continue with reset');
+                    console.error('No active session to clear - continuing with reset');
                   } finally {
                     setIsDialogOpen(false);
-                    navigate('/landing');
+                    navigate('/');
                   }
                 }}
               />
@@ -86,7 +85,7 @@ export default function Navbar() {
                 variant="secondary"
                 onClick={async () => {
                   await supabase.auth.signOut();
-                  navigate('/login');
+                  navigate('/landing');
                 }}
               >
                 Log Out - {user.email?.substring(0, 1)}

@@ -166,18 +166,11 @@ const chatMessageHandler = async (req: Request, res: Response): Promise<void> =>
 const deleteChatSessionHandler = async (req: Request, res: Response): Promise<void> => {
   // const { supabase } = req;
   const sessionId = req.cookies?.chat_session_id;
+  logger.debug("Deleting chat session. id: ",sessionId)
 
-  if (!sessionId) {
-    res.status(400).json({
-      error: 'No active session found',
-    });
-    return;
-  }
+  // TODO Delete session from chat sessions table?
 
-  // Delete session from chat sessions table
-  // await deleteChatSession({ supabase, sessionId });
-
-  // Clear the session cookie
+  // Always clear the cookie so the browser removes it even if it wasn't visible server-side
   res.clearCookie('chat_session_id', cookieOptions);
 
   res.status(200).json({ message: 'Session cleared' });

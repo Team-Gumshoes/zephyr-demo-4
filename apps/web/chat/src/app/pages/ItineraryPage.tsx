@@ -17,6 +17,9 @@ const ItineraryPage = () => {
     const pendingRaw = localStorage.getItem(PENDING_SAVE_KEY);
     if (!pendingRaw) return;
 
+    // Remove immediately to prevent duplicate saves on re-renders or StrictMode double-invocation
+    localStorage.removeItem(PENDING_SAVE_KEY);
+
     const completePendingSave = async () => {
       const {
         data: { session },
@@ -24,7 +27,6 @@ const ItineraryPage = () => {
       if (!session) return;
 
       const pending: { tripData: TripData; activities: Activity[] } = JSON.parse(pendingRaw);
-      localStorage.removeItem(PENDING_SAVE_KEY);
 
       updateTripData(pending.tripData);
       setActivityOptions(pending.activities);

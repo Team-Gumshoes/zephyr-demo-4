@@ -26,6 +26,7 @@ const ChatPage = () => {
     setHotelOptions,
     setActivityOptions,
     setTravelTips,
+    reset,
   } = useTripStore();
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -38,6 +39,7 @@ const ChatPage = () => {
 
   // empty dependency array is correct in this case. We never want the effect to run again no matter what changes
   useEffect(() => {
+    reset();
     const prefs = startingPrefs ?? (forceRealUserInputOnLanding ? null : fallbackStartingPrefs);
     if (prefs) {
       updateTripData(prefs);
@@ -142,6 +144,7 @@ const ChatPage = () => {
                       // No active session to clear — continue with reset
                       console.error('No active session to clear - continue with reset');
                     } finally {
+                      reset();
                       setIsDialogOpen(false);
                       navigate('/landing');
                     }

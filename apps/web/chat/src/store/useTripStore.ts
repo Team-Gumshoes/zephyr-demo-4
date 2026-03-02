@@ -15,6 +15,7 @@ interface TripStore {
   activityOptions: Activity[];
   travelTips: TravelTips[];
 
+  reset: () => void;
   updateTripData: (fields: Partial<TripData>) => void;
   setFlightOptions: (updater: Flight[] | ((prev: Flight[]) => Flight[])) => void;
   setHotelOptions: (updater: Hotel[] | ((prev: Hotel[]) => Hotel[])) => void;
@@ -32,6 +33,15 @@ export const useTripStore = create<TripStore>((set) => ({
   hotelOptions: [],
   activityOptions: [],
   travelTips: [],
+
+  reset: () =>
+    set(() => ({
+      tripData: createEmptyTrip(),
+      flightOptions: [],
+      hotelOptions: [],
+      activityOptions: [],
+      travelTips: [],
+    })),
 
   updateTripData: (fields) =>
     set((s) => ({ tripData: { ...s.tripData, ...fields } })),

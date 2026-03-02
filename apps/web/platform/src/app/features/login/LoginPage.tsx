@@ -29,7 +29,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-sm flex flex-col items-center gap-6">
         <h1 className="text-2xl font-bold text-[#002e9a]">Sign in to Allorai</h1>
-        <p className="text-gray-500 text-sm text-center">Save your trip and come back any time.</p>
+        <p className="text-gray-500 text-sm text-center">Save all your trip itineraries and share them with others!</p>
         <button
           onClick={handleGoogleLogin}
           className="flex items-center justify-center gap-3 w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
