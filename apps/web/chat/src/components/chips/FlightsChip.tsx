@@ -77,7 +77,9 @@ function SegmentRow({ segment }: { segment: FlightSegment }) {
 
       {/* Flight Length and Airports */}
       <div className="flex flex-col">
-        <span className="font-medium text-[#050315] text-base leading-6">{segment.duration}</span>
+        <span className="font-medium text-[#050315] text-base leading-6">
+          {formatIsoDuration(segment.duration)}
+        </span>
         <span className="font-normal text-[#050315] text-base leading-6">
           {segment.departure.airport} - {segment.arrival.airport}
         </span>
