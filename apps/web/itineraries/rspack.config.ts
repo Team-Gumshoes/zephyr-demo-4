@@ -14,6 +14,12 @@ const config: Configuration = {
     path: join(__dirname, 'dist'),
     publicPath: 'auto',
   },
+    resolve: {
+    alias: {
+      '@allorai/shared-ui': join(__dirname, '../../../libs/shared/ui/src/index.ts'),
+      '@allorai/shared-types': join(__dirname, '../../../libs/shared/types/src/index.ts'),
+    },
+  },
   devServer: {
     port: 4203,
     headers: {

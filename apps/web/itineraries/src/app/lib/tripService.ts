@@ -7,7 +7,7 @@ export interface TripSummary {
   departure_date?: string;
   return_date?: string;
   budget?: number;
-  hotel?: { name: string };
+  hotel?: { name: string; imageUrl?: string };
   departure_flight?: { legs: { originAirport?: { iata?: string } }[] };
   created_at: string;
 }

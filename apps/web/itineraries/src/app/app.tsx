@@ -1,19 +1,32 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
 import { fetchUserTrips, TripSummary } from './lib/tripService';
+import { TripCard } from './components/TripCard';
+import {
+  EmptyTripsState,
+  ErrorTripsState,
+  LoadingTripsState,
+  NotLoggedInState,
+} from './components/TripStates';
 
 function MyTripsPage() {
   const [trips, setTrips] = useState<TripSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     async function loadTrips() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
+        setIsLoggedIn(false);
         setLoading(false);
         return;
       }
+
+      setIsLoggedIn(true);
 
       try {
         const data = await fetchUserTrips(session.user.id);
@@ -29,47 +42,27 @@ function MyTripsPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <p className="text-gray-500">Loading your trips...</p>
-      </div>
-    );
+    return <LoadingTripsState />;
   }
 
   if (error) {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
+    return <ErrorTripsState message={error} />;
+  }
+
+  if (!isLoggedIn) {
+    return <NotLoggedInState />;
   }
 
   if (trips.length === 0) {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <p className="text-gray-500">You have no saved trips yet.</p>
-      </div>
-    );
+    return <EmptyTripsState />;
   }
 
   return (
     <div className="max-w-7xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-6">My Trips</h1>
-      <ul className="space-y-4">
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {trips.map((trip) => (
-          <li key={trip.id} className="border rounded-lg p-4 shadow-sm">
-            <p className="text-lg font-semibold">
-              {trip.city ?? trip.destination ?? 'Unknown destination'}
-            </p>
-            {(trip.departure_date || trip.return_date) && (
-              <p className="text-sm text-gray-600">
-                {trip.departure_date} – {trip.return_date}
-              </p>
-            )}
-            {trip.budget != null && (
-              <p className="text-sm text-gray-600">Budget: ${trip.budget}</p>
-            )}
-          </li>
+          <TripCard key={trip.id} trip={trip} />
         ))}
       </ul>
     </div>

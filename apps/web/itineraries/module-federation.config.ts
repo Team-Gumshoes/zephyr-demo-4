@@ -7,10 +7,24 @@ const config: ModuleFederationConfig = {
   },
   shared: (libraryName, defaultConfig) => {
     if (libraryName === 'react' || libraryName === 'react-dom') {
-      return { singleton: true, requiredVersion: false, eager: false };
+      return {
+        singleton: true,
+        requiredVersion: false,
+        eager: false,
+      };
+    } else if (libraryName === '@allorai/shared-ui') {
+      return {
+        singleton: true,
+        requiredVersion: false,
+      };
+    } else if (libraryName === '@allorai/shared-types') {
+      return {
+        singleton: true,
+        requiredVersion: false,
+      };
     }
     return defaultConfig;
-  }
+  },
 };
 
 /**
